@@ -13,7 +13,7 @@ class LoginForm extends Component {
             <div className="control-group">
               <label className="control-label" for="nickname">Email</label>
               <div className="controls">
-                <Field type="text" component="input" name="nickname" />
+                <Field type="text" component="input" name="username" />
               </div>
             </div>
             <div className="control-group">
@@ -28,7 +28,7 @@ class LoginForm extends Component {
             </div>
             <div className="control-group">
               <div className="controls">
-                <button className="btn btn-primary btn-large" type="submit" value="Enviar" />
+                <button className="btn btn-primary btn-large" type="submit" >Enviar</button>
               </div>
             </div>
           </form>

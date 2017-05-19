@@ -3,6 +3,7 @@ import locationReducer from './location';
 import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 import accountReducer from './domain/account/reducers';
+import installationReducer from './domain/installation/reducers';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -10,6 +11,7 @@ export const makeRootReducer = (asyncReducers) => {
     form: formReducer,
     routing: routerReducer,
     account: accountReducer,
+    installations: installationReducer,
     ...asyncReducers
   })
 }

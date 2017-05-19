@@ -11,9 +11,9 @@ function isPromise(value) {
   return false;
 }
 
-function mapResponseToPayload(res) {
+function mapResponseToPayload(res, body) {
   return {
-    ...res.data,
+    ...body,
     status: parseInt(res.status, 10),
   };
 }
@@ -26,16 +26,15 @@ export default function promiseMiddleware(store) {
     // if payload doesn't exist, move along
     if (!payload) { return next(action); }
 
-    console.log(state);
-    const username = R.path(['account', 'user','nickname'], state);
-    const password = R.path(['account', 'user','password'], state);
+    const token = R.path(['account', 'user', 'token'], state);
+
 
     // payload can be either a function or a promise.
     // if its a function, let's execute that, before checking
     // whether its a promise
-    const payloadResult = (typeof payload === 'function') ? payload(username, password) : payload;
+    const payloadResult = (typeof payload === 'function') ? payload(token) : payload;
     // if the resulting payload is not a promise, move along.
-    if (!isPromise(payloadResult)) { return next(action); }
+    if (!isPromise(payloadResult)) { console.log(";is not promise"); return next(action); }
 
     // it is a promise, so we handle it.
     const SUCCESS = `${type}_FULFILLED`;
@@ -44,38 +43,38 @@ export default function promiseMiddleware(store) {
     next({ ...rest, type: PENDING });
 
     function checkStatus(res) {
-      console.log(res);
       return res
     }
 
     function handleFailure(res) {
-      console.log(res);
-      console.log(res.headers);
-      next({
-        ...rest,
-        payload: res.data,
-        status: res.status,
-        type: FAILURE,
+      return res.json().then((body) => {
+        next({
+          ...rest,
+          payload: body,
+          status: res.status,
+          type: FAILURE,
+        });
+
+        if (res.status !== 200) {
+          store.dispatch({type: UNAUTHORIZED});
+        }
+
+        throw mapResponseToPayload(res, body);
       });
-
-      console.log(res);
-
-      if (res.status === 401) {
-        store.dispatch({ type: UNAUTHORIZED });
-      }
-
-      throw mapResponseToPayload(res);
     }
 
     function handleSuccess(res) {
-      next({
-        ...rest,
-        payload: res.data,
-        status: res.status,
-        type: SUCCESS,
-      });
+      return res.json().then((body) => {
 
-      return mapResponseToPayload(res);
+        next({
+          ...rest,
+          payload: body,
+          status: res.status,
+          type: SUCCESS,
+        });
+
+        return mapResponseToPayload(res, body);
+      });
     }
 
     return payloadResult

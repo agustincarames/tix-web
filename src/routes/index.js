@@ -2,6 +2,7 @@ import CoreLayout from '../layouts/CoreLayout/CoreLayout'
 import Landing from './Landing'
 import AboutRoute from './About'
 import HomeRoute from './Home';
+import RegisterRoute from './Register';
 
 export const createRoutes = (store) => ({
   path        : '/',
@@ -10,6 +11,7 @@ export const createRoutes = (store) => ({
   childRoutes : [
     AboutRoute(),
     HomeRoute(),
+    RegisterRoute(),
   ]
 });
 
