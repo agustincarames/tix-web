@@ -17,15 +17,11 @@ export const LocationList = (props) => (
   <div>
     <li className=''>
       <a id="toggler" class="toggler active">
-
-        <i className="icon-folder-open"></i>
-        <i className="icon-folder-close"></i>
-
-        {props.installation.name}
+        {props.active ? <i className="glyphicon glyphicon-folder-open" /> : <i className="glyphicon glyphicon-folder-close" />} {props.installation.name}
       </a>
     </li>
     <ul>
-      {renderProviders(props.installation.providers)}
+      { props.active && renderProviders(props.installation.providers) }
     </ul>
     <li className="divider"></li>
     <li >

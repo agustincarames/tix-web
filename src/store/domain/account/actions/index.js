@@ -4,6 +4,7 @@ export const LOGIN_USER = 'LOGIN_USER';
 export const FETCH_USER = 'FETCH_USER';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const REGISTER_USER = 'REGISTER_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 
 export function fetchCurrentUser() {
   return dispatch => {
@@ -28,6 +29,14 @@ export function registerUser(register) {
     dispatch({
       type: REGISTER_USER,
       payload: fetch('/register', { method: 'POST', body: register})
+    });
+  }
+}
+
+export function logoutUser() {
+  return dispatch => {
+    dispatch({
+      type: LOGOUT_USER
     });
   }
 }

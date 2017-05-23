@@ -4,21 +4,23 @@ import LocationList from './LocationList';
 
 class SidebarView extends Component {
 
-  renderInstallations (installations) {
-    return installations.map((installation) => <LocationList installation={installation} key={installation.id} />)
+  renderInstallations (list, active) {
+    if(!list) return [];
+    return list.map((installation) => <LocationList installation={installation} key={installation.id} active={active === installation.id} />)
   }
 
   render () {
     const {
       installations
     } = this.props;
+
     console.log(installations);
     return (
-      <div className="span3">
+      <div>
         <div className="well sidebar-nav">
           <ul className="nav nav-list">
             <li className="nav-header">Instalaciones</li>
-            {this.renderInstallations(installations)}
+            {this.renderInstallations(installations.list, installations.active)}
 
 
             <li className="divider"></li>

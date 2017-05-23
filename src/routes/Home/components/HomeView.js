@@ -2,9 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from '../../../store/domain/account/actions';
-import { fetchUserInstallation } from '../../../store/domain/installation/actions'
+import { fetchUserInstallation } from '../../../store/domain/installation/actions';
+import { fetchReports } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
-
+import { DashboardView }  from '../../../components/Dashboard';
 class HomeView extends Component {
 
   componentDidMount(){
@@ -18,14 +19,13 @@ class HomeView extends Component {
     } = this.props;
     return(
       <div className="container-fluid">
-        <div className="row-fluid">
-          <div className="span3">
+        <div className="row">
+          <div className="col-md-3">
             <SidebarView installations={installations} />
           </div>
 
-          <div className="span9">
-
-
+          <div className="col-md-9">
+            <DashboardView/>
           </div>
         </div>
 
@@ -42,7 +42,8 @@ const mapStateToProps = (store) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUserData: () => dispatch(fetchCurrentUser()),
-    loadInstallations: (userId) => dispatch(fetchUserInstallation(userId))
+    loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
+    loadReports: (userId, installationId) => dispatch(fetchReports(userId, installationId))
   }
 };
 
