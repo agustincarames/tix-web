@@ -6,7 +6,7 @@ export function fetchReports(userId, installationId) {
   return dispatch => {
     dispatch({
       type: FETCH_REPORTS,
-      payload: fetch(`/user/${userId}/installation/${installationId}/reports`)
+      payload: fetch(`/user/${userId}/reports`)
     });
   };
 }

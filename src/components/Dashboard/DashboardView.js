@@ -1,74 +1,63 @@
-var React = require('react'),
-  Highcharts = require('highcharts');
+import React, {Component} from 'react';
+import SelectDate from './TimeForm'
+import DashboardChart from '../Charts/DashboardChart';
 
-var Chart = React.createClass({
-    // When the DOM is ready, create the chart.
-    componentDidMount: function() {
-      // Extend Highcharts with modules
-      if (this.props.modules) {
-        this.props.modules.forEach(function(module) {
-          module(Highcharts);
-        });
+class Chart extends Component {
+
+  componentWillMount(){
+    this.fechas = [new Date().setMinutes(0),new Date().setMinutes(1),new Date().setMinutes(2),new Date().setMinutes(3),new Date().setMinutes(4),new Date().setMinutes(5),
+      new Date().setMinutes(6),new Date().setMinutes(7),new Date().setMinutes(8),new Date().setMinutes(9),new Date().setMinutes(10),new Date().setMinutes(11)];
+    this.data = [
+      {
+        data: [0.9, 0.5, 0.4, 0.2, 0.0, 0.0, 0.6, 0.5, 0.4, 0.1, 0.6, 0.4]
+      },
+      {
+        data: [0.8, 0.4, 0.3, 0.2, 0.1, 0.1, 0.66, 0.6, 0.6, 0.6, 0.6, 0.6]
+      },
+      {
+        data: [0.6, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.15, 0.5, 0.4]
+      },
+      {
+        data: [0.9, 0.5, 0.5, 0.2, 0.2, 0.2, 0.2, 0.52, 0.24, 0.2, 0.26, 0.24]
       }
-      // Set container which the chart should render to.
-      this.chart = new Highcharts[this.props.type || "Chart"](
-        this.props.container,
-        this.props.options
-      );
-    },
-    //Destroy chart before unmount.
-    componentWillUnmount: function() {
-      this.chart.destroy();
-    },
-    //Create the div which the chart will be rendered to.
-    render: function() {
-      return React.createElement('div', {
-        id: this.props.container
-      });
-    }
-  });
-
-
-// Create and render element
-export default React.createElement(Chart, {
-  container: 'chart',
-  options: {
-    chart: {
-      type: 'funnel',
-      marginRight: 100
-    },
-    title: {
-      text: 'React example',
-      x: -50
-    },
-    plotOptions: {
-      series: {
-        dataLabels: {
-          enabled: true,
-          format: '<b>{point.name}</b> ({point.y:,.0f})',
-          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
-          softConnector: true
-        },
-        neckWidth: '30%',
-        neckHeight: '25%'
-
-        //-- Other available options
-        // height: pixels or percent
-        // width: pixels or percent
-      }
-    },
-    legend: {
-      enabled: false
-    },
-    series: [{
-      name: 'Unique users',
-      data: [
-        ['Website visits', 15654],
-        ['Downloads', 4064],
-        ['Requested price list', 1987],
-        ['Invoice sent', 976],
-        ['Finalized', 846]
-      ]
-    }]
+    ]
   }
-});
+
+  submitDate(dates) {
+    console.log(dates);
+    this.data = [
+      {
+        data: [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
+      },
+      {
+        data: [0.8, 0.4, 0.3, 0.2, 0.1, 0.1, 0.66, 0.6, 0.6, 0.6, 0.6, 0.6]
+      },
+      {
+        data: [0.6, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.15, 0.5, 0.4]
+      },
+      {
+        data: [0.9, 0.5, 0.5, 0.2, 0.2, 0.2, 0.2, 0.52, 0.24, 0.2, 0.26, 0.24]
+      }
+    ]
+    this.forceUpdate();
+  };
+
+  render() {
+    return(
+      <div>
+        <SelectDate onSubmit={this.submitDate.bind(this)} />
+        <DashboardChart fechas={this.fechas} data={this.data} />
+        <div className="jumbotron" style={{ zIndex: "1", height: "53px", margin: "0px", padding: "0px"}}>
+          <div className="row" style={{marginTop: "10px", marginBottom:"20px"}}>
+            <div className="text-center">
+              <a className="btn btn-primary">General</a>
+              <a className="btn btn-primary">Upstream</a>
+              <a className="btn btn-primary">Downstream</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+export default Chart;

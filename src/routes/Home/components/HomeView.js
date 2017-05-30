@@ -5,27 +5,29 @@ import { fetchCurrentUser } from '../../../store/domain/account/actions';
 import { fetchUserInstallation } from '../../../store/domain/installation/actions';
 import { fetchReports } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
-import { DashboardView }  from '../../../components/Dashboard';
+import DashboardView  from '../../../components/Dashboard';
 class HomeView extends Component {
 
   componentDidMount(){
     this.props.loadUserData();
-    this.props.loadInstallations(this.props.user.id);
+    this.props.loadInstallations(this.props.user.id).then((res) => {this.props.loadReports(this.props.user.id)});
   }
 
   render() {
     const {
-      installations
+      installations,
+      loadReports
     } = this.props;
+
     return(
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-3">
-            <SidebarView installations={installations} />
+            <SidebarView installations={installations} loadReports={loadReports} />
           </div>
 
           <div className="col-md-9">
-            <DashboardView/>
+            <DashboardView />
           </div>
         </div>
 
@@ -43,7 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadUserData: () => dispatch(fetchCurrentUser()),
     loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
-    loadReports: (userId, installationId) => dispatch(fetchReports(userId, installationId))
+    loadReports: (userId) => dispatch(fetchReports(userId))
   }
 };
 

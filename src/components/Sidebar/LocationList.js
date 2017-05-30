@@ -1,5 +1,6 @@
 import React from 'react'
-import { IndexLink, Link } from 'react-router'
+import { IndexLink, Link } from 'react-router';
+import './Sidebar.scss';
 
 const ProviderList = (props) => (
     <li>
@@ -14,10 +15,10 @@ const renderProviders = (providers) => {
 }
 
 export const LocationList = (props) => (
-  <div>
-    <li className=''>
-      <a id="toggler" class="toggler active">
-        {props.active ? <i className="glyphicon glyphicon-folder-open" /> : <i className="glyphicon glyphicon-folder-close" />} {props.installation.name}
+  <div className="location">
+    <li className='active'>
+      <a id="toggler" class="toggler">
+        {props.active ? <i className="icon glyphicon glyphicon-folder-open" /> : <i className="icon glyphicon glyphicon-folder-close" />} {props.installation.name}
       </a>
     </li>
     <ul>
