@@ -20,7 +20,6 @@ class HomeView extends Component {
     } = this.props;
 
     return(
-      <div className="container-fluid">
         <div className="row">
           <div className="col-md-3">
             <SidebarView installations={installations} loadReports={loadReports} />
@@ -30,8 +29,6 @@ class HomeView extends Component {
             <DashboardView />
           </div>
         </div>
-
-      </div>
     )
   }
 }

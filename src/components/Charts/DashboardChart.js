@@ -10,11 +10,11 @@ class DashboardChart extends Component {
         marginBottom: 40
       },
       title: {
-        text: "chart",
+        text: `Porcentaje de utilizacion de ancho de banda en ${props ? props.isp : this.props.isp}`,
         x: -20 //center
       },
       subtitle: {
-        text: "subtitle",
+        text: `Grafico general para ${props ? props.email : this.props.email}`,
         x: -20
       },
       xAxis: {
