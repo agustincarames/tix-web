@@ -3,7 +3,7 @@ import { IndexLink, Link } from 'react-router';
 import './Sidebar.scss';
 
 const ProviderList = (props) => (
-    <li>
+    <li className="activeISP">
       <a> {props.provider.name}</a>
     </li>
 )
@@ -22,6 +22,9 @@ export const LocationList = (props) => (
       </a>
     </li>
     <ul>
+      <li>
+        <a>General</a>
+      </li>
       { props.active && renderProviders(props.installation.providers) }
     </ul>
     <li className="divider"></li>

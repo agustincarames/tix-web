@@ -21,14 +21,14 @@ class SidebarView extends Component {
             <li className="nav-header">Instalaciones</li>
             {this.renderInstallations(installations.list, installations.active)}
             <li className="divider"></li>
-            <li><a href="../installation/downloadapp"><i class="icon-plus-sign"></i>Nueva instalaci&oacute;n</a></li>
-            <li><a href="../installation/allinstallations"><i class="icon-pencil"></i>Editar instalaci&oacute;nes</a>
+            <li><a><i className="icon glyphicon glyphicon-plus-sign" />Nueva instalaci&oacute;n</a></li>
+            <li><a><i className="icon glyphicon glyphicon-pencil" />Editar instalaci&oacute;nes</a>
             </li>
-            <li class="className"></li>
-            <li><a href="../account/edit"><i class="icon-cog"></i>Mi cuenta</a></li>
-            <li><a href="#">Ayuda</a></li>
-            <li><a href="./userreport?nickname=${user.nickname}">Reporte de usuario</a></li>
-             -->            </ul>
+            <li className="className"></li>
+            <li><a><i className="icon glyphicon glyphicon-cog"></i>Mi cuenta</a></li>
+            <li><a>Ayuda</a></li>
+            <li><a>Reporte de usuario</a></li>
+          </ul>
         </div>
       </div>
 
