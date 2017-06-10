@@ -1,5 +1,5 @@
 import {
-  UNAUTHORIZED,
+  LOGOUT_USER,
 } from 'store/domain/account/actions';
 import R from 'ramda';
 
@@ -50,8 +50,8 @@ export default function promiseMiddleware(store) {
           type: FAILURE,
         });
 
-        if (res.status !== 200) {
-          store.dispatch({type: UNAUTHORIZED});
+        if (res.status == 401) {
+          store.dispatch({type: LOGOUT_USER});
         }
 
         throw mapResponseToPayload(res, body);
@@ -70,12 +70,15 @@ export default function promiseMiddleware(store) {
 
     return payloadResult
       .then((res) => {
-        return res.json().then((json) => {
-          if(res.status >= 200 && res.status < 300){
-            return handleSuccess(res, json);
-          }
-          return handleFailure(res, json);
-        });
+        if(res.ok) return res.json().then((json) => handleStatuses(res, json));
+        return handleStatuses(res, null);
       });
+
+    function handleStatuses(res, json) {
+      if(res.status >= 200 && res.status < 300){
+        return handleSuccess(res, json);
+      }
+      return handleFailure(res, json);
+    };
   };
 }

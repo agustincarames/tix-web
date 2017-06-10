@@ -9,7 +9,7 @@ const displayLogout = (user, logout) => {
     return (
       <ul className="nav navbar-right">
         <li>
-          <button onClick={ console.log("test") } >{`Cerrar sesion (${user.username})`}</button>
+          <a href="#" onClick={() => logout() } >{`Cerrar sesion (${user.username})`}</a>
         </li>
       </ul>
     )

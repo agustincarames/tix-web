@@ -6,11 +6,14 @@ import { fetchUserInstallation } from '../../../store/domain/installation/action
 import { fetchReports } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
 import DashboardView  from '../../../components/Dashboard';
+import R from 'ramda';
+
 class HomeView extends Component {
 
   componentDidMount(){
     this.props.loadUserData();
-    this.props.loadInstallations(this.props.user.id).then((res) => {this.props.loadReports(this.props.user.id)});
+    var id = R.path(['user', 'id'], this.props);
+    id && this.props.loadInstallations(this.props.user.id).then((res) => {this.props.loadReports(this.props.user.id)});
   }
 
   render() {

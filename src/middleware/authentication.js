@@ -1,5 +1,5 @@
 import {
-  UNAUTHORIZED,
+  LOGOUT_USER,
   loadFromLocalStorage
 } from 'store/domain/account/actions';
 import { push } from 'react-router-redux';
@@ -8,7 +8,6 @@ var firstRun = true;
 
 export default function authenticationMiddleware(store) {
   return next => action => {
-    console.log(action);
     const {type} = action;
 
     if(firstRun) {
@@ -19,7 +18,8 @@ export default function authenticationMiddleware(store) {
       }
     }
 
-    if (type === UNAUTHORIZED) {
+    if (type === LOGOUT_USER) {
+      localStorage.clear();
       store.dispatch(push('/'));
     }
 

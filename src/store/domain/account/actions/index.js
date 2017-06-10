@@ -42,6 +42,7 @@ export function logoutUser() {
     dispatch({
       type: LOGOUT_USER
     });
+    return dispatch({type: UNAUTHORIZED})
   }
 }
 
