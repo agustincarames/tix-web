@@ -2,14 +2,14 @@ import React from 'react'
 import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 import { connect } from 'react-redux';
+import { logoutUser } from '../../store/domain/account/actions';
 
-
-const displayLogout = (user) => {
+const displayLogout = (user, logout) => {
   if(user) {
     return (
       <ul className="nav navbar-right">
         <li>
-          <span>{`Cerrar sesion (${user.username})`}</span>
+          <button onClick={ console.log("test") } >{`Cerrar sesion (${user.username})`}</button>
         </li>
       </ul>
     )
@@ -27,7 +27,7 @@ export const Header = (props) => (
               <Link to='/about'>Sobre el proyecto</Link>
             </li>
           </ul>
-          {displayLogout(props.user)}
+          {displayLogout(props.user, props.logoutUser)}
         </div>
       </div>
     </div>
@@ -38,6 +38,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => dispatch(logoutUser())
 });
 
 export default connect(

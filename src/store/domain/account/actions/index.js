@@ -5,6 +5,7 @@ export const FETCH_USER = 'FETCH_USER';
 export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOCAL_STORAGE_LOAD = 'LOCAL_STORAGE_LOAD';
 
 export function fetchCurrentUser() {
   return dispatch => {
@@ -20,7 +21,10 @@ export function loginUser(login) {
     dispatch({
       type: LOGIN_USER,
       payload: fetch('/login', {method: 'POST', body: login})
-    }).then((response) => { console.log(response); return dispatch(push('/home'))});
+    }).then((response) => {
+      localStorage.setItem("user", JSON.stringify(response));
+      return dispatch(push('/home'));
+    });
   };
 }
 
@@ -37,6 +41,15 @@ export function logoutUser() {
   return dispatch => {
     dispatch({
       type: LOGOUT_USER
+    });
+  }
+}
+
+export function loadFromLocalStorage(user){
+  return dispatch => {
+    dispatch({
+      type: LOCAL_STORAGE_LOAD,
+      payload: user
     });
   }
 }

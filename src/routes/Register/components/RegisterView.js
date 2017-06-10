@@ -21,7 +21,6 @@ const mapStateToProps = () => ({ });
 
 const mapDispatchToProps = dispatch => ({
   submitRegister: (data) => {
-    console.log(data);
     dispatch(registerUser(data));
   },
 });

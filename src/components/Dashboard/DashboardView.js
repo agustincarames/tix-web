@@ -28,7 +28,6 @@ class Chart extends Component {
   }
 
   submitDate(dates) {
-    console.log(dates);
     this.data = [
       {
         data: [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]

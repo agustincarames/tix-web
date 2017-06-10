@@ -34,7 +34,7 @@ export default function promiseMiddleware(store) {
     // whether its a promise
     const payloadResult = (typeof payload === 'function') ? payload(token) : payload;
     // if the resulting payload is not a promise, move along.
-    if (!isPromise(payloadResult)) { console.log(";is not promise"); return next(action); }
+    if (!isPromise(payloadResult)) return next(action);
 
     // it is a promise, so we handle it.
     const SUCCESS = `${type}_FULFILLED`;
@@ -42,12 +42,7 @@ export default function promiseMiddleware(store) {
     const FAILURE = `${type}_REJECTED`;
     next({ ...rest, type: PENDING });
 
-    function checkStatus(res) {
-      return res
-    }
-
     function handleFailure(res, body) {
-      console.log(res);
         next({
           ...rest,
           payload: body,
@@ -63,7 +58,6 @@ export default function promiseMiddleware(store) {
     }
 
     function handleSuccess(res, body) {
-        console.log(res);
         next({
           ...rest,
           payload: body,
