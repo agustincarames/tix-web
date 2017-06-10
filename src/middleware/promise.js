@@ -46,8 +46,8 @@ export default function promiseMiddleware(store) {
       return res
     }
 
-    function handleFailure(res) {
-      return res.json().then((body) => {
+    function handleFailure(res, body) {
+      console.log(res);
         next({
           ...rest,
           payload: body,
@@ -60,12 +60,10 @@ export default function promiseMiddleware(store) {
         }
 
         throw mapResponseToPayload(res, body);
-      });
     }
 
-    function handleSuccess(res) {
-      return res.json().then((body) => {
-
+    function handleSuccess(res, body) {
+        console.log(res);
         next({
           ...rest,
           payload: body,
@@ -74,10 +72,16 @@ export default function promiseMiddleware(store) {
         });
 
         return mapResponseToPayload(res, body);
-      });
     }
 
     return payloadResult
-      .then(handleSuccess, handleFailure);
+      .then((res) => {
+        return res.json().then((json) => {
+          if(res.status >= 200 && res.status < 300){
+            return handleSuccess(res, json);
+          }
+          return handleFailure(res, json);
+        });
+      });
   };
 }
