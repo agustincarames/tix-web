@@ -14,23 +14,24 @@ const renderProviders = (providers, installationId) => {
   })
 }
 
+const renderFolders = (providers, id) => (
+  <ul>
+    <li>
+      <Link to={`/home/report/${id}/0`}>General</Link>
+    </li>
+    { renderProviders(providers, id) }
+  </ul>
+)
+
 export const LocationList = (props) => (
   <div className="location">
-    <li className='active'>
-      <a id="toggler" class="toggler">
-        {props.active ? <i className="icon glyphicon glyphicon-folder-open" /> : <i className="icon glyphicon glyphicon-folder-close" />} {props.installation.name}
+    <li className={ props.active && 'active'}>
+      <a onClick={() => props.setActiveInstallation(props.installation.id)} className="toggler">
+        {props.active ? <i className="icon glyphicon glyphicon-folder-open" /> : <i className="icon glyphicon glyphicon-folder-close" />}
+        <span className="sidebar-installation-text" >{props.installation.name}</span>
       </a>
     </li>
-    <ul>
-      <li>
-        <Link to={`/home/report/${props.installation.id}/0`}>General</Link>
-      </li>
-      { props.active && renderProviders(props.installation.providers, props.installation.id) }
-    </ul>
-    <li className="divider"></li>
-    <li >
-      <a> Set as default installation <i class="icon-bookmark"></i> </a>
-    </li>
+    {props.active && renderFolders(props.installation.providers, props.installation.id)}
   </div>
 );
 

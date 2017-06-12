@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from '../../../store/domain/account/actions';
-import { fetchUserInstallation } from '../../../store/domain/installation/actions';
+import { fetchUserInstallation, setActiveInstallation } from '../../../store/domain/installation/actions';
 import { fetchReports } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
 import { push } from 'react-router-redux';
@@ -18,8 +18,6 @@ class HomeView extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(this.state);
-    console.log(nextProps.user.id);
     if(this.state.id != nextProps.user.id) {
       this.state.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
@@ -34,13 +32,14 @@ class HomeView extends Component {
       installations,
       loadReports,
       user,
-      children
+      children,
+      setActiveInstallation
     } = this.props;
 
     return(
         <div className="row">
           <div className="col-md-3">
-            <SidebarView installations={installations} loadReports={loadReports} user={user} />
+            <SidebarView installations={installations} loadReports={loadReports} user={user} setActiveInstallation={setActiveInstallation} />
           </div>
           <div className="col-md-9">
             {children}
@@ -60,7 +59,8 @@ const mapDispatchToProps = (dispatch) => {
     loadUserData: () => dispatch(fetchCurrentUser()),
     loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
     loadReports: (userId) => dispatch(fetchReports(userId)),
-    redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`))
+    redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
+    setActiveInstallation: (installationId) => dispatch(setActiveInstallation(installationId))
   }
 };
 

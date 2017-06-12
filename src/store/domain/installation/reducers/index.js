@@ -1,6 +1,6 @@
 import typeToReducer from 'type-to-reducer';
 
-import { FETCH_USER_INSTALLATIONS } from '../actions';
+import { FETCH_USER_INSTALLATIONS, SET_ACTIVE_INSTALLATION } from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
 export default typeToReducer({
@@ -12,6 +12,12 @@ export default typeToReducer({
         active: action.payload.length > 0 ? action.payload[0].id : null
       }
     }
+  },
+  [SET_ACTIVE_INSTALLATION]: (state, action) => {
+    return {
+      ...state,
+      active: action.id
+    };
   },
   [LOGOUT_USER]: (state, action) => {
     return {};
