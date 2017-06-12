@@ -1,7 +1,7 @@
-import DashboardView from './components/DashboardView'
+import ViewAccount from './components/ViewAccount'
 
 // Sync route definition
 export default () => ({
   path: 'account',
-  component: DashboardView
+  component: ViewAccount
 })

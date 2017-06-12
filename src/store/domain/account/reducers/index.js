@@ -1,6 +1,6 @@
 import typeToReducer from 'type-to-reducer';
 
-import { LOGIN_USER , FETCH_USER, LOGOUT_USER, LOCAL_STORAGE_LOAD, FETCH_ALL_USERS } from '../actions';
+import { LOGIN_USER , FETCH_USER, LOGOUT_USER, LOCAL_STORAGE_LOAD, FETCH_ALL_USERS, IMPERSONATE_USER, STOP_IMPERSONATION } from '../actions';
 
 export default typeToReducer({
   [LOGIN_USER]: {
@@ -41,5 +41,27 @@ export default typeToReducer({
         users: action.payload
       }
     }
+  },
+  [IMPERSONATE_USER]: {
+    FULFILLED: (state, action) => {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.payload,
+          isImpersonating: true
+        }
+      }
+    }
+  },
+  [STOP_IMPERSONATION]: (state, action) => {
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        isImpersonating: false
+      }
+    }
+
   }
 }, {});

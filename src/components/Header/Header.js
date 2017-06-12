@@ -2,14 +2,16 @@ import React from 'react'
 import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 import { connect } from 'react-redux';
-import { logoutUser } from '../../store/domain/account/actions';
+import { logoutUser, stopImpersonation } from '../../store/domain/account/actions';
 
-const displayLogout = (user, logout) => {
+const displayLogout = (user, logout, stopImpersonation) => {
   if(user) {
+    var action = user.isImpersonating ? stopImpersonation : logout;
+    var actionString = user.isImpersonating ? 'Terminar impersonalizacion' : 'Cerrar sesion'
     return (
       <ul className="nav navbar-right">
         <li>
-          <a href="#" onClick={() => logout() } >{`Cerrar sesion (${user.username})`}</a>
+          <a href="#" onClick={() => action() } >{`${actionString} (${user.username})`}</a>
         </li>
       </ul>
     )
@@ -27,7 +29,7 @@ export const Header = (props) => (
               <Link to='/about'>Sobre el proyecto</Link>
             </li>
           </ul>
-          {displayLogout(props.user, props.logoutUser)}
+          {displayLogout(props.user, props.logoutUser, props.stopImpersonation)}
         </div>
       </div>
     </div>
@@ -38,7 +40,8 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  logoutUser: () => dispatch(logoutUser())
+  logoutUser: () => dispatch(logoutUser()),
+  stopImpersonation: () => dispatch(stopImpersonation())
 });
 
 export default connect(

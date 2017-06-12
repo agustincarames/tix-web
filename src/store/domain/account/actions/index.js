@@ -7,6 +7,8 @@ export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOCAL_STORAGE_LOAD = 'LOCAL_STORAGE_LOAD';
 export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';
+export const IMPERSONATE_USER = "IMPERSONATE_USER";
+export const STOP_IMPERSONATION = "STOP_IMPERSONATING";
 
 export function fetchCurrentUser() {
   return dispatch => {
@@ -62,5 +64,26 @@ export function fetchAllUsers(){
       type: FETCH_ALL_USERS,
       payload: fetch('/user/all')
     });
+  }
+}
+
+export function impersonateUser(id){
+  console.log(id);
+  return dispatch => {
+    dispatch({
+      type: IMPERSONATE_USER,
+      payload: fetch(`/user/${id}`)
+    }).then(() => {
+      return dispatch(push('/home'));
+    });
+  }
+}
+
+export function stopImpersonation(){
+  return dispatch => {
+    dispatch({
+      type: STOP_IMPERSONATION
+    });
+    return dispatch(fetchCurrentUser()).then(() => dispatch(push('/home')))
   }
 }

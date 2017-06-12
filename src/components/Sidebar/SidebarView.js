@@ -28,11 +28,10 @@ class SidebarView extends Component {
             <li className="nav-header">Instalaciones</li>
             {this.renderInstallations(installations.list, installations.active)}
             <li className="divider"></li>
-            <li><a><i className="icon glyphicon glyphicon-plus-sign" />Nueva instalaci&oacute;n</a></li>
             <li><Link to="/home/installation/view"><i className="icon glyphicon glyphicon-pencil" />{'Ver Instalaciones'}</Link>
             </li>
-            <li className="className"></li>
-            <li><a><i className="icon glyphicon glyphicon-cog"></i>Mi cuenta</a></li>
+            <li className="divider"></li>
+            <li><Link to="/home/account"><i className="icon glyphicon glyphicon-cog"></i>Mi cuenta</Link></li>
             <li><a>Ayuda</a></li>
             <li><a>Reporte de usuario</a></li>
             {this.renderAdminLink(user)}

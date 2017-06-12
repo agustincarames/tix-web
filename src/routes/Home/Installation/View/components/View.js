@@ -20,9 +20,9 @@ class ViewInstallation extends Component {
     return installations.map((installation) => (
       <tr>
         <td>{installation.name}</td>
+        <td>{installation.publickey}</td>
         <td>
           <a className="btn btn-info" href="#">Editar</a>
-          <a href="#" role="button" className="btn btn-danger publicKeyDialog">Ver Clave P&uacute;blica</a>
           <a href="#" role="button" className="btn btn-danger deleteInstallationDialog">Eliminar</a>
         </td>
       </tr>
@@ -40,6 +40,7 @@ class ViewInstallation extends Component {
                 <thead>
                 <tr>
                   <th>Nombre</th>
+                  <th>Clave Publica</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>

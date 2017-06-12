@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import R from 'ramda';
-import { fetchAllUsers } from 'store/domain/account/actions';
+import { fetchAllUsers, impersonateUser } from 'store/domain/account/actions';
 
 
 class AdminView extends Component {
@@ -13,13 +13,14 @@ class AdminView extends Component {
     )
   }
 
-  renderUsers(users){
+  renderUsers(users, impersonateUser){
     return users.map((user) => {
       return (
         <tr key={user.id}>
           <td>{user.id}</td>
           <td>{user.username}</td>
-          <td><a className="btn btn-info" href="#">Estad&iacute;sticas</a></td>
+          <td>{user.role}</td>
+          <td><a onClick={() => impersonateUser(user.id)} className="btn btn-info" href="#">Impersonar</a></td>
         </tr>
       )
     })
@@ -32,7 +33,8 @@ class AdminView extends Component {
 
   render() {
     const {
-      users
+      users,
+      impersonateUser
     } = this.props;
 
     return(
@@ -57,11 +59,12 @@ class AdminView extends Component {
                 <tr>
                   <th>#</th>
                   <th>Nickname</th>
+                  <th>Rol</th>
                   <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                  {this.renderUsers(users)}
+                  {this.renderUsers(users, impersonateUser)}
                 </tbody>
               </table>
         </section>
@@ -76,7 +79,8 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllUsers: () => dispatch(fetchAllUsers())
+    fetchAllUsers: () => dispatch(fetchAllUsers()),
+    impersonateUser: (id) => dispatch(impersonateUser(id))
   }
 };
 
