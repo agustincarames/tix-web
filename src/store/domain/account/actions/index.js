@@ -6,6 +6,7 @@ export const UNAUTHORIZED = 'UNAUTHORIZED';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOCAL_STORAGE_LOAD = 'LOCAL_STORAGE_LOAD';
+export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';
 
 export function fetchCurrentUser() {
   return dispatch => {
@@ -51,6 +52,15 @@ export function loadFromLocalStorage(user){
     dispatch({
       type: LOCAL_STORAGE_LOAD,
       payload: user
+    });
+  }
+}
+
+export function fetchAllUsers(){
+  return dispatch => {
+    dispatch({
+      type: FETCH_ALL_USERS,
+      payload: fetch('/user/all')
     });
   }
 }

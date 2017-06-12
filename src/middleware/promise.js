@@ -1,6 +1,10 @@
 import {
   LOGOUT_USER,
 } from 'store/domain/account/actions';
+import {
+  addAlert,
+} from 'store/domain/alerts/actions';
+
 import R from 'ramda';
 
 function isPromise(value) {
@@ -43,6 +47,7 @@ export default function promiseMiddleware(store) {
     next({ ...rest, type: PENDING });
 
     function handleFailure(res, body) {
+      console.log(body)
         next({
           ...rest,
           payload: body,
@@ -52,6 +57,10 @@ export default function promiseMiddleware(store) {
 
         if (res.status == 401) {
           store.dispatch({type: LOGOUT_USER});
+        }
+
+        if(body && body.reason){
+          store.dispatch(addAlert(body.reason));
         }
 
         throw mapResponseToPayload(res, body);
@@ -70,12 +79,13 @@ export default function promiseMiddleware(store) {
 
     return payloadResult
       .then((res) => {
-        if(res.ok) return res.json().then((json) => handleStatuses(res, json));
+        console.log(res);
+        if(res.body) return res.json().then((json) => handleStatuses(res, json));
         return handleStatuses(res, null);
       });
 
     function handleStatuses(res, json) {
-      if(res.status >= 200 && res.status < 300){
+      if(res.ok){
         return handleSuccess(res, json);
       }
       return handleFailure(res, json);

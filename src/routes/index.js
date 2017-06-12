@@ -4,6 +4,7 @@ import AboutRoute from './About'
 import HomeRoute from './Home';
 import RegisterRoute from './Register';
 import InstallationRoute from './Installation';
+import AdminRoute from './Admin';
 
 export const createRoutes = (store) => ({
   path        : '/',
@@ -14,6 +15,7 @@ export const createRoutes = (store) => ({
     HomeRoute(),
     RegisterRoute(),
     InstallationRoute(),
+    AdminRoute(),
   ]
 });
 

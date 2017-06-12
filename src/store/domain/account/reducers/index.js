@@ -1,6 +1,6 @@
 import typeToReducer from 'type-to-reducer';
 
-import { LOGIN_USER , FETCH_USER, LOGOUT_USER, LOCAL_STORAGE_LOAD } from '../actions';
+import { LOGIN_USER , FETCH_USER, LOGOUT_USER, LOCAL_STORAGE_LOAD, FETCH_ALL_USERS } from '../actions';
 
 export default typeToReducer({
   [LOGIN_USER]: {
@@ -33,5 +33,13 @@ export default typeToReducer({
   },
   [LOGOUT_USER]: (state, action) => {
     return {};
+  },
+  [FETCH_ALL_USERS]: {
+    FULFILLED: (state, action) => {
+      return {
+        ...state,
+        users: action.payload
+      }
+    }
   }
 }, {});
