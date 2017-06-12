@@ -9,7 +9,7 @@ export default typeToReducer({
       return {
         ...state,
         list: action.payload,
-        active: action.payload[0].id
+        active: action.payload.length > 0 ? action.payload[0].id : null
       }
     }
   },

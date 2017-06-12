@@ -13,12 +13,17 @@ class HomeView extends Component {
   componentDidMount(){
     this.props.loadUserData();
     var id = R.path(['user', 'id'], this.props);
-    id && this.props.loadInstallations(this.props.user.id).then((res) => {this.props.loadReports(this.props.user.id)});
+    this.setState({ id: id });
+    id && this.props.loadInstallations(this.props.user.id);
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    if(nextProps.location.pathname == '/home' && nextProps.installations != null) {
+    console.log(this.state);
+    console.log(nextProps.user.id);
+    if(this.state.id != nextProps.user.id) {
+      this.state.id = nextProps.user.id;
+      nextProps.loadInstallations(nextProps.user.id);
+    } else if(nextProps.location.pathname == '/home' && nextProps.installations != null) {
       nextProps.redirectToReport(1,0);
     }
 
