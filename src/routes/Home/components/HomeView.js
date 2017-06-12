@@ -5,7 +5,7 @@ import { fetchCurrentUser } from '../../../store/domain/account/actions';
 import { fetchUserInstallation } from '../../../store/domain/installation/actions';
 import { fetchReports } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
-import DashboardView  from '../../../components/Dashboard';
+import { push } from 'react-router-redux';
 import R from 'ramda';
 
 class HomeView extends Component {
@@ -16,20 +16,29 @@ class HomeView extends Component {
     id && this.props.loadInstallations(this.props.user.id).then((res) => {this.props.loadReports(this.props.user.id)});
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+    if(nextProps.location.pathname == '/home' && nextProps.installations != null) {
+      nextProps.redirectToReport(1,0);
+    }
+
+  }
+
   render() {
     const {
       installations,
-      loadReports
+      loadReports,
+      user,
+      children
     } = this.props;
 
     return(
         <div className="row">
           <div className="col-md-3">
-            <SidebarView installations={installations} loadReports={loadReports} />
+            <SidebarView installations={installations} loadReports={loadReports} user={user} />
           </div>
-
           <div className="col-md-9">
-            <DashboardView />
+            {children}
           </div>
         </div>
     )
@@ -45,7 +54,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadUserData: () => dispatch(fetchCurrentUser()),
     loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
-    loadReports: (userId) => dispatch(fetchReports(userId))
+    loadReports: (userId) => dispatch(fetchReports(userId)),
+    redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`))
   }
 };
 

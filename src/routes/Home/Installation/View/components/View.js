@@ -7,7 +7,6 @@ import R from 'ramda';
 class ViewInstallation extends Component {
 
   componentWillMount(){
-    this.props.loadInstallations(this.props.user.id);
   }
 
   renderNoInstallations(){
@@ -31,7 +30,6 @@ class ViewInstallation extends Component {
   }
 
   render() {
-
     return(
       <div className="hero-unit">
         <section id="tables">
@@ -50,8 +48,6 @@ class ViewInstallation extends Component {
                 </tbody>
               </table>
         </section>
-        <a className="btn btn-primary" href="../user/dashboard?nickname=${user.nickname}&graphtype=GENERAL_GRAPH">Volver</a>
-
       </div>
     )
   }

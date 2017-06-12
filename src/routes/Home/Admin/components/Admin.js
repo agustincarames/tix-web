@@ -16,7 +16,7 @@ class AdminView extends Component {
   renderUsers(users){
     return users.map((user) => {
       return (
-        <tr>
+        <tr key={user.id}>
           <td>{user.id}</td>
           <td>{user.username}</td>
           <td><a className="btn btn-info" href="#">Estad&iacute;sticas</a></td>

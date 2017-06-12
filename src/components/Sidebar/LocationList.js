@@ -4,13 +4,13 @@ import './Sidebar.scss';
 
 const ProviderList = (props) => (
     <li className="activeISP">
-      <a> {props.provider.name}</a>
+      <Link to={`/home/report/${props.installationId}/${props.provider.id}`}> {props.provider.name}</Link>
     </li>
 )
 
-const renderProviders = (providers) => {
+const renderProviders = (providers, installationId) => {
   return providers.map((provider) => {
-    return <ProviderList provider={provider} key={'provider'+provider.id} />
+    return <ProviderList provider={provider} installationId={installationId} key={'provider'+provider.id} />
   })
 }
 
@@ -23,9 +23,9 @@ export const LocationList = (props) => (
     </li>
     <ul>
       <li>
-        <a>General</a>
+        <Link to={`/home/report/${props.installation.id}/0`}>General</Link>
       </li>
-      { props.active && renderProviders(props.installation.providers) }
+      { props.active && renderProviders(props.installation.providers, props.installation.id) }
     </ul>
     <li className="divider"></li>
     <li >

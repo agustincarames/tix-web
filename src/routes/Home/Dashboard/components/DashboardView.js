@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import SelectDate from './TimeForm'
-import DashboardChart from '../Charts/DashboardChart';
+import DashboardChart from 'components/Charts/DashboardChart';
+import { connect } from 'react-redux';
 
-class Chart extends Component {
+
+class DashboardView extends Component {
 
   componentWillMount(){
     this.fechas = [new Date().setMinutes(0),new Date().setMinutes(1),new Date().setMinutes(2),new Date().setMinutes(3),new Date().setMinutes(4),new Date().setMinutes(5),
@@ -63,4 +65,17 @@ class Chart extends Component {
     )
   }
 }
-export default Chart;
+
+const mapStateToProps = (store) => ({
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashboardView);
+
