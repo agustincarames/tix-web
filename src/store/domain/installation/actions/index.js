@@ -12,13 +12,16 @@ export function fetchUserInstallation(userId) {
   };
 }
 
-export function setActiveInstallation(installationId) {
+export function setActiveInstallation(installationId, locationId) {
+  locationId = locationId ? locationId : 0;
+  console.log(locationId);
   return dispatch => {
     dispatch({
       type: SET_ACTIVE_INSTALLATION,
-      id: installationId
+      installationId: installationId,
+      locationId: locationId
     });
-    dispatch(push(`/home/report/${installationId}/0`))
+    dispatch(push(`/home/report/${installationId}/${locationId}`))
   };
 }
 setActiveInstallation

@@ -9,14 +9,16 @@ export default typeToReducer({
       return {
         ...state,
         list: action.payload,
-        active: action.payload.length > 0 ? action.payload[0].id : null
+        activeInstallation: action.payload.length > 0 ? action.payload[0].id : null,
+        activeLocation: 0
       }
     }
   },
   [SET_ACTIVE_INSTALLATION]: (state, action) => {
     return {
       ...state,
-      active: action.id
+      activeInstallation: action.installationId,
+      activeLocation: action.locationId
     };
   },
   [LOGOUT_USER]: (state, action) => {

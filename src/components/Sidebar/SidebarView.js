@@ -5,9 +5,17 @@ import './Sidebar.scss';
 
 class SidebarView extends Component {
 
-  renderInstallations (list, active, setActiveInstallation) {
+  renderInstallations (list, activeInstallation, activeLocation, setActiveInstallation) {
     if(!list) return [];
-    return list.map((installation) => <LocationList installation={installation} key={installation.id} active={active === installation.id} setActiveInstallation={setActiveInstallation} />)
+    return list.map((installation) =>
+      <LocationList
+        installation={installation}
+        key={installation.id}
+        active={activeInstallation === installation.id}
+        activeLocation={activeLocation}
+        setActiveInstallation={setActiveInstallation}
+      />
+    )
   }
 
   renderAdminLink(user){
@@ -27,9 +35,9 @@ class SidebarView extends Component {
         <div className="well sidebar-nav">
           <ul className="nav nav-list">
             <li className="nav-header">Instalaciones</li>
-            {this.renderInstallations(installations.list, installations.active, setActiveInstallation)}
+            {this.renderInstallations(installations.list, installations.activeInstallation, installations.activeLocation, setActiveInstallation)}
             <li className="divider"></li>
-            <li ><a> Set as default installation <i class="glyphicon glyphicon-bookmark"></i> </a></li>
+            <li ><a> Set as default installation <i className="glyphicon glyphicon-bookmark"></i> </a></li>
             <li className="divider"></li>
             <li><Link to="/home/installation/view"><i className="icon glyphicon glyphicon-pencil" />{'Ver Instalaciones'}</Link>
             </li>

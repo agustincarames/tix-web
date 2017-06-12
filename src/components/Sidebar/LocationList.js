@@ -3,23 +3,31 @@ import { IndexLink, Link } from 'react-router';
 import './Sidebar.scss';
 
 const ProviderList = (props) => (
-    <li className="activeISP">
-      <Link to={`/home/report/${props.installationId}/${props.provider.id}`}> {props.provider.name}</Link>
+    <li className={props.activeLocation == props.provider.id ? "activeISP" : ""}>
+      <a onClick={() => props.setActiveInstallation(props.installationId, props.provider.id )}> {props.provider.name}</a>
     </li>
 )
 
-const renderProviders = (providers, installationId) => {
+const renderProviders = (providers, installationId, activeLocation, setActiveInstallation) => {
   return providers.map((provider) => {
-    return <ProviderList provider={provider} installationId={installationId} key={'provider'+provider.id} />
+    return(
+      <ProviderList
+        provider={provider}
+        installationId={installationId}
+        key={'provider'+provider.id}
+        activeLocation={activeLocation}
+        setActiveInstallation={setActiveInstallation}
+      />
+    )
   })
 }
 
-const renderFolders = (providers, id) => (
+const renderFolders = (providers, id, activeLocation, setActiveInstallation) => (
   <ul>
-    <li>
-      <Link to={`/home/report/${id}/0`}>General</Link>
+    <li className={activeLocation == 0 ? "activeISP" : ""} >
+      <a >General</a>
     </li>
-    { renderProviders(providers, id) }
+    { renderProviders(providers, id, activeLocation, setActiveInstallation) }
   </ul>
 )
 
@@ -31,7 +39,7 @@ export const LocationList = (props) => (
         <span className="sidebar-installation-text" >{props.installation.name}</span>
       </a>
     </li>
-    {props.active && renderFolders(props.installation.providers, props.installation.id)}
+    {props.active && renderFolders(props.installation.providers, props.installation.id, props.activeLocation, props.setActiveInstallation)}
   </div>
 );
 

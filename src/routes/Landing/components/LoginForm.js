@@ -11,13 +11,13 @@ class LoginForm extends Component {
         <div className="form-horizontal well">
           <form onSubmit={handleSubmit}>
             <div className="control-group">
-              <label className="control-label" for="nickname">Email</label>
+              <label className="control-label" htmlFor="nickname">Email</label>
               <div className="controls">
                 <Field type="text" component="input" name="username" />
               </div>
             </div>
             <div className="control-group">
-              <label className="control-label" for="password">{ `Contraseña` }</label>
+              <label className="control-label" htmlFor="password">{ `Contraseña` }</label>
               <div className="controls">
                 <Field type="password" component="input" name="password" />
                 <br />

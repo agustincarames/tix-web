@@ -16,9 +16,8 @@ class ViewInstallation extends Component {
   }
 
   renderInstallations(installations){
-    console.log(installations)
     return installations.map((installation) => (
-      <tr>
+      <tr key={installation.id}>
         <td>{installation.name}</td>
         <td>{installation.publickey}</td>
         <td>
