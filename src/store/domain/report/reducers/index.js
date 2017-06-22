@@ -48,8 +48,7 @@ export default typeToReducer({
         report[measure.provider_id].dates.push(measure.timestamp);
       });
       providerList.forEach((providerId) => {
-        console.log('providerid');
-        console.log(report[providerId].upUsage[Math.round(report[providerId].upUsage.length/2)]);
+
         report[providerId].upUsageMedian = report[providerId].upUsage[Math.round(report[providerId].upUsage.length/2)];
         report[providerId].downUsageMedian = report[providerId].downUsage[Math.round(report[providerId].downUsage.length/2)];
         report[providerId].upQualityMedian = report[providerId].upQuality[Math.round(report[providerId].upQuality.length/2)];

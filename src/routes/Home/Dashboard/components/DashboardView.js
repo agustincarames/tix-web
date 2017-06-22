@@ -43,6 +43,47 @@ class DashboardView extends Component {
     ]
   }
 
+  setUpstreamData(reports){
+    this.data = [
+      {
+        data: reports.upUsage,
+        name: 'Utilizacion Up',
+      },
+      {
+        data: reports.upQuality,
+        name: 'Calidad Up',
+      }
+    ]
+  }
+
+  setDownstreamData(reports){
+    this.data = [
+      {
+        data: reports.downUsage,
+        name: 'Utilizacion Down',
+      },
+      {
+        data: reports.downQuality,
+        name: 'Calidad Down',
+      }
+    ]
+  }
+
+  selectGeneral(){
+    this.setData(this.props.reports);
+    this.forceUpdate();
+  }
+
+  selectUpstream(){
+    this.setUpstreamData(this.props.reports);
+    this.forceUpdate();
+  }
+
+  selectDownstream(){
+    this.setDownstreamData(this.props.reports);
+    this.forceUpdate();
+  }
+
   render() {
     return(
       <div>
@@ -51,9 +92,9 @@ class DashboardView extends Component {
         <div className="jumbotron jumbotron-display">
           <div className="row">
             <div className="text-center">
-              <a className="btn btn-primary">General</a>
-              <a className="btn btn-primary">Upstream</a>
-              <a className="btn btn-primary">Downstream</a>
+              <a className="btn btn-primary" onClick={this.selectGeneral.bind(this)}>General</a>
+              <a className="btn btn-primary" onClick={this.selectUpstream.bind(this)}>Upstream</a>
+              <a className="btn btn-primary" onClick={this.selectDownstream.bind(this)}>Downstream</a>
             </div>
           </div>
         </div>
