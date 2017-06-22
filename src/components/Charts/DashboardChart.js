@@ -5,6 +5,8 @@ import moment from 'moment';
 class DashboardChart extends Component {
 
   buildConfig(props){
+    var fechasLength = props && props.fechas? props.fechas.length : 0;
+    console.log(fechasLength);
     return {
       chart: {
         marginRight: 130,
@@ -19,7 +21,6 @@ class DashboardChart extends Component {
         x: -20
       },
       xAxis: {
-        max: 50,
         type: 'datetime',
         //plotBands: redmarker,
         categories: props ? props.fechas : this.props.fechas,
@@ -34,8 +35,8 @@ class DashboardChart extends Component {
             return `${date.date()}/${date.month()+1} <br> ${date.hour()}:${date.minute()}`;
           },
         },
-        min: 0,
-        max: 50,
+        min: fechasLength < 50 ? 0 : fechasLength - 50,
+        max: fechasLength,
       },
       yAxis: {
         title: {

@@ -3,6 +3,7 @@ import DashboardView from './Dashboard/index';
 import AdminView from './Admin/index';
 import InstallationView from './Installation/index';
 import AccountView from './Account/index';
+import UserReportView from './UserReport/index';
 
 // Sync route definition
 export default () => ({
@@ -12,6 +13,7 @@ export default () => ({
     DashboardView(),
     AdminView(),
     InstallationView(),
-    AccountView()
+    AccountView(),
+    UserReportView()
   ]
 })
