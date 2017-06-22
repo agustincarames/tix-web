@@ -2,55 +2,51 @@ import React, {Component} from 'react';
 import SelectDate from './TimeForm'
 import DashboardChart from 'components/Charts/DashboardChart';
 import { connect } from 'react-redux';
-
+import { fetchReports } from 'store/domain/report/actions';
+import moment from 'moment';
 
 class DashboardView extends Component {
 
   componentWillMount(){
-    this.fechas = [new Date().setMinutes(0),new Date().setMinutes(1),new Date().setMinutes(2),new Date().setMinutes(3),new Date().setMinutes(4),new Date().setMinutes(5),
-      new Date().setMinutes(6),new Date().setMinutes(7),new Date().setMinutes(8),new Date().setMinutes(9),new Date().setMinutes(10),new Date().setMinutes(11)];
+    const {
+      user,
+      routeParams
+    } = this.props;
+    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.reports){
+      this.setData(nextProps.reports);
+    }
+  }
+
+  setData(reports){
+    this.fechas = reports.dates;
     this.data = [
       {
-        data: [0.9, 0.5, 0.4, 0.2, 0.0, 0.0, 0.6, 0.5, 0.4, 0.1, 0.6, 0.4],
+        data: reports.upUsage,
         name: 'Utilizacion Up',
       },
       {
-        data: [0.8, 0.4, 0.3, 0.2, 0.1, 0.1, 0.66, 0.6, 0.6, 0.6, 0.6, 0.6],
+        data: reports.downUsage,
         name: 'Utilizacion Down',
       },
       {
-        data: [0.6, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.15, 0.5, 0.4],
+        data: reports.upQuality,
         name: 'Calidad Up',
       },
       {
-        data: [0.9, 0.5, 0.5, 0.2, 0.2, 0.2, 0.2, 0.52, 0.24, 0.2, 0.26, 0.24],
+        data: reports.downQuality,
         name: 'Calidad Down',
       }
     ]
   }
 
-  submitDate(dates) {
-    this.data = [
-      {
-        data: [0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8]
-      },
-      {
-        data: [0.8, 0.4, 0.3, 0.2, 0.1, 0.1, 0.66, 0.6, 0.6, 0.6, 0.6, 0.6]
-      },
-      {
-        data: [0.6, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.15, 0.5, 0.4]
-      },
-      {
-        data: [0.9, 0.5, 0.5, 0.2, 0.2, 0.2, 0.2, 0.52, 0.24, 0.2, 0.26, 0.24]
-      }
-    ]
-    this.forceUpdate();
-  };
-
   render() {
     return(
       <div>
-        <SelectDate onSubmit={this.submitDate.bind(this)} />
+        <SelectDate onSubmit={() => {console.log('click')}} />
         <DashboardChart isp="General" email="matiasdomingues@gmail.com" fechas={this.fechas} data={this.data} />
         <div className="jumbotron jumbotron-display">
           <div className="row">
@@ -66,11 +62,16 @@ class DashboardView extends Component {
   }
 }
 
-const mapStateToProps = (store) => ({
-});
+const mapStateToProps = (store, state) => {
+  return {
+    user: store.account.user,
+    reports: store.reports
+  }
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchReports: (userId, installationId, providerId, startDate, endDate, ) => dispatch(fetchReports(userId, installationId, providerId, startDate, endDate))
   }
 };
 

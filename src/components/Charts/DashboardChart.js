@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 const ReactHighcharts = require('react-highcharts'); // Expects that Highcharts was loaded in the code.
+import moment from 'moment';
 
 class DashboardChart extends Component {
 
@@ -29,12 +30,12 @@ class DashboardChart extends Component {
             if(this.value < 0){
               return "";
             }
-            const date = new Date(this.value);
-            return `${date.getDay()}/${date.getMonth()} ${date.getHours()}:${date.getMinutes()}`;
+            const date = moment(this.value);
+            return `${date.date()}/${date.month()+1} <br> ${date.hour()}:${date.minute()}`;
           },
         },
-        min: -38,
-        max: 12,
+        min: 0,
+        max: 50,
       },
       yAxis: {
         title: {

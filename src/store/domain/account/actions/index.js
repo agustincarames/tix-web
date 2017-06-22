@@ -68,7 +68,6 @@ export function fetchAllUsers(){
 }
 
 export function impersonateUser(id){
-  console.log(id);
   return dispatch => {
     dispatch({
       type: IMPERSONATE_USER,

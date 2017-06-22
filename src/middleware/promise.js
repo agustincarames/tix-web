@@ -47,7 +47,6 @@ export default function promiseMiddleware(store) {
     next({ ...rest, type: PENDING });
 
     function handleFailure(res, body) {
-      console.log(body)
         next({
           ...rest,
           payload: body,
@@ -79,7 +78,6 @@ export default function promiseMiddleware(store) {
 
     return payloadResult
       .then((res) => {
-        console.log(res);
         if(res.body) return res.json().then((json) => handleStatuses(res, json));
         return handleStatuses(res, null);
       });

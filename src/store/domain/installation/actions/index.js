@@ -14,7 +14,6 @@ export function fetchUserInstallation(userId) {
 
 export function setActiveInstallation(installationId, locationId) {
   locationId = locationId ? locationId : 0;
-  console.log(locationId);
   return dispatch => {
     dispatch({
       type: SET_ACTIVE_INSTALLATION,

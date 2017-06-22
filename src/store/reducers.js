@@ -5,6 +5,7 @@ import { routerReducer } from 'react-router-redux';
 import accountReducer from './domain/account/reducers';
 import installationReducer from './domain/installation/reducers';
 import alertReducer from './domain/alerts/reducers';
+import reportReducer from './domain/report/reducers';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -14,6 +15,7 @@ export const makeRootReducer = (asyncReducers) => {
     account: accountReducer,
     installations: installationReducer,
     alerts: alertReducer,
+    reports: reportReducer,
     ...asyncReducers
   })
 }
