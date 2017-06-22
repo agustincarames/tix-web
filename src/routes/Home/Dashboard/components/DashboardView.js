@@ -84,10 +84,19 @@ class DashboardView extends Component {
     this.forceUpdate();
   }
 
+  selectDates(dates){
+    const {
+      user,
+      routeParams
+    } = this.props;
+    console.log(dates);
+    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, dates.startDate, dates.endDate);
+  }
+
   render() {
     return(
       <div>
-        <SelectDate onSubmit={() => {console.log('click')}} />
+        <SelectDate onSubmit={this.selectDates.bind(this)} />
         <DashboardChart isp="General" email="matiasdomingues@gmail.com" fechas={this.fechas} data={this.data} />
         <div className="jumbotron jumbotron-display">
           <div className="row">

@@ -8,7 +8,7 @@ export function fetchReports(userId, installationId, providerId, startDate, endD
   return dispatch => {
     dispatch({
       type: FETCH_REPORTS,
-      payload: fetch(`/user/${userId}/reports?installationId=${installationId}&providerId=${providerId}`)
+      payload: fetch(`/user/${userId}/reports?installationId=${installationId}&providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`)
     });
   };
 }
