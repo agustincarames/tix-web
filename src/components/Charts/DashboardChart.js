@@ -28,7 +28,7 @@ class DashboardChart extends Component {
         labels: {
           enabled: true,
           formatter: function () {
-            if(this.value < 0){
+            if(this.value <= 0){
               return "";
             }
             const date = moment(this.value);

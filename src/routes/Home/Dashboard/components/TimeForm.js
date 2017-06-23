@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import './Dashboard.scss';
+import moment from 'moment';
 
 class SelectDate extends Component {
 
@@ -32,7 +33,8 @@ class SelectDate extends Component {
 }
 
 SelectDate = reduxForm({
-  form: 'selectDate'
+  form: 'selectDate',
+  initialValues: {startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'), endDate: moment().format('YYYY-MM-DD')}
 })(SelectDate);
 
 export default SelectDate;
