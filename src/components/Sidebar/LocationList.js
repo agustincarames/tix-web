@@ -9,6 +9,7 @@ const ProviderList = (props) => (
 )
 
 const renderProviders = (providers, installationId, activeLocation, setActiveInstallation) => {
+  console.log(providers);
   return providers.map((provider) => {
     return(
       <ProviderList
@@ -31,16 +32,20 @@ const renderFolders = (providers, id, activeLocation, setActiveInstallation) => 
   </ul>
 )
 
-export const LocationList = (props) => (
-  <div className="location">
-    <li className={ props.active && 'active'}>
-      <a onClick={() => props.setActiveInstallation(props.installation.id, 0)} className="toggler">
-        {props.active ? <i className="icon glyphicon glyphicon-folder-open" /> : <i className="icon glyphicon glyphicon-folder-close" />}
-        <span className="sidebar-installation-text" >{props.installation.name}</span>
-      </a>
-    </li>
-    {props.active && renderFolders(props.installation.providers, props.installation.id, props.activeLocation, props.setActiveInstallation)}
-  </div>
-);
+export const LocationList = (props) => {
+  console.log(props);
+  return (
+    <div className="location">
+      <li className={ props.active && 'active'}>
+        <a onClick={() => props.setActiveInstallation(props.installation.id, 0)} className="toggler">
+          {props.active ? <i className="icon glyphicon glyphicon-folder-open"/> :
+            <i className="icon glyphicon glyphicon-folder-close"/>}
+          <span className="sidebar-installation-text">{props.installation.name}</span>
+        </a>
+      </li>
+      {props.active && renderFolders(props.installation.providers, props.installation.id, props.activeLocation, props.setActiveInstallation)}
+    </div>
+  )
+};
 
 export default LocationList
