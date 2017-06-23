@@ -2,6 +2,7 @@ import fetch from '../../../../utils/fetch';
 import { push } from 'react-router-redux';
 export const FETCH_USER_INSTALLATIONS = 'FETCH_USER_INSTALLATIONS';
 export const SET_ACTIVE_INSTALLATION = 'SET_ACTIVE_INSTALLATION';
+export const DELETE_INSTALLATION = 'DELETE_INSTALLATION';
 
 export function fetchUserInstallation(userId) {
   return dispatch => {
@@ -22,5 +23,15 @@ export function setActiveInstallation(installationId, locationId) {
     });
     dispatch(push(`/home/report/${installationId}/${locationId}`))
   };
+}
+
+export function deleteInstallation(userId, installationId){
+  return dispatch => {
+    dispatch({
+      type: DELETE_INSTALLATION,
+      installationId: installationId,
+      payload: fetch(`/user/${userId}/installation/${installationId}`, { method: 'delete' })
+    })
+  }
 }
 

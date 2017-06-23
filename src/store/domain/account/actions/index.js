@@ -9,7 +9,7 @@ export const LOCAL_STORAGE_LOAD = 'LOCAL_STORAGE_LOAD';
 export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';
 export const IMPERSONATE_USER = "IMPERSONATE_USER";
 export const STOP_IMPERSONATION = "STOP_IMPERSONATING";
-
+export const UPDATE_USER = "UPDATE_USER";
 export function fetchCurrentUser() {
   return dispatch => {
     return dispatch({
@@ -86,3 +86,28 @@ export function stopImpersonation(){
     return dispatch(fetchCurrentUser()).then(() => dispatch(push('/home')))
   }
 }
+
+export function updatePassword(userId, newPassword, oldPassword) {
+  var body = {};
+  body.newPassword = newPassword;
+  body.oldPassword = oldPassword;
+  return dispatch => {
+    dispatch({
+      type: UPDATE_USER,
+      payload: fetch(`/user/${userId}`, {method: 'put', body})
+    })
+  }
+}
+
+export function updateUsername(userId, username, oldPassword) {
+  var body = {};
+  body.username = username;
+  body.oldPassword = oldPassword;
+  return dispatch => {
+    dispatch({
+      type: UPDATE_USER,
+      payload: fetch(`/user/${userId}`, {method: 'put', body})
+    })
+  }
+}
+

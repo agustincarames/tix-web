@@ -43,8 +43,7 @@ class SidebarView extends Component {
             </li>
             <li className="divider"></li>
             <li><Link to="/home/account"><i className="icon glyphicon glyphicon-cog"></i>Mi cuenta</Link></li>
-            <li><a>Ayuda</a></li>
-            <li><a>Reporte de usuario</a></li>
+            <li><Link to="/home/userreport">Reporte de usuario</Link></li>
             {this.renderAdminLink(user)}
           </ul>
         </div>

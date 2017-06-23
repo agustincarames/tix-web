@@ -1,7 +1,19 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import UsernameForm from './UsernameForm';
+import PasswordForm from './PasswordForm';
+import {updatePassword, updateUsername} from 'store/domain/account/actions';
 
 class AdminView extends Component {
+
+  onUserSubmit(values){
+    this.props.updateUsername(this.props.user.id, values.username, values.oldPassword);
+  }
+
+  onPasswordSubmit(values) {
+    this.props.updatePassword(this.props.user.id, values.newPassword, values.oldPassword);
+  }
+
   render() {
     return(
       <div className="hero-unit">
@@ -9,58 +21,12 @@ class AdminView extends Component {
 					<span className="span12" >
 						<h3>Usuario</h3>
 					</span>
-          <br />
           <span className="span12 breadcrumb">
-						<h4>Editar informaci&oacute;n</h4>
-						<div className="row-fluid">
-							<form method="POST" action="edit">
-								<div className="row-fluid">
-									<div className="span3">
-										<strong>Nickname: </strong><br />
-									</div>
-									<div className="span4">
-										<input type="text" path="nickname" /><br />
-									</div>
-								</div>
-
-								<div className="row-fluid">
-									<div className="span3">
-										<strong>Contrase&ntilde;a: </strong><br />
-									</div>
-									<div className="span4">
-										<input type="password" path="password1" value="" /> <br />
-									</div>
-								</div>
-								<button type="submit" className="btn btn-primary btn-mini">
-									<i className="icon-ok icon-white"></i> Guardar cambios
-								</button>
-							</form>
-							<br />
-							<h4>Editar contrase&ntilde;a</h4>
-							<form method="POST" action="changePassword">
-								<br />
-								<div className="row-fluid">
-									<div className="span3">
-										<strong>Original: </strong><br />
-									</div>
-									<div className="span4">
-										<input type="password" path="originalPassword" /><br />
-									</div>
-								</div>
-								<div className="row-fluid">
-									<div className="span3">
-										<strong>Nueva: </strong><br />
-									</div>
-									<div className="span4">
-										<input type="password" path="newPassword" /><br />
-									</div>
-								</div>
-								<button type="submit" className="btn btn-primary btn-mini">
-									<i className="icon-ok icon-white"></i> Guardar cambios
-								</button>
-							</form>
-						</div>
-					</span>
+						<h4>{`Editar información`}</h4>
+            <UsernameForm onSubmit={ this.onUserSubmit.bind(this) }/>
+            <h4>{`Editar contraseña`}</h4>
+            <PasswordForm onSubmit={ this.onPasswordSubmit.bind(this) }/>
+          </span>
         </div>
       </div>
     )
@@ -68,9 +34,13 @@ class AdminView extends Component {
 }
 
 const mapStateToProps = (store) => ({
+  user: store.account.user
 });
 
-const mapDispatchToProps = (dispatch) => ({});
+const mapDispatchToProps = (dispatch) => ({
+  updatePassword: (userId, newPassword, oldPassword) => dispatch(updatePassword(userId, newPassword, oldPassword)),
+  updateUsername: (userId, username, oldPassword) => dispatch(updateUsername(userId, username, oldPassword))
+})
 
 export default connect(
   mapStateToProps,

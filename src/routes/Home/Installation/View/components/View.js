@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { fetchUserInstallation } from 'store/domain/installation/actions';
+import { fetchUserInstallation, deleteInstallation } from 'store/domain/installation/actions';
 import R from 'ramda';
 
 class ViewInstallation extends Component {
@@ -15,14 +15,18 @@ class ViewInstallation extends Component {
     )
   }
 
-  renderInstallations(installations){
+  deleteInstallation(installationId, userId){
+    this.props.deleteInstallation(userId, installationId);
+  }
+
+  renderInstallations(installations, userId){
     return installations.map((installation) => (
       <tr key={installation.id}>
         <td>{installation.name}</td>
         <td>{installation.publickey}</td>
         <td>
           <a className="btn btn-info" href="#">Editar</a>
-          <a href="#" role="button" className="btn btn-danger deleteInstallationDialog">Eliminar</a>
+          <a onClick={this.deleteInstallation.bind(this, installation.id, userId)} role="button" className="btn btn-danger">Eliminar</a>
         </td>
       </tr>
     ))
@@ -44,7 +48,7 @@ class ViewInstallation extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                  {this.renderInstallations(this.props.installations)}
+                  {this.renderInstallations(this.props.installations, this.props.user.id)}
                 </tbody>
               </table>
         </section>
@@ -60,7 +64,8 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadInstallations: (userId) => dispatch(fetchUserInstallation(userId))
+    loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
+    deleteInstallation: (userId, installationId) => dispatch(deleteInstallation(userId, installationId))
   }
 };
 

@@ -1,6 +1,6 @@
 import typeToReducer from 'type-to-reducer';
-
-import { FETCH_USER_INSTALLATIONS, SET_ACTIVE_INSTALLATION } from '../actions';
+import R from 'ramda';
+import { FETCH_USER_INSTALLATIONS, SET_ACTIVE_INSTALLATION, DELETE_INSTALLATION } from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
 export default typeToReducer({
@@ -23,6 +23,14 @@ export default typeToReducer({
   },
   [LOGOUT_USER]: (state, action) => {
     return {};
+  },
+  [DELETE_INSTALLATION]: {
+    FULFILLED: (state, action) => {
+      return {
+        ...state,
+        list: state.list.splice(R.findIndex(R.propEq('id', action.installationId)))
+      }
+    }
   }
 
 }, {});
