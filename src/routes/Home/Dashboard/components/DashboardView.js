@@ -13,9 +13,18 @@ class DashboardView extends Component {
       routeParams
     } = this.props;
     this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+    this.installationId = routeParams.installationId;
+    this.providerId = routeParams.providerId;
   }
 
   componentWillReceiveProps(nextProps){
+    console.log(this.installationId);
+    console.log(this.providerId);
+    if(this.installationId != nextProps.routeParams.installationId || this.providerId != nextProps.routeParams.providerId){
+      this.providerId = nextProps.routeParams.providerId;
+      this.installationId = nextProps.routeParams.installationId;
+      nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId, nextProps.routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+    }
     if(nextProps.reports){
       this.setData(nextProps.reports);
     }
@@ -89,7 +98,6 @@ class DashboardView extends Component {
       user,
       routeParams
     } = this.props;
-    console.log(dates);
     this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, dates.startDate, dates.endDate);
   }
 

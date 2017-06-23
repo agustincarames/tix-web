@@ -60,7 +60,7 @@ const mapDispatchToProps = (dispatch) => {
     loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
     loadReports: (userId) => dispatch(fetchReports(userId)),
     redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
-    setActiveInstallation: (installationId) => dispatch(setActiveInstallation(installationId))
+    setActiveInstallation: (installationId, locationId) => dispatch(setActiveInstallation(installationId, locationId))
   }
 };
 

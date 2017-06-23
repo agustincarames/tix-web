@@ -23,4 +23,4 @@ export function setActiveInstallation(installationId, locationId) {
     dispatch(push(`/home/report/${installationId}/${locationId}`))
   };
 }
-setActiveInstallation
+

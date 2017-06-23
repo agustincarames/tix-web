@@ -14,7 +14,7 @@ const renderProviders = (providers, installationId, activeLocation, setActiveIns
       <ProviderList
         provider={provider}
         installationId={installationId}
-        key={'provider'+provider.id}
+        key={'provider'+ provider.id}
         activeLocation={activeLocation}
         setActiveInstallation={setActiveInstallation}
       />
@@ -25,7 +25,7 @@ const renderProviders = (providers, installationId, activeLocation, setActiveIns
 const renderFolders = (providers, id, activeLocation, setActiveInstallation) => (
   <ul>
     <li className={activeLocation == 0 ? "activeISP" : ""} >
-      <a >General</a>
+      <a onClick={() => setActiveInstallation(id, 0 )} >General</a>
     </li>
     { renderProviders(providers, id, activeLocation, setActiveInstallation) }
   </ul>
@@ -34,7 +34,7 @@ const renderFolders = (providers, id, activeLocation, setActiveInstallation) => 
 export const LocationList = (props) => (
   <div className="location">
     <li className={ props.active && 'active'}>
-      <a onClick={() => props.setActiveInstallation(props.installation.id)} className="toggler">
+      <a onClick={() => props.setActiveInstallation(props.installation.id, 0)} className="toggler">
         {props.active ? <i className="icon glyphicon glyphicon-folder-open" /> : <i className="icon glyphicon glyphicon-folder-close" />}
         <span className="sidebar-installation-text" >{props.installation.name}</span>
       </a>

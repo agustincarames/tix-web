@@ -6,7 +6,6 @@ class DashboardChart extends Component {
 
   buildConfig(props){
     var fechasLength = props && props.fechas? props.fechas.length : 0;
-    console.log(fechasLength);
     return {
       chart: {
         marginRight: 130,
