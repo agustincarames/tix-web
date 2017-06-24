@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 const ReactHighcharts = require('react-highcharts'); // Expects that Highcharts was loaded in the code.
 import moment from 'moment';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class DashboardChart extends Component {
 
@@ -12,12 +13,8 @@ class DashboardChart extends Component {
         marginBottom: 40
       },
       title: {
-        text: `Porcentaje de utilizacion de ancho de banda en ${props ? props.isp : this.props.isp}`,
+        text: '',
         x: -20 //center
-      },
-      subtitle: {
-        text: `Grafico general para ${props ? props.email : this.props.email}`,
-        x: -20
       },
       xAxis: {
         type: 'datetime',
@@ -84,9 +81,29 @@ class DashboardChart extends Component {
     this.config = this.buildConfig(newProps);
   }
 
+  renderGraph() {
+    if(!this.props.data || this.props.fechas.length == 0){
+      return <span>No hay reportes para mostrar</span>
+    }
+    return <ReactHighcharts config = {this.config}></ReactHighcharts>
+  }
+
+
   render() {
+    const {
+      isp,
+      email
+    } = this.props;
     return(
-      <ReactHighcharts config = {this.config}></ReactHighcharts>
+      <Card className="card-margins">
+        <CardTitle
+          title={`Porcentaje de utilizacion de ancho de banda en ${isp}`}
+          subtitle={ `Grafico general para ${email}`}
+        />
+        <CardText>
+          {this.renderGraph()}
+        </CardText>
+      </Card>
     )
   }
 }

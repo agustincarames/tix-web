@@ -12,6 +12,8 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import InstallationListView from './InstallationListView'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 class ViewInstallation extends Component {
 
@@ -35,7 +37,6 @@ class ViewInstallation extends Component {
     if(installations.length == 0){
       return this.renderNoInstallations();
     }
-    console.log(installations);
     return (
       <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -58,14 +59,14 @@ class ViewInstallation extends Component {
 
 
     return(
-      <div className="hero-unit">
-        <section id="tables">
-          <div className="page-header">
-            <h2>Mis instalaciones_</h2>
-          </div>
+      <Card className="card-margins">
+        <CardTitle
+          title='Mis Instalaciones'
+        />
+        <CardText>
           {this.renderTable()}
-        </section>
-      </div>
+        </CardText>
+      </Card>
     )
   }
 }

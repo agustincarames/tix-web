@@ -17,7 +17,7 @@ export function fetchAllReports(userId, startDate, endDate) {
   return dispatch => {
     dispatch({
       type: FETCH_ALL_REPORTS,
-      payload: fetch(`/user/${userId}/reports?startDate=${startDate}&endDate=${endDate}`)
+      payload: fetch(`/user/${userId}/reports`)
     });
   };
 }

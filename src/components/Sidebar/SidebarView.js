@@ -28,7 +28,14 @@ class SidebarView extends Component {
 
   renderAdminLink(user){
     if(user.role == 'admin'){
-      return <ListItem primaryText={'Panel de Administracion'} containerElement={<Link to="/home/admin" />} />;
+      return <ListItem
+        primaryText={'Panel de Administracion'}
+        containerElement={<Link to="/home/admin/users" />}
+        nestedItems={[
+          <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to="/home/admin/ispchart" />} />,
+          <ListItem primaryText={'Descarga de Datos'} containerElement={<Link to="/home/a/view" />} />
+        ]}
+      />;
     }
   }
 
