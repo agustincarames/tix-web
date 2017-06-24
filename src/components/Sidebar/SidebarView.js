@@ -12,15 +12,18 @@ class SidebarView extends Component {
 
   renderInstallations (installations, setActiveInstallation) {
     if(!installations.list) return [];
-    return installations.list.map((installation) =>
-      <LocationList
-        installation={installation}
-        key={installation.id}
-        active={installations.activeInstallation === installation.id}
-        activeLocation={installations.activeLocation}
-        setActiveInstallation={setActiveInstallation}
-      />
-    )
+    return Object.keys(installations.list).map((key) => {
+      var installation = installations.list[key];
+      return (
+        <LocationList
+          installation={installation}
+          key={installation.id}
+          active={installations.activeInstallation === installation.id}
+          activeLocation={installations.activeLocation}
+          setActiveInstallation={setActiveInstallation}
+        />
+      )
+    })
   }
 
   renderAdminLink(user){

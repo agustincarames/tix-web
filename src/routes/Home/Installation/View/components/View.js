@@ -1,11 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { fetchUserInstallation, deleteInstallation } from 'store/domain/installation/actions';
+import { fetchUserInstallation, deleteInstallation, editInstallationName } from 'store/domain/installation/actions';
 import R from 'ramda';
-import IconButton from 'material-ui/IconButton';
-import Pencil from 'material-ui/svg-icons/content/create';
-import Delete from 'material-ui/svg-icons/action/delete'
 import {
   Table,
   TableBody,
@@ -14,6 +11,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
+import InstallationListView from './InstallationListView'
 
 class ViewInstallation extends Component {
 
@@ -22,50 +20,50 @@ class ViewInstallation extends Component {
 
   renderNoInstallations(){
     return (
-      <span class="label label-important">No hay instalaciones registradas en el sistema.</span>
+      <span className="label label-important">No hay instalaciones registradas en el sistema.</span>
     )
   }
 
-  deleteInstallation(installationId, userId){
-    this.props.deleteInstallation(userId, installationId);
-  }
+  renderTable(){
+    const {
+      installations,
+      deleteInstallation,
+      editInstallation,
+      user
+    } = this.props;
 
-  renderInstallations(installations, userId){
-    return installations.map((installation) => (
-      <TableRow key={installation.id}>
-        <TableRowColumn>{installation.name}</TableRowColumn>
-        <TableRowColumn>{installation.publickey}</TableRowColumn>
-        <TableRowColumn>
-          <IconButton tooltip="Editar">
-            <Pencil />
-          </IconButton>
-          <IconButton tooltip="Eliminar" onTouchTap={this.deleteInstallation.bind(this, installation.id, userId)}>
-            <Delete />
-          </IconButton>
-        </TableRowColumn>
-      </TableRow>
-    ))
+    if(installations.length == 0){
+      return this.renderNoInstallations();
+    }
+    console.log(installations);
+    return (
+      <Table>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>Nombre</TableHeaderColumn>
+            <TableHeaderColumn>Clave Publica</TableHeaderColumn>
+            <TableHeaderColumn>Acciones</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+        <TableBody displayRowCheckbox={false} showRowHover={true}>
+          { Object.keys(installations).map((key) =>
+            <InstallationListView installation={ installations[key] } deleteInstallation={ deleteInstallation } userId={ user.id } editInstallation={ editInstallation } />
+          )}
+        </TableBody>
+      </Table>
+    )
   }
 
   render() {
+
+
     return(
       <div className="hero-unit">
         <section id="tables">
           <div className="page-header">
             <h2>Mis instalaciones_</h2>
           </div>
-          <Table>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn>Nombre</TableHeaderColumn>
-                <TableHeaderColumn>Clave Publica</TableHeaderColumn>
-                <TableHeaderColumn>Acciones</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false} showRowHover={true}>
-              {this.renderInstallations(this.props.installations, this.props.user.id)}
-            </TableBody>
-          </Table>
+          {this.renderTable()}
         </section>
       </div>
     )
@@ -80,7 +78,8 @@ const mapStateToProps = (store) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
-    deleteInstallation: (userId, installationId) => dispatch(deleteInstallation(userId, installationId))
+    deleteInstallation: (userId, installationId) => dispatch(deleteInstallation(userId, installationId)),
+    editInstallation: (userId, installationId, name) => dispatch(editInstallationName(userId, installationId, name))
   }
 };
 

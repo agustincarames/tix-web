@@ -1,6 +1,6 @@
 import typeToReducer from 'type-to-reducer';
 import R from 'ramda';
-import { FETCH_USER_INSTALLATIONS, SET_ACTIVE_INSTALLATION, DELETE_INSTALLATION } from '../actions';
+import { FETCH_USER_INSTALLATIONS, SET_ACTIVE_INSTALLATION, DELETE_INSTALLATION, EDIT_INSTALLATION } from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
 export default typeToReducer({
@@ -8,7 +8,7 @@ export default typeToReducer({
     FULFILLED: (state, action) => {
       return {
         ...state,
-        list: action.payload,
+        list: R.indexBy(R.prop('id'), action.payload),
         activeInstallation: action.payload.length > 0 ? action.payload[0].id : null,
         activeLocation: 0
       }
@@ -26,11 +26,27 @@ export default typeToReducer({
   },
   [DELETE_INSTALLATION]: {
     FULFILLED: (state, action) => {
+      var list = delete list[action.installationId];
+      console.log(list);
       return {
         ...state,
-        list: state.list.splice(R.findIndex(R.propEq('id', action.installationId)))
+        list: list
+      }
+    }
+  },
+  [EDIT_INSTALLATION]: {
+    FULFILLED: (state, action) => {
+      return {
+        ...state,
+        list: {
+          ...state.list,
+          [action.payload.id]: {
+            ...state.list[action.payload.id],
+            name: action.payload.name
+          }
+        }
+
       }
     }
   }
-
 }, {});

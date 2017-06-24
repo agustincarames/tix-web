@@ -40,7 +40,7 @@ export function editInstallationName(userId, installationId, name){
   var body = {};
   body.name = name;
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: EDIT_INSTALLATION,
       payload: fetch(`/user/${userId}/installation/${installationId}`, { method: 'put', body })
     })
