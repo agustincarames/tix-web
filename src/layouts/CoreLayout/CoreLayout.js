@@ -19,6 +19,7 @@ export const CoreLayout = ({ children, alerts, deleteAlert }) => (
   <div>
     <Header />
     <div className="beta-banner">{ `Versión Beta` }</div>
+    <Alert />
     {renderAlerts(alerts, deleteAlert)}
     <div className='container'>
       {children}

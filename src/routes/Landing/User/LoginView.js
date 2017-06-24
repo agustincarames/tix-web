@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Snackbar from 'material-ui/Snackbar';
 
-class Alert extends Component {
+class LoginView extends Component {
 
   componentWillMount(){
     this.setState({open: false})
@@ -29,4 +29,4 @@ class Alert extends Component {
 }
 
 
-export default Alert
+export default LoginView

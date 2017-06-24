@@ -1,48 +1,29 @@
 import React from 'react'
 import { IndexLink, Link } from 'react-router';
 import './Sidebar.scss';
+import FolderOpen from 'material-ui/svg-icons/file/folder-open';
+import FolderClose from 'material-ui/svg-icons/file/folder';
+import {ListItem} from 'material-ui/List';
 
-const ProviderList = (props) => (
-    <li className={props.activeLocation == props.provider.id ? "activeISP" : ""}>
-      <a onClick={() => props.setActiveInstallation(props.installationId, props.provider.id )}> {props.provider.name}</a>
-    </li>
-)
-
-const renderProviders = (providers, installationId, activeLocation, setActiveInstallation) => {
-  return providers.map((provider) => {
-    return(
-      <ProviderList
-        provider={provider}
-        installationId={installationId}
-        key={'provider'+ provider.id}
-        activeLocation={activeLocation}
-        setActiveInstallation={setActiveInstallation}
-      />
-    )
-  })
+const renderFolders = (providers, id, setActiveInstallation) => {
+  var providerItems = [];
+  providerItems.push(<ListItem primaryText={'General'} onTouchTap={() => setActiveInstallation(id, 0)}/>);
+  return providerItems.concat(providers.map((provider) => <ListItem
+                                                            primaryText={provider.name}
+                                                            onTouchTap={() => setActiveInstallation(id, provider.id) }/> ));
 }
-
-const renderFolders = (providers, id, activeLocation, setActiveInstallation) => (
-  <ul>
-    <li className={activeLocation == 0 ? "activeISP" : ""} >
-      <a onClick={() => setActiveInstallation(id, 0 )} >General</a>
-    </li>
-    { renderProviders(providers, id, activeLocation, setActiveInstallation) }
-  </ul>
-)
 
 export const LocationList = (props) => {
   return (
-    <div className="location">
-      <li className={ props.active && 'active'}>
-        <a onClick={() => props.setActiveInstallation(props.installation.id, 0)} className="toggler">
-          {props.active ? <i className="icon glyphicon glyphicon-folder-open"/> :
-            <i className="icon glyphicon glyphicon-folder-close"/>}
-          <span className="sidebar-installation-text">{props.installation.name}</span>
-        </a>
-      </li>
-      {props.active && renderFolders(props.installation.providers, props.installation.id, props.activeLocation, props.setActiveInstallation)}
-    </div>
+    <ListItem
+      primaryText={props.installation.name}
+      leftIcon={props.active ? <FolderOpen /> : <FolderClose />}
+      open={props.active}
+      onTouchTap={() => props.setActiveInstallation(props.installation.id, 0)}
+      nestedItems={
+        renderFolders(props.installation.providers, props.installation.id, props.setActiveInstallation)
+      }
+    />
   )
 };
 

@@ -2,17 +2,22 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router'
 import LocationList from './LocationList';
 import './Sidebar.scss';
+import {List, ListItem} from 'material-ui/List';
+import Pencil from 'material-ui/svg-icons/content/create';
+import Wrench from 'material-ui/svg-icons/action/build';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
 
 class SidebarView extends Component {
 
-  renderInstallations (list, activeInstallation, activeLocation, setActiveInstallation) {
-    if(!list) return [];
-    return list.map((installation) =>
+  renderInstallations (installations, setActiveInstallation) {
+    if(!installations.list) return [];
+    return installations.list.map((installation) =>
       <LocationList
         installation={installation}
         key={installation.id}
-        active={activeInstallation === installation.id}
-        activeLocation={activeLocation}
+        active={installations.activeInstallation === installation.id}
+        activeLocation={installations.activeLocation}
         setActiveInstallation={setActiveInstallation}
       />
     )
@@ -20,7 +25,7 @@ class SidebarView extends Component {
 
   renderAdminLink(user){
     if(user.role == 'admin'){
-      return <li><Link to="/home/admin">Panel de Administracion</Link></li>
+      return <ListItem primaryText={'Panel de Administracion'} containerElement={<Link to="/home/admin" />} />;
     }
   }
 
@@ -32,23 +37,19 @@ class SidebarView extends Component {
     } = this.props;
     return (
       <div>
-        <div className="well sidebar-nav">
-          <ul className="nav nav-list">
-            <li className="nav-header">Instalaciones</li>
-            {this.renderInstallations(installations.list, installations.activeInstallation, installations.activeLocation, setActiveInstallation)}
-            <li className="divider"></li>
-            <li ><a> Set as default installation <i className="glyphicon glyphicon-bookmark"></i> </a></li>
-            <li className="divider"></li>
-            <li><Link to="/home/installation/view"><i className="icon glyphicon glyphicon-pencil" />{'Ver Instalaciones'}</Link>
-            </li>
-            <li className="divider"></li>
-            <li><Link to="/home/account"><i className="icon glyphicon glyphicon-cog"></i>Mi cuenta</Link></li>
-            <li><Link to="/home/userreport">Reporte de usuario</Link></li>
-            {this.renderAdminLink(user)}
-          </ul>
-        </div>
+        <List>
+          <Subheader>Instalaciones</Subheader>
+          {this.renderInstallations(installations, setActiveInstallation)}
+        </List>
+        <Divider />
+        <List>
+          <Subheader>Configuracion</Subheader>
+          <ListItem primaryText={'Ver Instalaciones'} leftIcon={<Pencil />} containerElement={<Link to="/home/installation/view" />} />
+          <ListItem primaryText={'Mi cuenta'} leftIcon={<Wrench />} containerElement={<Link to="/home/account" />} />
+          <ListItem primaryText={'Reporte de usuario'} leftIcon={<Pencil />} containerElement={<Link to="/home/userreport" />} />
+          {this.renderAdminLink(user)}
+        </List>
       </div>
-
     )
   }
 }

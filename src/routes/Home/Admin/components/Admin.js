@@ -3,7 +3,14 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import R from 'ramda';
 import { fetchAllUsers, impersonateUser } from 'store/domain/account/actions';
-
+import {
+  Table,
+  TableBody,
+  TableHeader,
+  TableHeaderColumn,
+  TableRow,
+  TableRowColumn,
+} from 'material-ui/Table';
 
 class AdminView extends Component {
 
@@ -16,12 +23,12 @@ class AdminView extends Component {
   renderUsers(users, impersonateUser){
     return users.map((user) => {
       return (
-        <tr key={user.id}>
-          <td>{user.id}</td>
-          <td>{user.username}</td>
-          <td>{user.role}</td>
-          <td><a onClick={() => impersonateUser(user.id)} className="btn btn-info" href="#">Impersonar</a></td>
-        </tr>
+        <TableRow key={user.id}>
+          <TableRowColumn>{user.id}</TableRowColumn>
+          <TableRowColumn>{user.username}</TableRowColumn>
+          <TableRowColumn>{user.role}</TableRowColumn>
+          <TableRowColumn><a onClick={() => impersonateUser(user.id)} className="btn btn-info" href="#">Impersonar</a></TableRowColumn>
+        </TableRow>
       )
     })
   }
@@ -54,19 +61,19 @@ class AdminView extends Component {
           <div className="page-header">
             <h2>Usuarios del sistema</h2>
           </div>
-              <table className="table table-bordered table-striped table-hover">
-                <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Nickname</th>
-                  <th>Rol</th>
-                  <th>Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
+              <Table>
+                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                  <TableRow>
+                    <TableHeaderColumn>#</TableHeaderColumn>
+                    <TableHeaderColumn>Nickname</TableHeaderColumn>
+                    <TableHeaderColumn>Rol</TableHeaderColumn>
+                    <TableHeaderColumn>Acciones</TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody displayRowCheckbox={false} showRowHover={true}>
                   {this.renderUsers(users, impersonateUser)}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
         </section>
       </div>
     )
