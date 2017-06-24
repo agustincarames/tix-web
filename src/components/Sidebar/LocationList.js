@@ -9,7 +9,6 @@ const ProviderList = (props) => (
 )
 
 const renderProviders = (providers, installationId, activeLocation, setActiveInstallation) => {
-  console.log(providers);
   return providers.map((provider) => {
     return(
       <ProviderList
@@ -33,7 +32,6 @@ const renderFolders = (providers, id, activeLocation, setActiveInstallation) => 
 )
 
 export const LocationList = (props) => {
-  console.log(props);
   return (
     <div className="location">
       <li className={ props.active && 'active'}>

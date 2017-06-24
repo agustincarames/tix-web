@@ -18,9 +18,7 @@ class DashboardView extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(this.installationId);
-    console.log(this.providerId);
-    if(this.installationId != nextProps.routeParams.installationId || this.providerId != nextProps.routeParams.providerId){
+    if(this.installationId !== nextProps.routeParams.installationId || this.providerId !== nextProps.routeParams.providerId){
       this.providerId = nextProps.routeParams.providerId;
       this.installationId = nextProps.routeParams.installationId;
       nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId, nextProps.routeParams.providerId, moment().subtract(30, 'minutes'), moment());
