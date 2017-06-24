@@ -1,35 +1,25 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import Paper from 'material-ui/Paper';
+import {
+  TextField
+} from 'redux-form-material-ui'
+import RaisedButton from 'material-ui/RaisedButton';
 
 class UsernameForm extends Component {
 
   render(){
     const { handleSubmit } = this.props;
     return(
-      <div>
-        <form className="form-alignment" onSubmit={handleSubmit}>
-          <div className="row-fluid">
-            <div className="span3">
-              <strong>Nickname: </strong><br />
-            </div>
-            <div className="span4">
-              <Field type="string" component="input" name="username" />
-            </div>
-          </div>
-
-          <div className="row-fluid">
-            <div className="span3">
-              <strong>Contrase&ntilde;a: </strong><br />
-            </div>
-            <div className="span4">
-              <Field type="password" component="input" name="oldPassword" />
-            </div>
-          </div>
-          <button type="submit" className="btn btn-primary btn-mini">
-            <i className="icon-ok icon-white"></i> Guardar cambios
-          </button>
+      <Paper>
+        <form className="form-alignment form-display" onSubmit={handleSubmit}>
+          <h4>{`Editar información`}</h4>
+          <Field type="string" name="username"  component={TextField} floatingLabelText="Email"  />
+          <Field type="password"  component={TextField} floatingLabelText={'Contraseña Actual'}  name="oldPassword" />
+          <RaisedButton className="settings-button-margin" label="Guardar Cambios" type="submit">
+          </RaisedButton>
         </form>
-      </div>)
+      </Paper>)
   }
 }
 

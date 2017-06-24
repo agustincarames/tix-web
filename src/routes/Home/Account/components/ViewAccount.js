@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import UsernameForm from './UsernameForm';
 import PasswordForm from './PasswordForm';
 import {updatePassword, updateUsername} from 'store/domain/account/actions';
+import './ViewAccount.scss'
 
 class AdminView extends Component {
 
@@ -21,11 +22,13 @@ class AdminView extends Component {
 					<span className="span12" >
 						<h3>Usuario</h3>
 					</span>
-          <span className="span12 breadcrumb">
-						<h4>{`Editar información`}</h4>
-            <UsernameForm onSubmit={ this.onUserSubmit.bind(this) }/>
-            <h4>{`Editar contraseña`}</h4>
-            <PasswordForm onSubmit={ this.onPasswordSubmit.bind(this) }/>
+          <span className="row">
+            <div className="col-md-6">
+              <UsernameForm onSubmit={ this.onUserSubmit.bind(this) }/>
+            </div>
+            <div className="col-md-6">
+              <PasswordForm onSubmit={ this.onPasswordSubmit.bind(this) }/>
+            </div>
           </span>
         </div>
       </div>

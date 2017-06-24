@@ -1,25 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import Paper from 'material-ui/Paper';
+import {
+  TextField
+} from 'redux-form-material-ui'
 
 class LoginForm extends Component {
 
   render(){
     const { handleSubmit } = this.props;
     return(
-      <div>
+      <Paper className="hgroup">
         <h3>{ `Iniciar sesión` }</h3>
-        <div className="form-horizontal well">
+        <div>
           <form onSubmit={handleSubmit}>
             <div className="control-group">
-              <label className="control-label" htmlFor="nickname">Email</label>
               <div className="controls">
-                <Field type="text" component="input" name="username" />
+                <Field type="text" name="username" component={TextField} floatingLabelText="Email" />
               </div>
             </div>
             <div className="control-group">
-              <label className="control-label" htmlFor="password">{ `Contraseña` }</label>
               <div className="controls">
-                <Field type="password" component="input" name="password" />
+                <Field type="password" name="password" component={TextField} floatingLabelText={'Constraseña'} />
                 <br />
                 <a href="#">
                   { `Olvidó su contraseña?` }
@@ -33,7 +35,7 @@ class LoginForm extends Component {
             </div>
           </form>
         </div>
-      </div>
+      </Paper>
     )
   }
 }
