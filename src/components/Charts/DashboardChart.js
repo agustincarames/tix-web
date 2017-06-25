@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
-const ReactHighcharts = require('react-highcharts'); // Expects that Highcharts was loaded in the code.
+import Highcharts from 'highcharts';
+import Highstock from 'highcharts/highstock';
+import ReactHighcharts from 'react-highcharts';
+
+const Charts = ReactHighcharts.withHighcharts(Highstock);
 import moment from 'moment';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
@@ -84,7 +88,7 @@ class DashboardChart extends Component {
     if(!this.props.data || this.props.fechas.length == 0){
       return <span>No hay reportes para mostrar</span>
     }
-    return <ReactHighcharts config = {this.config}></ReactHighcharts>
+    return <Charts config = {this.config}></Charts>
   }
 
 

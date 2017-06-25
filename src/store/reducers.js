@@ -6,6 +6,7 @@ import accountReducer from './domain/account/reducers';
 import installationReducer from './domain/installation/reducers';
 import alertReducer from './domain/alerts/reducers';
 import reportReducer from './domain/report/reducers';
+import providerReducer from './domain/provider/reducers';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -16,6 +17,7 @@ export const makeRootReducer = (asyncReducers) => {
     installations: installationReducer,
     alerts: alertReducer,
     reports: reportReducer,
+    providers: providerReducer,
     ...asyncReducers
   })
 }

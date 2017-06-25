@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { fetchAllReports } from 'store/domain/report/actions';
+import { fetchProviders } from 'store/domain/provider/actions';
 import DashboardChart from 'components/Charts/DashboardChart';
 import moment from 'moment';
 import MonthlyReportTable from './MonthlyReportTable'
@@ -10,6 +11,7 @@ class UserReportView extends Component {
 
   componentWillMount(){
     this.props.fetchAllReports(this.props.user.id);
+    this.props.fetchProviders(this.props.user.id);
   }
 
   renderGraph(provider, report){
@@ -54,9 +56,9 @@ class UserReportView extends Component {
     return(
       <div>
         <div>
-          <MonthlyReportTable providers={ providers } reports={ reports }/>
+          <MonthlyReportTable providers={ providers } reports={ reports}/>
         </div>
-        {providers && providers.map((provider) => this.renderGraph(provider, reports[provider]))}
+        {reports.providerList && reports.providerList.map((provider) => this.renderGraph(providers[provider].name, reports.fullReport[provider]))}
       </div>
     )
   }
@@ -64,13 +66,14 @@ class UserReportView extends Component {
 
 const mapStateToProps = (store) => ({
   user: store.account.user,
-  reports: store.reports.fullReport,
-  providers: store.reports.providerList
+  reports: store.reports,
+  providers: store.providers
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllReports: (userId) => dispatch(fetchAllReports(userId,  moment().subtract(30, 'days'), moment()))
+    fetchAllReports: (userId) => dispatch(fetchAllReports(userId,  moment().subtract(30, 'days'), moment())),
+    fetchProviders: (userId) => dispatch(fetchProviders(userId))
   }
 };
 

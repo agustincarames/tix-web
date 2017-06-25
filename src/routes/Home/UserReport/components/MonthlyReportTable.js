@@ -15,13 +15,13 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 class MonthlyReportTable extends Component {
 
   renderTableValues(providers, reports) {
-    return providers.map((provider) =>
+    return reports.providerList.map((provider) =>
       <TableRow>
-        <TableRowColumn>{provider}</TableRowColumn>
-        <TableRowColumn>{reports[provider].upQualityMedian}</TableRowColumn>
-        <TableRowColumn>{reports[provider].downQualityMedian}</TableRowColumn>
-        <TableRowColumn>{reports[provider].upUsageMedian}</TableRowColumn>
-        <TableRowColumn>{reports[provider].downUsageMedian}</TableRowColumn>
+        <TableRowColumn>{providers[provider].name}</TableRowColumn>
+        <TableRowColumn>{reports.fullReport[provider].upQualityMedian}</TableRowColumn>
+        <TableRowColumn>{reports.fullReport[provider].downQualityMedian}</TableRowColumn>
+        <TableRowColumn>{reports.fullReport[provider].upUsageMedian}</TableRowColumn>
+        <TableRowColumn>{reports.fullReport[provider].downUsageMedian}</TableRowColumn>
       </TableRow>
     )
   }
@@ -31,8 +31,7 @@ class MonthlyReportTable extends Component {
       providers,
       reports
     } = this.props;
-
-    if(!providers || providers.length == 0){
+    if(!reports.providerList || reports.providerList.length == 0 || !providers ){
       return <span> No hay información para mostrar</span>
     }
 
