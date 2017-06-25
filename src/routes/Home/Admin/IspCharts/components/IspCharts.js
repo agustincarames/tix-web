@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import R from 'ramda';
-import { fetchAllUsers, impersonateUser } from 'store/domain/account/actions';
+import { fetchAdminReports } from 'store/domain/report/actions';
 import {
   Table,
   TableBody,
@@ -12,73 +12,85 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import HistogramChart from 'components/Charts/HistogramChart';
+import FiltersForm from './FiltersForm';
 
 class AdminView extends Component {
 
-  renderNoUsers(){
+  componentWillMount() {
+    this.props.fetchAdminReports();
+  }
+
+  getQuartilRepresentation(index) {
+    var answer = [];
+    if(!index){
+      return answer;
+    }
+    answer[0] = index[0];
+    answer[1] = index[Math.floor(index.length*0.25)];
+    answer[2] = index[Math.floor(index.length*0.5)];
+    answer[3] = index[Math.floor(index.length*0.75)];
+    answer[4] = index[index.length - 1];
+    return answer;
+
+  }
+
+  renderHistograms() {
+    const {
+      reports
+    } = this.props;
     return (
-      <span className="label label-important">No hay usuarios registrados en el sistema.</span>
+      <Card className="card-margins">
+        <CardTitle
+          title='Reporte para ISP: '
+          subtitle="Histogramas para los rangos de fechas definidos en los filtros"
+        />
+        <CardText>
+          <div className="row">
+            <div className="col-md-6">
+              <HistogramChart data={reports.upUsageQuartils} description="Utilization Subida" title='Histograma Utilization Subida'/>
+            </div>
+            <div className="col-md-6">
+              <HistogramChart data={reports.downUsageQuartils} description="Utilization Bajada" red title='Histograma Utilization Bajada' />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <HistogramChart data={reports.upQualityQuartils} description="Calidad Subida" title='Histograma Calidad Subida' />
+            </div>
+            <div className="col-md-6">
+              <HistogramChart data={reports.downQualityQuartils} description="Calidad Bajada" red title='Histograma Calidad Bajada'/>
+            </div>
+          </div>
+        </CardText>
+      </Card>
     )
   }
 
-  renderUsers(users, impersonateUser){
-    return users.map((user) => {
-      return (
-        <TableRow key={user.id}>
-          <TableRowColumn>{user.id}</TableRowColumn>
-          <TableRowColumn>{user.username}</TableRowColumn>
-          <TableRowColumn>{user.role}</TableRowColumn>
-          <TableRowColumn><a onClick={() => impersonateUser(user.id)} className="btn btn-info" href="#">Impersonar</a></TableRowColumn>
-        </TableRow>
-      )
-    })
-  }
-
-  componentWillMount() {
-    this.props.fetchAllUsers();
-  }
-
-
   render() {
-    const {
-      users,
-      impersonateUser
-    } = this.props;
 
+    if(!this.props.reports.upUsage) {
+      return <span>Nothing to show</span>
+    }
     return(
-      <Card className="card-margins">
-        <CardTitle
-          title='Administración de usuarios'
-          subtitle='Visualizar e Impersonalizar los usuarios del sistema'
-        />
-        <CardText>
-          <Table>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn>#</TableHeaderColumn>
-                <TableHeaderColumn>Nickname</TableHeaderColumn>
-                <TableHeaderColumn>Rol</TableHeaderColumn>
-                <TableHeaderColumn>Acciones</TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody displayRowCheckbox={false} showRowHover={true}>
-              {this.renderUsers(users, impersonateUser)}
-            </TableBody>
-          </Table>
-        </CardText>
-      </Card>
+      <div>
+        <FiltersForm onSubmit={(data) => console.log(data)} />
+        {this.renderHistograms()}
+      </div>
+
     )
   }
 }
 
 const mapStateToProps = (store) => ({
-  users: R.pathOr([], ['account', 'users'], store)
+  users: R.pathOr([], ['account', 'users'], store),
+  reports: R.pathOr({}, ['reports','adminReport'], store),
+  provider: store.reports.provider,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllUsers: () => dispatch(fetchAllUsers()),
-    impersonateUser: (id) => dispatch(impersonateUser(id))
+    fetchAdminReports: () => dispatch(fetchAdminReports())
   }
 };
 

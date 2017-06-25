@@ -18,7 +18,6 @@ class DashboardChart extends Component {
       },
       xAxis: {
         type: 'datetime',
-        //plotBands: redmarker,
         categories: props ? props.fechas : this.props.fechas,
         tickInterval: 6,
         labels: {
