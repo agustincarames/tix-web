@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import ReCAPTCHA from 'react-google-recaptcha';
+import Paper from 'material-ui/Paper';
+import {
+  TextField
+} from 'redux-form-material-ui'
+import RaisedButton from 'material-ui/RaisedButton';
 
 const Captcha = (props) => (
-  <div>
     <ReCAPTCHA
       sitekey='6LexqSAUAAAAAKD-PBs2MePg0TCpRuyFi4-HJ66R'
       onChange={props.input.onChange}
     />
-  </div>
 );
 
 class RegisterForm extends Component {
@@ -16,34 +19,20 @@ class RegisterForm extends Component {
   render(){
     const { handleSubmit } = this.props;
     return(
-      <div>
+      <div style={{margin: '20px 0px'}}>
         <form onSubmit={handleSubmit}>
-          <div className="control-group">
-            <label className="control-label" for="nickname">Email:</label>
-            <div className="controls">
-              <Field type="text" component="input" name="username" />
+          <Paper>
+            <h3 className="log-in-header">{ `Registrarse` }</h3>
+            <div>
+              <form onSubmit={handleSubmit} className="hgroup">
+                <Field type="text" name="username" component={TextField} floatingLabelText="Email" />
+                <Field type="password" name="password1" component={TextField} floatingLabelText={'Contraseña'} />
+                <Field type="password" name="password2" component={TextField} floatingLabelText={'Contraseña'} />
+                <Field name='captcharesponse' component={Captcha}/>
+                <RaisedButton style={{marginBottom: '15px'}} className="button-size" primary={true} label="Registrarse"type="submit" />
+              </form>
             </div>
-          </div>
-          <div className="control-group">
-            <label className="control-label" for="nickname">{`Contrasena:`}</label>
-            <div className="controls">
-              <Field type="password" component="input" name="password1" />
-            </div>
-          </div>
-          <div className="control-group">
-            <label className="control-label" for="nickname">{`Repetir Contrasena:`}</label>
-            <div className="controls">
-              <Field type="password" component="input" name="password2" />
-            </div>
-          </div>
-          <div className="control-group">
-            <Field name='captcharesponse' component={Captcha}/>
-          </div>
-          <div className="control-group">
-            <div className="controls">
-              <button className="btn btn-warning btn-large" type="submit">Enviar</button>
-            </div>
-          </div>
+          </Paper>
         </form>
       </div>
     )

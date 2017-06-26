@@ -4,35 +4,21 @@ import Paper from 'material-ui/Paper';
 import {
   TextField
 } from 'redux-form-material-ui'
+import RaisedButton from 'material-ui/RaisedButton';
 
 class LoginForm extends Component {
 
   render(){
     const { handleSubmit } = this.props;
     return(
-      <Paper className="hgroup">
-        <h3>{ `Iniciar sesión` }</h3>
+      <Paper>
+        <h3 className="log-in-header">{ `Iniciar sesión` }</h3>
         <div>
-          <form onSubmit={handleSubmit}>
-            <div className="control-group">
-              <div className="controls">
-                <Field type="text" name="username" component={TextField} floatingLabelText="Email" />
-              </div>
-            </div>
-            <div className="control-group">
-              <div className="controls">
-                <Field type="password" name="password" component={TextField} floatingLabelText={'Constraseña'} />
-                <br />
-                <a href="#">
-                  { `Olvidó su contraseña?` }
-                </a>
-              </div>
-            </div>
-            <div className="control-group">
-              <div className="controls">
-                <button className="btn btn-primary btn-large" type="submit" >Enviar</button>
-              </div>
-            </div>
+          <form onSubmit={handleSubmit} className="hgroup">
+            <Field type="text" name="username" component={TextField} floatingLabelText="Email" />
+            <Field type="password" name="password" component={TextField} floatingLabelText={'Constraseña'} />
+            <RaisedButton className="button-size" primary={true} label="Log in"type="submit" />
+            <a className="password-forgot-text" >Olvido su contraseña? </a>
           </form>
         </div>
       </Paper>

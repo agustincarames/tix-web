@@ -2,15 +2,16 @@ import React from 'react'
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../store/domain/account/actions/index';
+import DownloadView from './DownloadView'
 
 const RegisterView = (props) => (
   <div className="container">
     <div className="row-fluid">
-      <div className="span12">
-        <h1>Crear nueva cuenta_</h1>
-        <div className="jumbotron">
-          <RegisterForm onSubmit={ props.submitRegister } />
-        </div>
+      <div className="col-md-4">
+        <RegisterForm onSubmit={ props.submitRegister } />
+      </div>
+      <div className="col-md-8">
+        <DownloadView />
       </div>
     </div>
 

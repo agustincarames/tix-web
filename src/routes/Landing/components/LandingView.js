@@ -6,10 +6,10 @@ import { connect } from 'react-redux';
 import './LandingView.scss'
 
 const LandingView = (props) => (
-  <div className="margin-fix">
+  <div className="container margin-fix">
 
-    <div className="row">
-      <div className="col-md-6">
+    <div className="row line-margin">
+      <div className="col-md-8">
         <h3>Proyecto TiX</h3>
         <div className="thumb_image">
           <img alt="Logo Tix" src={ LogoTix } />
@@ -34,7 +34,7 @@ const LandingView = (props) => (
 
 
       </div>
-      <div className="col-md-6">
+      <div className="col-md-4">
         <LoginForm onSubmit={ props.submitLogin } />
       </div>
     </div>

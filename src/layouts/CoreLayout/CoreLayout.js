@@ -5,23 +5,12 @@ import './CoreLayout.scss'
 import '../../styles/core.scss'
 import { connect } from 'react-redux';
 import {removeAlert} from 'store/domain/alerts/actions';
-import Alert from 'components/Alert';
 import R from 'ramda';
 
-function renderAlerts(alerts, removeAlert) {
-  return Object.keys(alerts).map((alertKey) => {
-    return <Alert message={alerts[alertKey]} key={alertKey} id={alertKey} removeAlert={removeAlert} />
-    }
-  )
-}
-
 export const CoreLayout = ({ children, alerts, deleteAlert }) => (
-  <div>
+  <div style={{ height: '100%', display: 'flex', flexDirection: 'column'}}>
     <Header />
-    <div className="beta-banner">{ `Versión Beta` }</div>
-    <Alert />
-    {renderAlerts(alerts, deleteAlert)}
-    <div className='container'>
+    <div style={{flex: '1 0 auto'}}>
       {children}
     </div>
     <Footer />

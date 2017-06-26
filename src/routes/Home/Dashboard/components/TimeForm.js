@@ -2,33 +2,21 @@ import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import './Dashboard.scss';
 import moment from 'moment';
+import Paper from 'material-ui/Paper';
+import { DatePicker } from 'redux-form-material-ui'
 
 class SelectDate extends Component {
 
   render(){
     const { handleSubmit } = this.props;
     return(
-      <div>
+    <Paper zDepth={1}>
       <form className="form-alignment" onSubmit={handleSubmit}>
-        <div className="control-group">
-          <label className="control-label" for="start-date">Start Date:</label>
-          <div className="controls">
-            <Field type="date" component="input" name="startDate" />
-          </div>
-        </div>
-        <div className="control-group">
-          <label className="control-label" for="end-date">End Date:</label>
-          <div className="controls">
-            <Field type="date" component="input" name="endDate" />
-          </div>
-        </div>
-        <div className="control-group">
-          <div className="controls">
-            <button className="btn btn-primary btn-large" type="submit" >Filtrar</button>
-          </div>
-        </div>
+        <Field format={null} name="startDate"  component={DatePicker} dateFormat="YYY-MM-DD" floatingLabelText="Fecha Inicio"  />
+        <Field format={null} name="endDate"  component={DatePicker} dateFormat="YYY-MM-DD" floatingLabelText="Fecha Final"  />
+        <button className="btn btn-primary btn-large" type="submit" >Filtrar</button>
       </form>
-    </div>)
+    </Paper>)
   }
 }
 

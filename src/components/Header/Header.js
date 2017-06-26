@@ -3,6 +3,7 @@ import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 import { connect } from 'react-redux';
 import { logoutUser, stopImpersonation } from '../../store/domain/account/actions';
+import Alert from 'components/Alert';
 
 const displayLogout = (user, logout, stopImpersonation) => {
   if(user) {
@@ -19,10 +20,10 @@ const displayLogout = (user, logout, stopImpersonation) => {
 }
 
 export const Header = (props) => (
+  <header>
     <div className="navbar navbar-default navbar-margin">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">TiX</Link>
-
         <div className="collapse navbar-collapse">
           <ul className="nav navbar-nav">
             <li>
@@ -33,6 +34,9 @@ export const Header = (props) => (
         </div>
       </div>
     </div>
+    <div className="beta-banner">{ `Versión Beta` }</div>
+    <Alert />
+  </header>
 );
 
 const mapStateToProps = (store) => ({

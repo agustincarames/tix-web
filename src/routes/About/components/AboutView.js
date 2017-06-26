@@ -22,7 +22,7 @@ function Colaborator({link, alt, image}) {
 }
 
 export const AboutView = () => (
-  <div>
+  <div className="container">
     <section id="typography">
       <div className="page-header">
         <h1>Bienvenido al Proyecto TiX</h1>

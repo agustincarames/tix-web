@@ -4,6 +4,11 @@ import DashboardChart from 'components/Charts/DashboardChart';
 import { connect } from 'react-redux';
 import { fetchReports } from 'store/domain/report/actions';
 import moment from 'moment';
+import BottomArrow from 'material-ui/svg-icons/editor/vertical-align-bottom';
+import TopArrow from 'material-ui/svg-icons/editor/vertical-align-top';
+import BothArrow from 'material-ui/svg-icons/editor/vertical-align-center';
+import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
+import Paper from 'material-ui/Paper';
 
 class DashboardView extends Component {
 
@@ -15,6 +20,7 @@ class DashboardView extends Component {
     this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, moment().subtract(30, 'minutes'), moment());
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
+    this.setState({selectedIndex:0})
   }
 
   componentWillReceiveProps(nextProps){
@@ -78,16 +84,20 @@ class DashboardView extends Component {
 
   selectGeneral(){
     this.setData(this.props.reports);
+    this.setState({selectedIndex:0})
     this.forceUpdate();
   }
 
   selectUpstream(){
     this.setUpstreamData(this.props.reports);
+    this.setState({selectedIndex:1})
     this.forceUpdate();
+
   }
 
   selectDownstream(){
     this.setDownstreamData(this.props.reports);
+    this.setState({selectedIndex:2})
     this.forceUpdate();
   }
 
@@ -104,15 +114,25 @@ class DashboardView extends Component {
       <div>
         <SelectDate onSubmit={this.selectDates.bind(this)} />
         <DashboardChart isp="General" email="matiasdomingues@gmail.com" fechas={this.fechas} data={this.data} />
-        <div className="jumbotron jumbotron-display">
-          <div className="row">
-            <div className="text-center">
-              <a className="btn btn-primary" onClick={this.selectGeneral.bind(this)}>General</a>
-              <a className="btn btn-primary" onClick={this.selectUpstream.bind(this)}>Upstream</a>
-              <a className="btn btn-primary" onClick={this.selectDownstream.bind(this)}>Downstream</a>
-            </div>
-          </div>
-        </div>
+        <Paper zDepth={1}>
+          <BottomNavigation selectedIndex={this.state.selectedIndex}>
+            <BottomNavigationItem
+              label="General"
+              icon={<BothArrow />}
+              onTouchTap={this.selectGeneral.bind(this)}
+            />
+            <BottomNavigationItem
+              label="Upstream"
+              icon={<TopArrow />}
+              onTouchTap={this.selectUpstream.bind(this)}
+            />
+            <BottomNavigationItem
+              label="Downstream"
+              icon={<BottomArrow />}
+              onTouchTap={this.selectDownstream.bind(this)}
+            />
+          </BottomNavigation>
+        </Paper>
       </div>
     )
   }
