@@ -23,7 +23,7 @@ export function fetchCurrentUser() {
 
 export function loginUser(login) {
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: LOGIN_USER,
       payload: fetch('/login', {method: 'POST', body: login})
     }).then((response) => {
@@ -35,7 +35,7 @@ export function loginUser(login) {
 
 export function registerUser(register) {
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: REGISTER_USER,
       payload: fetch('/register', { method: 'POST', body: register})
     });
@@ -53,7 +53,7 @@ export function logoutUser() {
 
 export function loadFromLocalStorage(user){
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: LOCAL_STORAGE_LOAD,
       payload: user
     });
@@ -62,7 +62,7 @@ export function loadFromLocalStorage(user){
 
 export function fetchAllUsers(){
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: FETCH_ALL_USERS,
       payload: fetch('/user/all')
     });
@@ -71,7 +71,7 @@ export function fetchAllUsers(){
 
 export function impersonateUser(id){
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: IMPERSONATE_USER,
       payload: fetch(`/user/${id}`)
     }).then(() => {
@@ -94,7 +94,7 @@ export function updatePassword(userId, newPassword, oldPassword) {
   body.newPassword = newPassword;
   body.oldPassword = oldPassword;
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: UPDATE_USER,
       payload: fetch(`/user/${userId}`, {method: 'put', body})
     })
@@ -106,7 +106,7 @@ export function updateUsername(userId, username, oldPassword) {
   body.username = username;
   body.oldPassword = oldPassword;
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: UPDATE_USER,
       payload: fetch(`/user/${userId}`, {method: 'put', body})
     })
@@ -115,7 +115,7 @@ export function updateUsername(userId, username, oldPassword) {
 
 export function sendRecoveryEmail(email) {
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: SEND_RECOVERY_EMAIL,
       payload: fetch('/recovery', {method: 'POST', body: {email}})
     })

@@ -6,7 +6,7 @@ export const FETCH_ADMIN_REPORTS = 'FETCH_ADMIN_REPORTS';
 
 export function fetchReports(userId, installationId, providerId, startDate, endDate) {
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: FETCH_REPORTS,
       payload: fetch(`/user/${userId}/reports?installationId=${installationId}&providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`)
     });
@@ -15,7 +15,7 @@ export function fetchReports(userId, installationId, providerId, startDate, endD
 
 export function fetchAllReports(userId, startDate, endDate) {
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: FETCH_ALL_REPORTS,
       payload: fetch(`/user/${userId}/reports`)
     });
@@ -24,7 +24,7 @@ export function fetchAllReports(userId, startDate, endDate) {
 
 export function fetchAdminReports(providerId, startDate, endDate) {
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: FETCH_ADMIN_REPORTS,
       payload: fetch(`/admin/reports?providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`)
     })

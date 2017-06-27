@@ -9,7 +9,7 @@ function getAuthentication(token) {
 
 export default function isoFetch(url, options = {}) {
   const method = options.method || 'GET';
-  const body = JSON.stringify(options.body) || {};
+  const body = JSON.stringify(options.body) || undefined;
   const fullUrl = `https://tix.innova-red.net/api${url}`;
   return (token) => {
     const headers = {

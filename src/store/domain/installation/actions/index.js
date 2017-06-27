@@ -22,13 +22,13 @@ export function setActiveInstallation(installationId, locationId) {
       installationId: installationId,
       locationId: locationId
     });
-    dispatch(push(`/home/report/${installationId}/${locationId}`))
+    return dispatch(push(`/home/report/${installationId}/${locationId}`))
   };
 }
 
 export function deleteInstallation(userId, installationId){
   return dispatch => {
-    dispatch({
+    return dispatch({
       type: DELETE_INSTALLATION,
       installationId: installationId,
       payload: fetch(`/user/${userId}/installation/${installationId}`, { method: 'delete' })
