@@ -14,11 +14,13 @@ import {
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import HistogramChart from 'components/Charts/HistogramChart';
 import FiltersForm from './FiltersForm';
+import { fetchProviders } from 'store/domain/provider/actions';
+import moment from 'moment';
 
 class AdminView extends Component {
 
-  componentWillMount() {
-    this.props.fetchAdminReports();
+  componentWillMount(){
+    this.props.fetchProviders(this.props.user.id);
   }
 
   getQuartilRepresentation(index) {
@@ -35,10 +37,18 @@ class AdminView extends Component {
 
   }
 
+  filterReports(data) {
+    console.log(data);
+    this.props.fetchAdminReports(data.isp, moment(data.startDate).format('YYYY-MM-DD'), moment(data.endDate).format('YYYY-MM-DD'))
+  }
+
   renderHistograms() {
     const {
       reports
     } = this.props;
+    if(!reports.upUsage) {
+      return <div></div>
+    }
     return (
       <Card className="card-margins">
         <CardTitle
@@ -68,13 +78,12 @@ class AdminView extends Component {
   }
 
   render() {
-
-    if(!this.props.reports.upUsage) {
-      return <span>Nothing to show</span>
-    }
+    const {
+      providers
+    } = this.props;
     return(
       <div>
-        <FiltersForm onSubmit={(data) => console.log(data)} />
+        <FiltersForm providers={providers} onSubmit={this.filterReports.bind(this)} />
         {this.renderHistograms()}
       </div>
 
@@ -83,14 +92,16 @@ class AdminView extends Component {
 }
 
 const mapStateToProps = (store) => ({
-  users: R.pathOr([], ['account', 'users'], store),
+  user: store.account.user,
   reports: R.pathOr({}, ['reports','adminReport'], store),
   provider: store.reports.provider,
+  providers: store.providers
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAdminReports: () => dispatch(fetchAdminReports())
+    fetchAdminReports: (isp, startDate, endDate) => dispatch(fetchAdminReports(isp, startDate, endDate)),
+    fetchProviders: (userId) => dispatch(fetchProviders(userId))
   }
 };
 

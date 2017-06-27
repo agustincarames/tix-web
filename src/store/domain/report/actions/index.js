@@ -26,7 +26,7 @@ export function fetchAdminReports(providerId, startDate, endDate) {
   return dispatch => {
     dispatch({
       type: FETCH_ADMIN_REPORTS,
-      payload: fetch(`/user/1/reports`)
+      payload: fetch(`/admin/reports?providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`)
     })
   }
 }
