@@ -3,7 +3,7 @@ import Landing from './Landing'
 import AboutRoute from './About'
 import HomeRoute from './Home';
 import RegisterRoute from './Register';
-
+import RecoverRoute from './Recover';
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
@@ -12,6 +12,7 @@ export const createRoutes = (store) => ({
     AboutRoute(),
     HomeRoute(),
     RegisterRoute(),
+    RecoverRoute(),
   ]
 });
 

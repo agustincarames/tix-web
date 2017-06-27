@@ -106,7 +106,7 @@ class DashboardView extends Component {
       user,
       routeParams
     } = this.props;
-    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, dates.startDate, dates.endDate);
+    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, moment(dates.startDate).format('YYYY-MM-DD'), moment(dates.endDate).format('YYYY-MM-DD'));
   }
 
   render() {

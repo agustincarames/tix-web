@@ -37,6 +37,7 @@ class HomeView extends Component {
     } = this.props;
 
     return(
+      <div className="container-fluid">
         <div className="row">
           <div className="col-md-3">
             <SidebarView installations={installations} loadReports={loadReports} user={user} setActiveInstallation={setActiveInstallation} />
@@ -45,6 +46,7 @@ class HomeView extends Component {
             {children}
           </div>
         </div>
+      </div>
     )
   }
 }

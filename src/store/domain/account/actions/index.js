@@ -10,6 +10,8 @@ export const FETCH_ALL_USERS = 'FETCH_ALL_USERS';
 export const IMPERSONATE_USER = "IMPERSONATE_USER";
 export const STOP_IMPERSONATION = "STOP_IMPERSONATING";
 export const UPDATE_USER = "UPDATE_USER";
+export const SEND_RECOVERY_EMAIL = "SEND_RECOVERY_EMAIL";
+
 export function fetchCurrentUser() {
   return dispatch => {
     return dispatch({
@@ -111,3 +113,11 @@ export function updateUsername(userId, username, oldPassword) {
   }
 }
 
+export function sendRecoveryEmail(email) {
+  return dispatch => {
+    dispatch({
+      type: SEND_RECOVERY_EMAIL,
+      payload: fetch('/recovery', {method: 'POST', body: {email}})
+    })
+  }
+}

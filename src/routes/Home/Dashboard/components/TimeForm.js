@@ -10,7 +10,7 @@ class SelectDate extends Component {
   render(){
     const { handleSubmit } = this.props;
     return(
-    <Paper zDepth={1}>
+    <Paper style={{marginTop: '15px'}} zDepth={1}>
       <form className="form-alignment" onSubmit={handleSubmit}>
         <Field format={null} name="startDate"  component={DatePicker} dateFormat="YYY-MM-DD" floatingLabelText="Fecha Inicio"  />
         <Field format={null} name="endDate"  component={DatePicker} dateFormat="YYY-MM-DD" floatingLabelText="Fecha Final"  />
@@ -22,7 +22,7 @@ class SelectDate extends Component {
 
 SelectDate = reduxForm({
   form: 'selectDate',
-  initialValues: {startDate: moment().subtract(1, 'days').format('YYYY-MM-DD'), endDate: moment().format('YYYY-MM-DD')}
+  initialValues: {startDate: new Date(moment().subtract(1, 'days')), endDate: new Date(moment())}
 })(SelectDate);
 
 export default SelectDate;
