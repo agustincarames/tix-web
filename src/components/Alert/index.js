@@ -8,10 +8,27 @@ class Alert extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if(nextProps.alert) {
-      var nextMessage = nextProps.alert[0];
-      this.setState({message: nextMessage.text});
+    console.log('props');
+    if(nextProps.alerts && Object.keys(nextProps.alerts).length > 0) {
+      console.log('nextprops');
+      var nextMessage = nextProps.alerts[Object.keys(nextProps.alerts)[0]];
+      console.log(nextMessage);
+      this.displayNotification(nextMessage, Object.keys(nextProps.alerts)[0]);
+
     }
+  }
+
+  handleRequestClose(){
+    clearTimeout(this.timer);
+    this.setState({open: false});
+    this.props.clearAlert(this.state.id);
+  }
+
+  displayNotification(alert, id){
+    this.setState({message: alert, id: id, open: true});
+    this.timer = setTimeout(() => {
+      //this.props.clearAlert(this.state.id);
+    }, 3000)
 
   }
 
@@ -20,9 +37,9 @@ class Alert extends Component {
       <Snackbar
         open={this.state.open}
         message={this.state.message}
-        action="undo"
+        action="Cerrar"
         autoHideDuration={3000}
-        onRequestClose={this.handleRequestClose}
+        onRequestClose={this.handleRequestClose.bind(this)}
       />
     )
   }

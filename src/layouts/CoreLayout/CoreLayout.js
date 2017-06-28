@@ -4,10 +4,9 @@ import Footer from '../../components/Footer'
 import './CoreLayout.scss'
 import '../../styles/core.scss'
 import { connect } from 'react-redux';
-import {removeAlert} from 'store/domain/alerts/actions';
 import R from 'ramda';
 
-export const CoreLayout = ({ children, alerts, deleteAlert }) => (
+export const CoreLayout = ({ children, alerts, clearAlert }) => (
   <div style={{ height: '100%', display: 'flex', flexDirection: 'column'}}>
     <Header />
     <div style={{flex: '1 0 auto'}}>
@@ -22,14 +21,9 @@ CoreLayout.propTypes = {
 }
 
 const mapStateToProps = (store) => ({
-  alerts: R.pathOr({}, ['alerts'], store)
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    deleteAlert: (id) => dispatch(removeAlert(id))
-  }
-};
+const mapDispatchToProps = (dispatch) =>({});
 
 
 export default connect(
