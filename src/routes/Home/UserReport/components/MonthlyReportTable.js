@@ -18,10 +18,10 @@ class MonthlyReportTable extends Component {
     return reports.providerList.map((provider) =>
       <TableRow>
         <TableRowColumn>{providers[provider].name}</TableRowColumn>
-        <TableRowColumn>{reports.fullReport[provider].upQualityMedian}</TableRowColumn>
-        <TableRowColumn>{reports.fullReport[provider].downQualityMedian}</TableRowColumn>
-        <TableRowColumn>{reports.fullReport[provider].upUsageMedian}</TableRowColumn>
-        <TableRowColumn>{reports.fullReport[provider].downUsageMedian}</TableRowColumn>
+        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].upQualityMedian)}%</TableRowColumn>
+        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].downQualityMedian)}%</TableRowColumn>
+        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].upUsageMedian)}%</TableRowColumn>
+        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].downUsageMedian)}%</TableRowColumn>
       </TableRow>
     )
   }
