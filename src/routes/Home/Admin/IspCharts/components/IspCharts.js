@@ -16,6 +16,7 @@ import HistogramChart from 'components/Charts/HistogramChart';
 import FiltersForm from './FiltersForm';
 import { fetchProviders } from 'store/domain/provider/actions';
 import moment from 'moment';
+import {CSVLink} from 'react-csv';
 
 class AdminView extends Component {
 
@@ -105,6 +106,30 @@ class AdminView extends Component {
     )
   }
 
+  renderCsvDownload() {
+    const {
+      reports,
+      providers,
+      provider
+    } = this.props;
+    if(!this.upUsageQuartils) {
+      return <div></div>
+    }
+    return (
+      <Card className="card-margins">
+        <CardTitle
+          title='Descarga de CSV'
+          subtitle="Descargar los datos RAW para analisis"
+        />
+        <CardText>
+          <CSVLink data={this.props.reports} separator={","} filename={`reporte-${providers[provider].name}.csv`}>
+            Descargar
+          </CSVLink>
+        </CardText>
+      </Card>
+    )
+  }
+
   render() {
     const {
       providers
@@ -112,6 +137,7 @@ class AdminView extends Component {
     return(
       <div>
         <FiltersForm providers={providers} onSubmit={this.filterReports.bind(this)} />
+        {this.renderCsvDownload()}
         {this.renderHistograms()}
       </div>
 

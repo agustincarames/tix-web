@@ -105,6 +105,7 @@
     "ramda": "^0.23.0",
     "react": "15.5.0",
     "react-async-script": "0.9.1",
+    "react-csv": "^1.0.8",
     "react-dom": "^15.4.1",
     "react-google-recaptcha": "^0.9.6",
     "react-highcharts": "^12.0.0",

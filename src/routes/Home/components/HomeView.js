@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from '../../../store/domain/account/actions';
 import { fetchUserInstallation, setActiveInstallation } from '../../../store/domain/installation/actions';
-import { fetchReports } from '../../../store/domain/report/actions';
+import { fetchReports, downloadAdminReport } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
 import { push } from 'react-router-redux';
 import R from 'ramda';
@@ -33,14 +33,21 @@ class HomeView extends Component {
       loadReports,
       user,
       children,
-      setActiveInstallation
+      setActiveInstallation,
+      downloadAdminReport
     } = this.props;
 
     return(
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-3">
-            <SidebarView installations={installations} loadReports={loadReports} user={user} setActiveInstallation={setActiveInstallation} />
+            <SidebarView
+              installations={installations}
+              loadReports={loadReports}
+              user={user}
+              setActiveInstallation={setActiveInstallation}
+              downloadAdminReport={downloadAdminReport}
+            />
           </div>
           <div className="col-md-9">
             {children}
@@ -62,7 +69,8 @@ const mapDispatchToProps = (dispatch) => {
     loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
     loadReports: (userId) => dispatch(fetchReports(userId)),
     redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
-    setActiveInstallation: (installationId, locationId) => dispatch(setActiveInstallation(installationId, locationId))
+    setActiveInstallation: (installationId, locationId) => dispatch(setActiveInstallation(installationId, locationId)),
+    downloadAdminReport: () => dispatch(downloadAdminReport())
   }
 };
 

@@ -15,6 +15,7 @@ export default function isoFetch(url, options = {}) {
     const headers = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      ...options.headers,
       ...getAuthentication(token)
     }
     return fetch(fullUrl, { headers: headers , method,  body: body });

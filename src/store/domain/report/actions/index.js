@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 export const FETCH_REPORTS = 'FETCH_REPORTS';
 export const FETCH_ALL_REPORTS = 'FETCH_ALL_REPORTS';
 export const FETCH_ADMIN_REPORTS = 'FETCH_ADMIN_REPORTS';
+export const DOWNLOAD_ADMIN_REPORTS = 'DOWNLOAD_ADMIN_REPORTS';
 
 export function fetchReports(userId, installationId, providerId, startDate, endDate) {
   return dispatch => {

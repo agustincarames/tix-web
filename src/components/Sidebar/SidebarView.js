@@ -26,14 +26,15 @@ class SidebarView extends Component {
     })
   }
 
-  renderAdminLink(user){
-    if(user.role == 'admin'){
+  renderAdminLink(user, downloadAdminReport){
+
+    if(user.role === 'admin'){
       return <ListItem
         primaryText={'Panel de Administracion'}
         containerElement={<Link to="/home/admin/users" />}
         nestedItems={[
           <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to="/home/admin/ispchart" />} />,
-          <ListItem primaryText={'Descarga de Datos'} containerElement={<Link to="/home/a/view" />} />
+          <ListItem primaryText={'Descarga de Datos'} containerElement={<a target="self" href="/api/admin/reports.csv" />}/>
         ]}
       />;
     }
@@ -43,7 +44,8 @@ class SidebarView extends Component {
     const {
       installations,
       user,
-      setActiveInstallation
+      setActiveInstallation,
+      downloadAdminReport
     } = this.props;
     return (
       <div>
@@ -57,7 +59,7 @@ class SidebarView extends Component {
           <ListItem primaryText={'Ver Instalaciones'} leftIcon={<Pencil />} containerElement={<Link to="/home/installation/view" />} />
           <ListItem primaryText={'Mi cuenta'} leftIcon={<Wrench />} containerElement={<Link to="/home/account" />} />
           <ListItem primaryText={'Reporte de usuario'} leftIcon={<Pencil />} containerElement={<Link to="/home/userreport" />} />
-          {this.renderAdminLink(user)}
+          {this.renderAdminLink(user, downloadAdminReport)}
         </List>
       </div>
     )
