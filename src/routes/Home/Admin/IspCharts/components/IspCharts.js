@@ -21,32 +21,60 @@ class AdminView extends Component {
 
   componentWillMount(){
     this.props.fetchProviders(this.props.user.id);
+    this.setState({version: 0})
   }
 
-  getQuartilRepresentation(index) {
-    var answer = [];
-    if(!index){
-      return answer;
+  componentWillReceiveProps(nextProps) {
+    console.log('props');
+    if(nextProps.version && this.state.version !== nextProps.reports.version){
+      this.calculateQuartils(nextProps.reports)
     }
-    answer[0] = index[0];
-    answer[1] = index[Math.floor(index.length*0.25)];
-    answer[2] = index[Math.floor(index.length*0.5)];
-    answer[3] = index[Math.floor(index.length*0.75)];
-    answer[4] = index[index.length - 1];
-    return answer;
-
   }
+
+  calculateQuartils(measures){
+    const filters = this.state.filters;
+    this.upUsageQuartils = new Array(10).fill(0);
+    this.downUsageQuartils = new Array(10).fill(0);
+    this.upQualityQuartils = new Array(10).fill(0);
+    this.downQualityQuartils = new Array(10).fill(0);
+    measures.forEach((measure) => {
+      var date = moment(measure.timestamp);
+      if((filters.dayOfWeek && (date.day() === filters.dayOfWeek - 1 || filters.dayOfWeek === 0 )) ||
+        (filters.startTime && date.hour() >= filters.startTime && filters.endTime && date.hour() <= filters.endTime) ||
+        (! filters.endTime && filters.startTime && date.hour() >= filters.startTime) ||
+        (!filters.startTime && filters.endTime && date.hour() <= filters.endTime) ||
+        (!filters.dayOfWeek && !filters.startTime && !filters.endTime)){
+        this.assignQuartils(this.upUsageQuartils, measure.upUsage);
+        this.assignQuartils(this.downUsageQuartils, measure.downUsage);
+        this.assignQuartils(this.upQualityQuartils, measure.upQuality);
+        this.assignQuartils(this.downQualityQuartils, measure.downQuality);
+      }
+
+    })
+  }
+
+  assignQuartils(quartilsArray, value){
+  var w = 0
+  for(var i = 0.1; i<=1 ; i += 0.1){
+    if(value <= i){
+      quartilsArray[w] += 1;
+      return;
+    }
+    w++;
+  }
+}
 
   filterReports(data) {
-    console.log(data);
-    this.props.fetchAdminReports(data.isp, moment(data.startDate).format('YYYY-MM-DD'), moment(data.endDate).format('YYYY-MM-DD'))
+    this.state.filters = data;
+    this.props.fetchAdminReports(data.isp, moment(data.startDate).format('YYYY-MM-DD'), moment(data.endDate).format('YYYY-MM-DD'));
+
   }
 
   renderHistograms() {
     const {
       reports
     } = this.props;
-    if(!reports.upUsage) {
+    if(!this.upUsageQuartils) {
       return <div></div>
     }
     return (
@@ -58,18 +86,18 @@ class AdminView extends Component {
         <CardText>
           <div className="row">
             <div className="col-md-6">
-              <HistogramChart data={reports.upUsageQuartils} description="Utilization Subida" title='Histograma Utilization Subida'/>
+              <HistogramChart data={this.upUsageQuartils} description="Utilization Subida" title='Histograma Utilization Subida'/>
             </div>
             <div className="col-md-6">
-              <HistogramChart data={reports.downUsageQuartils} description="Utilization Bajada" red title='Histograma Utilization Bajada' />
+              <HistogramChart data={this.downUsageQuartils} description="Utilization Bajada" red title='Histograma Utilization Bajada' />
             </div>
           </div>
           <div className="row">
             <div className="col-md-6">
-              <HistogramChart data={reports.upQualityQuartils} description="Calidad Subida" title='Histograma Calidad Subida' />
+              <HistogramChart data={this.upQualityQuartils} description="Calidad Subida" title='Histograma Calidad Subida' />
             </div>
             <div className="col-md-6">
-              <HistogramChart data={reports.downQualityQuartils} description="Calidad Bajada" red title='Histograma Calidad Bajada'/>
+              <HistogramChart data={this.downQualityQuartils} description="Calidad Bajada" red title='Histograma Calidad Bajada'/>
             </div>
           </div>
         </CardText>
@@ -95,6 +123,7 @@ const mapStateToProps = (store) => ({
   user: store.account.user,
   reports: R.pathOr({}, ['reports','adminReport'], store),
   provider: store.reports.provider,
+  version: store.reports.version,
   providers: store.providers
 });
 

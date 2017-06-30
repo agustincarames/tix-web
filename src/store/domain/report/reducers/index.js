@@ -3,6 +3,8 @@ import R from 'ramda';
 import { FETCH_REPORTS, FETCH_ALL_REPORTS, FETCH_ADMIN_REPORTS } from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
+var version = 1;
+
 export default typeToReducer({
   [FETCH_REPORTS]: {
     FULFILLED: (state, action) => {
@@ -62,32 +64,10 @@ export default typeToReducer({
   },
   [FETCH_ADMIN_REPORTS]: {
     FULFILLED: (state, action) => {
-      var report = {};
-      report.upUsage = [];
-      report.downUsage = [];
-      report.upQuality = [];
-      report.downQuality = [];
-      report.upUsageQuartils = new Array(10).fill(0);
-      report.downUsageQuartils = new Array(10).fill(0);
-      report.upQualityQuartils = new Array(10).fill(0);
-      report.downQualityQuartils = new Array(10).fill(0);
-      action.payload.forEach((measure) => {
-        report.upUsage.push(measure.upUsage);
-        assignQuartils(report.upUsageQuartils, measure.upUsage)
-        report.downUsage.push(measure.downUsage);
-        assignQuartils(report.downUsageQuartils, measure.downUsage)
-        report.upQuality.push(measure.upQuality);
-        assignQuartils(report.upQualityQuartils, measure.upQuality)
-        report.downQuality.push(measure.downQuality);
-        assignQuartils(report.downQualityQuartils, measure.downQuality)
-      })
-      report.upUsage = report.upUsage.sort();
-      report.downUsage = report.downUsage.sort();
-      report.upQuality = report.upQuality.sort();
-      report.downQuality = report.downQuality.sort();
       return {
+        version: version++,
         "provider": 1,
-        "adminReport": report
+        "adminReport": action.payload
       }
     }
   },
@@ -97,13 +77,4 @@ export default typeToReducer({
 
 }, []);
 
-function assignQuartils(quartilsArray, value){
-  var w = 0
-  for(var i = 0.1; i<=1 ; i += 0.1){
-    if(value <= i){
-      quartilsArray[w] += 1;
-      return;
-    }
-    w++;
-  }
-}
+
