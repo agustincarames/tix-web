@@ -23,7 +23,7 @@ function mapResponseToPayload(res, body) {
 }
 
 export default function promiseMiddleware(store) {
-  return next => action => {
+  return next => (action) => {
     const { payload, type, ...rest } = action;
     const state = store.getState();
 
@@ -47,46 +47,46 @@ export default function promiseMiddleware(store) {
     next({ ...rest, type: PENDING });
 
     function handleFailure(res, body) {
-        next({
-          ...rest,
-          payload: body,
-          status: res.status,
-          type: FAILURE,
-        });
+      next({
+        ...rest,
+        payload: body,
+        status: res.status,
+        type: FAILURE,
+      });
 
-        if (res.status == 401) {
-          store.dispatch({type: LOGOUT_USER});
-        }
+      if (res.status == 401) {
+        store.dispatch({ type: LOGOUT_USER });
+      }
 
-        if(body && body.reason){
-          store.dispatch(addAlert(body.reason));
-        }
+      if (body && body.reason) {
+        store.dispatch(addAlert(body.reason));
+      }
 
-        throw mapResponseToPayload(res, body);
+      throw mapResponseToPayload(res, body);
     }
 
     function handleSuccess(res, body) {
-        next({
-          ...rest,
-          payload: body,
-          status: res.status,
-          type: SUCCESS,
-        });
+      next({
+        ...rest,
+        payload: body,
+        status: res.status,
+        type: SUCCESS,
+      });
 
-        return mapResponseToPayload(res, body);
+      return mapResponseToPayload(res, body);
     }
 
     return payloadResult
       .then((res) => {
-        if(!res.bodyUsed || res.body) return res.json().then((json) => handleStatuses(res, json));
+        if (!res.bodyUsed || res.body) return res.json().then(json => handleStatuses(res, json));
         return handleStatuses(res, null);
       });
 
     function handleStatuses(res, json) {
-      if(res.ok){
+      if (res.ok) {
         return handleSuccess(res, json);
       }
       return handleFailure(res, json);
-    };
+    }
   };
 }

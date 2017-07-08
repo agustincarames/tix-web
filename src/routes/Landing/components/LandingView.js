@@ -1,23 +1,23 @@
-import React from 'react'
-import LogoTix from '../assets/LogoTix.png'
+import React from 'react';
+import LogoTix from '../assets/LogoTix.png';
 import LoginForm from './LoginForm';
 import { loginUser } from '../../../store/domain/account/actions/index';
 import { connect } from 'react-redux';
-import './LandingView.scss'
+import './LandingView.scss';
 
-const LandingView = (props) => (
-  <div className="container margin-fix">
+const LandingView = props => (
+  <div className='container margin-fix'>
 
-    <div className="row line-margin">
-      <div className="col-md-8">
+    <div className='row line-margin'>
+      <div className='col-md-8'>
         <h3>Proyecto TiX</h3>
-        <div className="thumb_image">
-          <img alt="Logo Tix" src={ LogoTix } />
+        <div className='thumb_image'>
+          <img alt='Logo Tix' src={LogoTix} />
         </div>
-        <div className="row caption pull-left head">
-          <div className="col-md-12">
+        <div className='row caption pull-left head'>
+          <div className='col-md-12'>
             <h4>
-              { `Qué es el Proyecto Tix?` }
+              { 'Qué es el Proyecto Tix?' }
             </h4>
             <p>
               {
@@ -26,22 +26,22 @@ const LandingView = (props) => (
                 Internet.`
               }
             </p>
-            <a className="btn btn-info btn-large" href='/register'>Instalar TiX</a>
+            <a className='btn btn-info btn-large' href='/register'>Instalar TiX</a>
 
           </div>
         </div>
-        <div className="clear"></div>
+        <div className='clear' />
 
 
       </div>
-      <div className="col-md-4">
-        <LoginForm onSubmit={ props.submitLogin } />
+      <div className='col-md-4'>
+        <LoginForm onSubmit={props.submitLogin} />
       </div>
     </div>
-    <div className="row">
-      <div className="col-md-4">
+    <div className='row'>
+      <div className='col-md-4'>
         <h4>
-          { `Cuál es el objetivo?` }
+          { 'Cuál es el objetivo?' }
         </h4>
         <p>
           {
@@ -52,9 +52,9 @@ const LandingView = (props) => (
           }
         </p>
       </div>
-      <div className="col-md-4">
+      <div className='col-md-4'>
         <h4>
-          { `Qué resultados arroja?` }
+          { 'Qué resultados arroja?' }
         </h4>
         <p>
           {
@@ -65,16 +65,16 @@ const LandingView = (props) => (
           }
         </p>
       </div>
-      <div className="col-md-4">
+      <div className='col-md-4'>
         <h4>
-          { `Cómo puedo usar TiX?` }
+          { 'Cómo puedo usar TiX?' }
         </h4>
         <p>
           {
             `Puede crear su cuenta e instalar el software de medición en
             su PC y/o computadora portátil aquí: `
           }
-          <a className="btn btn-info" href="/register">Instalar TiX</a>
+          <a className='btn btn-info' href='/register'>Instalar TiX</a>
         </p>
       </div>
     </div>
@@ -93,6 +93,6 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(LandingView);
 

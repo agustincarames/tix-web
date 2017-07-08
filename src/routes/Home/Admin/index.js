@@ -8,6 +8,6 @@ export default () => ({
   component : AdminView,
   childRoutes: [
     IpsCharts(),
-    UserAdminView()
-  ]
-})
+    UserAdminView(),
+  ],
+});

@@ -1,4 +1,4 @@
-import HomeView from './components/HomeView'
+import HomeView from './components/HomeView';
 import DashboardView from './Dashboard/index';
 import AdminView from './Admin/index';
 import InstallationView from './Installation/index';
@@ -14,6 +14,6 @@ export default () => ({
     AdminView(),
     InstallationView(),
     AccountView(),
-    UserReportView()
-  ]
-})
+    UserReportView(),
+  ],
+});

@@ -4,4 +4,4 @@ import IspCharts from './components/IspCharts';
 export default () => ({
   path: 'ispchart',
   component : IspCharts,
-})
+});

@@ -11,27 +11,25 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 class AdminView extends Component {
 
-  renderNoUsers(){
+  renderNoUsers() {
     return (
-      <span className="label label-important">No hay usuarios registrados en el sistema.</span>
-    )
+      <span className='label label-important'>No hay usuarios registrados en el sistema.</span>
+    );
   }
 
-  renderUsers(users, impersonateUser){
-    return users.map((user) => {
-      return (
-        <TableRow key={user.id}>
-          <TableRowColumn>{user.id}</TableRowColumn>
-          <TableRowColumn>{user.username}</TableRowColumn>
-          <TableRowColumn>{user.role}</TableRowColumn>
-          <TableRowColumn><a onClick={() => impersonateUser(user.id)} className="btn btn-info" href="#">Impersonar</a></TableRowColumn>
-        </TableRow>
-      )
-    })
+  renderUsers(users, impersonateUser) {
+    return users.map(user => (
+      <TableRow key={user.id}>
+        <TableRowColumn>{user.id}</TableRowColumn>
+        <TableRowColumn>{user.username}</TableRowColumn>
+        <TableRowColumn>{user.role}</TableRowColumn>
+        <TableRowColumn><a onClick={() => impersonateUser(user.id)} className='btn btn-info' href='#'>Impersonar</a></TableRowColumn>
+      </TableRow>
+      ));
   }
 
   componentWillMount() {
@@ -42,11 +40,11 @@ class AdminView extends Component {
   render() {
     const {
       users,
-      impersonateUser
+      impersonateUser,
     } = this.props;
 
-    return(
-      <Card className="card-margins">
+    return (
+      <Card className='card-margins'>
         <CardTitle
           title='Administración de usuarios'
           subtitle='Visualizar e Impersonalizar los usuarios del sistema'
@@ -61,28 +59,26 @@ class AdminView extends Component {
                 <TableHeaderColumn>Acciones</TableHeaderColumn>
               </TableRow>
             </TableHeader>
-            <TableBody displayRowCheckbox={false} showRowHover={true}>
+            <TableBody displayRowCheckbox={false} showRowHover>
               {this.renderUsers(users, impersonateUser)}
             </TableBody>
           </Table>
         </CardText>
       </Card>
-    )
+    );
   }
 }
 
-const mapStateToProps = (store) => ({
-  users: R.pathOr([], ['account', 'users'], store)
+const mapStateToProps = store => ({
+  users: R.pathOr([], ['account', 'users'], store),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchAllUsers: () => dispatch(fetchAllUsers()),
-    impersonateUser: (id) => dispatch(impersonateUser(id))
-  }
-};
+const mapDispatchToProps = dispatch => ({
+  fetchAllUsers: () => dispatch(fetchAllUsers()),
+  impersonateUser: id => dispatch(impersonateUser(id)),
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AdminView);

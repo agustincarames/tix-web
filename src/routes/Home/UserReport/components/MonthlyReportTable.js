@@ -10,29 +10,29 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 class MonthlyReportTable extends Component {
 
   renderTableValues(providers, reports) {
-    return reports.providerList.map((provider) =>
-      <TableRow>
+    return reports.providerList.map(provider =>
+      (<TableRow>
         <TableRowColumn>{providers[provider].name}</TableRowColumn>
-        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].upQualityMedian)}%</TableRowColumn>
-        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].downQualityMedian)}%</TableRowColumn>
-        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].upUsageMedian)}%</TableRowColumn>
-        <TableRowColumn>{Math.floor(100*reports.fullReport[provider].downUsageMedian)}%</TableRowColumn>
-      </TableRow>
-    )
+        <TableRowColumn>{Math.floor(100 * reports.fullReport[provider].upQualityMedian)}%</TableRowColumn>
+        <TableRowColumn>{Math.floor(100 * reports.fullReport[provider].downQualityMedian)}%</TableRowColumn>
+        <TableRowColumn>{Math.floor(100 * reports.fullReport[provider].upUsageMedian)}%</TableRowColumn>
+        <TableRowColumn>{Math.floor(100 * reports.fullReport[provider].downUsageMedian)}%</TableRowColumn>
+      </TableRow>),
+    );
   }
 
-  renderTable(){
+  renderTable() {
     const {
       providers,
-      reports
+      reports,
     } = this.props;
-    if(!reports.providerList || reports.providerList.length == 0 || !providers ){
-      return <span> No hay información para mostrar</span>
+    if (!reports.providerList || reports.providerList.length == 0 || !providers) {
+      return <span> No hay información para mostrar</span>;
     }
 
     return (
@@ -46,29 +46,29 @@ class MonthlyReportTable extends Component {
             <TableHeaderColumn>Utilizacion Bajada</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody displayRowCheckbox={false} showRowHover={true}>
+        <TableBody displayRowCheckbox={false} showRowHover>
           {this.renderTableValues(providers, reports)}
         </TableBody>
       </Table>
-    )
+    );
   }
 
   render() {
     const {
       providers,
-      reports
+      reports,
     } = this.props;
     return (
-      <Card className="card-margins">
+      <Card className='card-margins'>
         <CardTitle
           title='Tabla de medianas mensuales'
-          subtitle="Esta tabla muestra las medianas mensuales de cada uno de los parámetros estudiados para cada uno de los proveedores de internet que utilizó el usuario."
+          subtitle='Esta tabla muestra las medianas mensuales de cada uno de los parámetros estudiados para cada uno de los proveedores de internet que utilizó el usuario.'
         />
         <CardText>
           {this.renderTable()}
         </CardText>
       </Card>
-    )
+    );
   }
 
 }

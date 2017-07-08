@@ -1,10 +1,11 @@
-import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import Landing from './Landing'
-import AboutRoute from './About'
+import CoreLayout from '../layouts/CoreLayout/CoreLayout';
+import Landing from './Landing';
+import AboutRoute from './About';
 import HomeRoute from './Home';
 import RegisterRoute from './Register';
 import RecoverRoute from './Recover';
-export const createRoutes = (store) => ({
+
+export const createRoutes = store => ({
   path        : '/',
   component   : CoreLayout,
   indexRoute  : Landing,
@@ -13,7 +14,7 @@ export const createRoutes = (store) => ({
     HomeRoute(),
     RegisterRoute(),
     RecoverRoute(),
-  ]
+  ],
 });
 
-export default createRoutes
+export default createRoutes;

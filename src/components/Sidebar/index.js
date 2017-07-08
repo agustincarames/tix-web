@@ -1,3 +1,3 @@
-import SidebarView from './SidebarView'
+import SidebarView from './SidebarView';
 
-export default SidebarView
+export default SidebarView;

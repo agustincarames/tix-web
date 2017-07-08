@@ -5,14 +5,10 @@ import { LOGOUT_USER } from '../../account/actions';
 
 export default typeToReducer({
   [FETCH_ALL_PROVIDERS]: {
-    FULFILLED: (state, action) => {
-      return {
-        ...state,
-        ...R.indexBy(R.prop('id'),action.payload)
-      }
-    }
+    FULFILLED: (state, action) => ({
+      ...state,
+      ...R.indexBy(R.prop('id'), action.payload),
+    }),
   },
-  [LOGOUT_USER]: (state, action) => {
-    return {};
-  }
+  [LOGOUT_USER]: (state, action) => ({}),
 }, {});

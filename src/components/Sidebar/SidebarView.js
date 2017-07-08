@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 import LocationList from './LocationList';
 import './Sidebar.scss';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import Pencil from 'material-ui/svg-icons/content/create';
 import Wrench from 'material-ui/svg-icons/action/build';
 import Divider from 'material-ui/Divider';
@@ -10,10 +10,10 @@ import Subheader from 'material-ui/Subheader';
 
 class SidebarView extends Component {
 
-  renderInstallations (installations, setActiveInstallation) {
-    if(!installations.list) return [];
+  renderInstallations(installations, setActiveInstallation) {
+    if (!installations.list) return [];
     return Object.keys(installations.list).map((key) => {
-      var installation = installations.list[key];
+      const installation = installations.list[key];
       return (
         <LocationList
           installation={installation}
@@ -22,29 +22,28 @@ class SidebarView extends Component {
           activeLocation={installations.activeLocation}
           setActiveInstallation={setActiveInstallation}
         />
-      )
-    })
+      );
+    });
   }
 
-  renderAdminLink(user, downloadAdminReport){
-
-    if(user.role === 'admin'){
-      return <ListItem
+  renderAdminLink(user, downloadAdminReport) {
+    if (user.role === 'admin') {
+      return (<ListItem
         primaryText={'Panel de Administracion'}
-        containerElement={<Link to="/home/admin/users" />}
+        containerElement={<Link to='/home/admin/users' />}
         nestedItems={[
-          <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to="/home/admin/ispchart" />} />
+          <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to='/home/admin/ispchart' />} />,
         ]}
-      />;
+      />);
     }
   }
 
-  render () {
+  render() {
     const {
       installations,
       user,
       setActiveInstallation,
-      downloadAdminReport
+      downloadAdminReport,
     } = this.props;
     return (
       <div>
@@ -55,13 +54,13 @@ class SidebarView extends Component {
         <Divider />
         <List>
           <Subheader>Configuracion</Subheader>
-          <ListItem primaryText={'Ver Instalaciones'} leftIcon={<Pencil />} containerElement={<Link to="/home/installation/view" />} />
-          <ListItem primaryText={'Mi cuenta'} leftIcon={<Wrench />} containerElement={<Link to="/home/account" />} />
-          <ListItem primaryText={'Reporte de usuario'} leftIcon={<Pencil />} containerElement={<Link to="/home/userreport" />} />
+          <ListItem primaryText={'Ver Instalaciones'} leftIcon={<Pencil />} containerElement={<Link to='/home/installation/view' />} />
+          <ListItem primaryText={'Mi cuenta'} leftIcon={<Wrench />} containerElement={<Link to='/home/account' />} />
+          <ListItem primaryText={'Reporte de usuario'} leftIcon={<Pencil />} containerElement={<Link to='/home/userreport' />} />
           {this.renderAdminLink(user, downloadAdminReport)}
         </List>
       </div>
-    )
+    );
   }
 }
 

@@ -5,27 +5,27 @@ import { fetchAllReports } from 'store/domain/report/actions';
 import { fetchProviders } from 'store/domain/provider/actions';
 import DashboardChart from 'components/Charts/DashboardChart';
 import moment from 'moment';
-import MonthlyReportTable from './MonthlyReportTable'
+import MonthlyReportTable from './MonthlyReportTable';
 
 class UserReportView extends Component {
 
-  componentWillMount(){
+  componentWillMount() {
     this.props.fetchAllReports(this.props.user.id);
     this.props.fetchProviders(this.props.user.id);
   }
 
-  renderGraph(provider, report){
-    var data = this.setGraphData(report);
+  renderGraph(provider, report) {
+    const data = this.setGraphData(report);
     const {
-      user
-    } = this.props
+      user,
+    } = this.props;
     return (
       <DashboardChart isp={provider} email={user.username} fechas={data.fechas} data={data.data} />
-    )
+    );
   }
 
-  setGraphData(report){
-    var data = {};
+  setGraphData(report) {
+    const data = {};
     data.fechas = report.dates;
     data.data = [
       {
@@ -43,41 +43,39 @@ class UserReportView extends Component {
       {
         data: report.downQuality,
         name: 'Calidad Down',
-      }
-    ]
+      },
+    ];
     return data;
   }
 
   render() {
     const {
       reports,
-      providers
+      providers,
     } = this.props;
-    return(
+    return (
       <div>
         <div>
-          <MonthlyReportTable providers={ providers } reports={ reports}/>
+          <MonthlyReportTable providers={providers} reports={reports} />
         </div>
-        {reports.providerList && reports.providerList.map((provider) => this.renderGraph(providers[provider].name, reports.fullReport[provider]))}
+        {reports.providerList && reports.providerList.map(provider => this.renderGraph(providers[provider].name, reports.fullReport[provider]))}
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (store) => ({
+const mapStateToProps = store => ({
   user: store.account.user,
   reports: store.reports,
-  providers: store.providers
+  providers: store.providers,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchAllReports: (userId) => dispatch(fetchAllReports(userId,  moment().subtract(30, 'days'), moment())),
-    fetchProviders: (userId) => dispatch(fetchProviders(userId))
-  }
-};
+const mapDispatchToProps = dispatch => ({
+  fetchAllReports: userId => dispatch(fetchAllReports(userId, moment().subtract(30, 'days'), moment())),
+  fetchProviders: userId => dispatch(fetchProviders(userId)),
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(UserReportView);

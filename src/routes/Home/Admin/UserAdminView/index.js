@@ -4,4 +4,4 @@ import AdminView from './components/Admin';
 export default () => ({
   path: 'users',
   component : AdminView,
-})
+});

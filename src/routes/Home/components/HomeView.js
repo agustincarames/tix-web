@@ -10,21 +10,20 @@ import R from 'ramda';
 
 class HomeView extends Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.loadUserData();
-    var id = R.path(['user', 'id'], this.props);
+    const id = R.path(['user', 'id'], this.props);
     this.id = id;
     id && this.props.loadInstallations(this.props.user.id);
   }
 
-  componentWillReceiveProps(nextProps){
-    if(this.id != nextProps.user.id) {
+  componentWillReceiveProps(nextProps) {
+    if (this.id != nextProps.user.id) {
       this.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
-    } else if(nextProps.location.pathname == '/home' && nextProps.installations != null) {
-      nextProps.redirectToReport(1,0);
+    } else if (nextProps.location.pathname == '/home' && nextProps.installations != null) {
+      nextProps.redirectToReport(1, 0);
     }
-
   }
 
   render() {
@@ -34,13 +33,13 @@ class HomeView extends Component {
       user,
       children,
       setActiveInstallation,
-      downloadAdminReport
+      downloadAdminReport,
     } = this.props;
 
-    return(
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-3">
+    return (
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-md-3'>
             <SidebarView
               installations={installations}
               loadReports={loadReports}
@@ -49,32 +48,30 @@ class HomeView extends Component {
               downloadAdminReport={downloadAdminReport}
             />
           </div>
-          <div className="col-md-9">
+          <div className='col-md-9'>
             {children}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (store, state) => ({
   user: store.account.user,
-  installations: R.pathOr({}, ["installations"], store),
+  installations: R.pathOr({}, ['installations'], store),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadUserData: () => dispatch(fetchCurrentUser()),
-    loadInstallations: (userId) => dispatch(fetchUserInstallation(userId)),
-    loadReports: (userId) => dispatch(fetchReports(userId)),
-    redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
-    setActiveInstallation: (installationId, locationId) => dispatch(setActiveInstallation(installationId, locationId)),
-    downloadAdminReport: () => dispatch(downloadAdminReport())
-  }
-};
+const mapDispatchToProps = dispatch => ({
+  loadUserData: () => dispatch(fetchCurrentUser()),
+  loadInstallations: userId => dispatch(fetchUserInstallation(userId)),
+  loadReports: userId => dispatch(fetchReports(userId)),
+  redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
+  setActiveInstallation: (installationId, locationId) => dispatch(setActiveInstallation(installationId, locationId)),
+  downloadAdminReport: () => dispatch(downloadAdminReport()),
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(HomeView);

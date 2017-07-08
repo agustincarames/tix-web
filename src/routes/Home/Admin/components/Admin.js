@@ -5,24 +5,21 @@ import { connect } from 'react-redux';
 class InstallationsView extends Component {
 
   render() {
-
-    return(
+    return (
       <div>
         { this.props.children }
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (store) => ({
+const mapStateToProps = store => ({
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-};
+const mapDispatchToProps = dispatch => ({
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(InstallationsView);

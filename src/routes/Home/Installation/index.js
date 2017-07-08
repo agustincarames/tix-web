@@ -6,6 +6,6 @@ export default () => ({
   path: 'installation',
   component : InstallationView,
   childRoutes : [
-    ViewIntallation()
-  ]
-})
+    ViewIntallation(),
+  ],
+});

@@ -1,19 +1,19 @@
 import {
   LOGOUT_USER,
-  loadFromLocalStorage
+  loadFromLocalStorage,
 } from 'store/domain/account/actions';
 import { push } from 'react-router-redux';
 
-var firstRun = true;
+let firstRun = true;
 
 export default function authenticationMiddleware(store) {
-  return next => action => {
-    const {type} = action;
+  return next => (action) => {
+    const { type } = action;
 
-    if(firstRun) {
+    if (firstRun) {
       firstRun = false;
-      var user = localStorage.getItem("user");
-      if(user){
+      const user = localStorage.getItem('user');
+      if (user) {
         store.dispatch(loadFromLocalStorage(JSON.parse(user)));
       }
     }
@@ -24,5 +24,5 @@ export default function authenticationMiddleware(store) {
     }
 
     return next(action);
-  }
+  };
 }

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Highcharts from 'highcharts';
 import Highstock from 'highcharts/highstock';
 import ReactHighcharts from 'react-highcharts';
@@ -10,35 +10,35 @@ class BoxPlotChart extends Component {
     this.config = this.buildConfig(this.props);
   }
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     this.config = this.buildConfig(newProps);
   }
 
-  buildConfig(props){
+  buildConfig(props) {
     return {
       chart: {
-        type: 'boxplot'
+        type: 'boxplot',
       },
 
       title: {
-        text: 'Highcharts box plot styling'
+        text: 'Highcharts box plot styling',
       },
 
       legend: {
-        enabled: false
+        enabled: false,
       },
 
       xAxis: {
         categories: ['1', '2', '3', '4', '5'],
         title: {
-          text: 'Experiment No.'
-        }
+          text: 'Experiment No.',
+        },
       },
 
       yAxis: {
         title: {
-          text: 'Observations'
-        }
+          text: 'Observations',
+        },
       },
 
       plotOptions: {
@@ -52,8 +52,8 @@ class BoxPlotChart extends Component {
           stemWidth: 1,
           whiskerColor: '#3D9200',
           whiskerLength: '20%',
-          whiskerWidth: 3
-        }
+          whiskerWidth: 3,
+        },
       },
 
       series: [{
@@ -63,16 +63,16 @@ class BoxPlotChart extends Component {
           [733, 853, 939, 980, 1080],
           [714, 762, 817, 870, 918],
           [724, 802, 806, 871, 950],
-          [834, 836, 864, 882, 910]
-        ]
-      }]
-    }
+          [834, 836, 864, 882, 910],
+        ],
+      }],
+    };
   }
 
   render() {
-    return(
-      <Charts config = {this.config}></Charts>
-    )
+    return (
+      <Charts config={this.config} />
+    );
   }
 }
 export default BoxPlotChart;

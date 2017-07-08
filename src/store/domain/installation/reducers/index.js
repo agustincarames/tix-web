@@ -5,47 +5,39 @@ import { LOGOUT_USER } from '../../account/actions';
 
 export default typeToReducer({
   [FETCH_USER_INSTALLATIONS]: {
-    FULFILLED: (state, action) => {
-      return {
-        ...state,
-        list: R.indexBy(R.prop('id'), action.payload),
-        activeInstallation: action.payload.length > 0 ? action.payload[0].id : null,
-        activeLocation: 0
-      }
-    }
-  },
-  [SET_ACTIVE_INSTALLATION]: (state, action) => {
-    return {
+    FULFILLED: (state, action) => ({
       ...state,
-      activeInstallation: action.installationId,
-      activeLocation: action.locationId
-    };
+      list: R.indexBy(R.prop('id'), action.payload),
+      activeInstallation: action.payload.length > 0 ? action.payload[0].id : null,
+      activeLocation: 0,
+    }),
   },
-  [LOGOUT_USER]: (state, action) => {
-    return {};
-  },
+  [SET_ACTIVE_INSTALLATION]: (state, action) => ({
+    ...state,
+    activeInstallation: action.installationId,
+    activeLocation: action.locationId,
+  }),
+  [LOGOUT_USER]: (state, action) => ({}),
   [DELETE_INSTALLATION]: {
     FULFILLED: (state, action) => {
       var list = delete list[action.installationId];
       return {
         ...state,
-        list: list
-      }
-    }
+        list,
+      };
+    },
   },
   [EDIT_INSTALLATION]: {
-    FULFILLED: (state, action) => {
-      return {
-        ...state,
-        list: {
-          ...state.list,
-          [action.payload.id]: {
-            ...state.list[action.payload.id],
-            name: action.payload.name
-          }
-        }
+    FULFILLED: (state, action) => ({
+      ...state,
+      list: {
+        ...state.list,
+        [action.payload.id]: {
+          ...state.list[action.payload.id],
+          name: action.payload.name,
+        },
+      },
 
-      }
-    }
-  }
+    }),
+  },
 }, {});

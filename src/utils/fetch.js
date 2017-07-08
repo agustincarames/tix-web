@@ -1,8 +1,8 @@
-import 'whatwg-fetch'
+import 'whatwg-fetch';
 
 function getAuthentication(token) {
-  if(token) {
-    return { 'Authorization': `JWT ${token}` }
+  if (token) {
+    return { Authorization: `JWT ${token}` };
   }
   return {};
 }
@@ -16,8 +16,8 @@ export default function isoFetch(url, options = {}) {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ...options.headers,
-      ...getAuthentication(token)
-    }
-    return fetch(fullUrl, { headers: headers , method,  body: body });
-  }
+      ...getAuthentication(token),
+    };
+    return fetch(fullUrl, { headers, method, body });
+  };
 }

@@ -1,8 +1,8 @@
-import { applyMiddleware, compose, createStore } from 'redux'
-import thunk from 'redux-thunk'
-import { browserHistory } from 'react-router'
-import makeRootReducer from './reducers'
-import { updateLocation } from './location'
+import { applyMiddleware, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
+import { browserHistory } from 'react-router';
+import makeRootReducer from './reducers';
+import { updateLocation } from './location';
 import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from '../middleware/promise';
 import authenticationMiddleware from '../middleware/authentication';
@@ -16,14 +16,14 @@ export default (initialState = {}) => {
   // ======================================================
   // Store Enhancers
   // ======================================================
-  const enhancers = []
+  const enhancers = [];
 
-  let composeEnhancers = compose
+  let composeEnhancers = compose;
 
   if (__DEV__) {
-    const composeWithDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    const composeWithDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
     if (typeof composeWithDevToolsExtension === 'function') {
-      composeEnhancers = composeWithDevToolsExtension
+      composeEnhancers = composeWithDevToolsExtension;
     }
   }
 
@@ -35,20 +35,20 @@ export default (initialState = {}) => {
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),
-      ...enhancers
-    )
-  )
-  store.asyncReducers = {}
+      ...enhancers,
+    ),
+  );
+  store.asyncReducers = {};
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
+  store.unsubscribeHistory = browserHistory.listen(updateLocation(store));
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      const reducers = require('./reducers').default
-      store.replaceReducer(reducers(store.asyncReducers))
-    })
+      const reducers = require('./reducers').default;
+      store.replaceReducer(reducers(store.asyncReducers));
+    });
   }
 
-  return store
-}
+  return store;
+};

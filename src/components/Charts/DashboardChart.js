@@ -1,24 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Highcharts from 'highcharts';
 import Highstock from 'highcharts/highstock';
 import ReactHighcharts from 'react-highcharts';
 
 const Charts = ReactHighcharts.withHighcharts(Highstock);
 import moment from 'moment';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 class DashboardChart extends Component {
 
-  buildConfig(props){
-    var fechasLength = props && props.fechas? props.fechas.length : 0;
+  buildConfig(props) {
+    const fechasLength = props && props.fechas ? props.fechas.length : 0;
     return {
       chart: {
         marginRight: 130,
-        marginBottom: 40
+        marginBottom: 40,
       },
       title: {
         text: '',
-        x: -20 //center
+        x: -20, // center
       },
       xAxis: {
         type: 'datetime',
@@ -26,12 +26,12 @@ class DashboardChart extends Component {
         tickInterval: 6,
         labels: {
           enabled: true,
-          formatter: function () {
-            if(this.value <= 0){
-              return "";
+          formatter() {
+            if (this.value <= 0) {
+              return '';
             }
             const date = moment(this.value);
-            return `${date.date()}/${date.month()+1} <br> ${date.hour()}:${date.minute()}`;
+            return `${date.date()}/${date.month() + 1} <br> ${date.hour()}:${date.minute()}`;
           },
         },
         min: fechasLength < 50 ? 0 : fechasLength - 50,
@@ -39,18 +39,19 @@ class DashboardChart extends Component {
       },
       yAxis: {
         title: {
-          text: '% de utilizacion'
+          text: '% de utilizacion',
         },
         plotLines: [{
           value: 0,
           width: 1,
-          color: '#808080'
+          color: '#808080',
         }],
-        min: 0, max: 1
+        min: 0,
+        max: 1,
       },
       tooltip: {
         shared: true,
-        crosshairs: true
+        crosshairs: true,
       },
       legend: {
         layout: 'vertical',
@@ -58,10 +59,10 @@ class DashboardChart extends Component {
         verticalAlign: 'top',
         x: -10,
         y: 100,
-        borderWidth: 0
+        borderWidth: 0,
       },
       scrollbar: {
-        enabled: true
+        enabled: true,
       },
       series: props ? props.data : this.props.data,
       plotOptions: {
@@ -69,9 +70,9 @@ class DashboardChart extends Component {
           cursor: 'pointer',
           turboThreshold: 0,
           marker: {
-            lineWidth: 1
-          }
-        }
+            lineWidth: 1,
+          },
+        },
       },
     };
   }
@@ -80,34 +81,34 @@ class DashboardChart extends Component {
     this.config = this.buildConfig();
   }
 
-  componentWillReceiveProps(newProps){
+  componentWillReceiveProps(newProps) {
     this.config = this.buildConfig(newProps);
   }
 
   renderGraph() {
-    if(!this.props.data || this.props.fechas.length == 0){
-      return <span>No hay reportes para mostrar</span>
+    if (!this.props.data || this.props.fechas.length == 0) {
+      return <span>No hay reportes para mostrar</span>;
     }
-    return <Charts config = {this.config}></Charts>
+    return <Charts config={this.config} />;
   }
 
 
   render() {
     const {
       isp,
-      email
+      email,
     } = this.props;
-    return(
-      <Card className="card-margins">
+    return (
+      <Card className='card-margins'>
         <CardTitle
           title={`Porcentaje de utilizacion de ancho de banda en ${isp}`}
-          subtitle={ `Grafico general para ${email}`}
+          subtitle={`Grafico general para ${email}`}
         />
         <CardText>
           {this.renderGraph()}
         </CardText>
       </Card>
-    )
+    );
   }
 }
 export default DashboardChart;
