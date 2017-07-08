@@ -26,7 +26,6 @@ class AdminView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('props');
     if(nextProps.version && this.state.version !== nextProps.reports.version){
       this.calculateQuartils(nextProps.reports)
     }

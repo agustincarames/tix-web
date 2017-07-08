@@ -27,7 +27,6 @@ export default typeToReducer({
   [DELETE_INSTALLATION]: {
     FULFILLED: (state, action) => {
       var list = delete list[action.installationId];
-      console.log(list);
       return {
         ...state,
         list: list

@@ -13,7 +13,6 @@ class DashboardChart extends Component {
   }
 
   buildConfig(props){
-    console.log(props.data);
     return {
       chart: {
         type: 'column',

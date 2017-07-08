@@ -33,8 +33,7 @@ class SidebarView extends Component {
         primaryText={'Panel de Administracion'}
         containerElement={<Link to="/home/admin/users" />}
         nestedItems={[
-          <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to="/home/admin/ispchart" />} />,
-          <ListItem primaryText={'Descarga de Datos'} containerElement={<a target="self" href="/api/admin/reports.csv" />}/>
+          <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to="/home/admin/ispchart" />} />
         ]}
       />;
     }

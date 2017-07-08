@@ -1,36 +1,66 @@
 import React, { Component, PropTypes } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import {
   TextField
 } from 'redux-form-material-ui'
 import RaisedButton from 'material-ui/RaisedButton';
 
-class RegisterForm extends Component {
+class RecoverForm extends Component {
+
+  renderCodeLink(){
+    if(!this.props.showCode) {
+      return <a onTouchTap={this.props.toggleRecoveryCode} className="password-recovery-text">Ya tiene el codigo? </a>
+    }
+  }
+
+
+
+  renderCodeFields(){
+    if(this.props.showCode) {
+      return (
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+          <Field type="text" name="code" component={TextField} floatingLabelText="Codigo" />
+          <Field type="password" name="password" component={TextField} floatingLabelText="Nueva Contraseña" />
+        </div>
+      )
+    }
+  }
 
   render(){
-    const { handleSubmit } = this.props;
+    const { handleSubmit, showCode } = this.props;
     return(
       <div style={{margin: '20px 0px'}}>
-        <form onSubmit={handleSubmit}>
           <Paper>
             <h3 className="log-in-header">{ `Recuperar Contraseña` }</h3>
             <div>
-              <form onSubmit={handleSubmit} className="hgroup">
+              <form onSubmit={handleSubmit} className="hgroup"  style={{paddingBottom: '15px'}}>
                 <Field type="text" name="email" component={TextField} floatingLabelText="Email" />
-                <RaisedButton style={{marginBottom: '15px'}}  primary={true} label="Recuperar Contraseña"type="submit" />
+                {this.renderCodeFields()}
+                <RaisedButton  primary={true} style={{marginTop: '15px'}} label={showCode ? 'Cambiar Contraseña' : 'Recuperar Contraseña'} type="submit" />
+                {this.renderCodeLink()}
               </form>
             </div>
           </Paper>
-        </form>
       </div>
     )
   }
 }
 
-RegisterForm = reduxForm({
-  form: 'register'
-})(RegisterForm);
+function mapStateToProps(state, ownProps) {
+  if(ownProps.showCode){
+    return {
+      initialValues: {
+        code: ownProps.code,
+        email: ownProps.email
+      }
+    }
+  }
+}
 
-export default RegisterForm;
+RecoverForm = reduxForm({
+  form: 'recoverForm'
+})(RecoverForm);
+
+export default connect(mapStateToProps)(RecoverForm);

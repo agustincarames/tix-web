@@ -8,11 +8,8 @@ class Alert extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    console.log('props');
     if(nextProps.alerts && Object.keys(nextProps.alerts).length > 0) {
-      console.log('nextprops');
       var nextMessage = nextProps.alerts[Object.keys(nextProps.alerts)[0]];
-      console.log(nextMessage);
       this.displayNotification(nextMessage, Object.keys(nextProps.alerts)[0]);
 
     }

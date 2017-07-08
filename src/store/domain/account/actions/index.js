@@ -117,7 +117,17 @@ export function sendRecoveryEmail(email) {
   return dispatch => {
     return dispatch({
       type: SEND_RECOVERY_EMAIL,
-      payload: fetch('/recovery', {method: 'POST', body: {email}})
+      payload: fetch('/recover', {method: 'POST', body: {email}})
     })
   }
 }
+
+export function sendRecoveryPassword(email, code, password) {
+  return dispatch => {
+    return dispatch({
+      type: SEND_RECOVERY_EMAIL,
+      payload: fetch('/recover/code', {method: 'POST', body: {email, code, password}})
+    })
+  }
+}
+

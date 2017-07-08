@@ -16,7 +16,6 @@ class FiltersForm extends Component {
 
   render(){
     const { handleSubmit, providers } = this.props;
-    console.log(providers);
     if(Object.keys(providers).length == 0){
       return <span>wait</span>
     }

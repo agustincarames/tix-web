@@ -6,7 +6,6 @@ import { LOGOUT_USER } from '../../account/actions';
 export default typeToReducer({
   [FETCH_ALL_PROVIDERS]: {
     FULFILLED: (state, action) => {
-      console.log(R.indexBy(R.prop('id'),action.payload));
       return {
         ...state,
         ...R.indexBy(R.prop('id'),action.payload)
