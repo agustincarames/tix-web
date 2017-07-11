@@ -17,10 +17,11 @@ export default typeToReducer({
     activeInstallation: action.installationId,
     activeLocation: action.locationId,
   }),
-  [LOGOUT_USER]: (state, action) => ({}),
+  [LOGOUT_USER]: () => ({}),
   [DELETE_INSTALLATION]: {
     FULFILLED: (state, action) => {
-      var list = delete list[action.installationId];
+      const actualList = state.list;
+      const list = delete actualList[action.installationId];
       return {
         ...state,
         list,

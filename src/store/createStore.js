@@ -1,9 +1,9 @@
+import { routerMiddleware } from 'react-router-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { browserHistory } from 'react-router';
-import makeRootReducer from './reducers';
+import rootReducer from './reducers';
 import { updateLocation } from './location';
-import { routerMiddleware } from 'react-router-redux';
 import promiseMiddleware from '../middleware/promise';
 import authenticationMiddleware from '../middleware/authentication';
 
@@ -31,7 +31,7 @@ export default (initialState = {}) => {
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createStore(
-    makeRootReducer(),
+    rootReducer(),
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),

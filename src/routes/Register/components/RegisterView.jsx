@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../store/domain/account/actions/index';
@@ -17,6 +18,14 @@ const RegisterView = props => (
 
   </div>
 );
+
+RegisterView.propTypes = {
+  submitRegister: PropTypes.func,
+};
+
+RegisterView.defaultProps = {
+  submitRegister: () => {},
+};
 
 const mapStateToProps = () => ({ });
 

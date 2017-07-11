@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
@@ -13,6 +14,7 @@ class RecoverForm extends Component {
     if (!this.props.showCode) {
       return <a onTouchTap={this.props.toggleRecoveryCode} className='password-recovery-text'>Ya tiene el codigo? </a>;
     }
+    return <div />;
   }
 
 
@@ -25,6 +27,7 @@ class RecoverForm extends Component {
         </div>
       );
     }
+    return <div />;
   }
 
   render() {
@@ -37,7 +40,12 @@ class RecoverForm extends Component {
             <form onSubmit={handleSubmit} className='hgroup' style={{ paddingBottom: '15px' }}>
               <Field type='text' name='email' component={TextField} floatingLabelText='Email' />
               {this.renderCodeFields()}
-              <RaisedButton primary style={{ marginTop: '15px' }} label={showCode ? 'Cambiar Contraseña' : 'Recuperar Contraseña'} type='submit' />
+              <RaisedButton
+                primary
+                style={{ marginTop: '15px' }}
+                label={showCode ? 'Cambiar Contraseña' : 'Recuperar Contraseña'}
+                type='submit'
+              />
               {this.renderCodeLink()}
             </form>
           </div>
@@ -46,6 +54,12 @@ class RecoverForm extends Component {
     );
   }
 }
+
+RecoverForm.propTypes = {
+  handleSubmit: PropTypes.func.required,
+  showCode: PropTypes.bool.required,
+  toggleRecoveryCode: PropTypes.func,
+};
 
 function mapStateToProps(state, ownProps) {
   if (ownProps.showCode) {
@@ -56,10 +70,11 @@ function mapStateToProps(state, ownProps) {
       },
     };
   }
+  return {};
 }
 
-RecoverForm = reduxForm({
+const RecoverFormView = reduxForm({
   form: 'recoverForm',
 })(RecoverForm);
 
-export default connect(mapStateToProps)(RecoverForm);
+export default connect(mapStateToProps)(RecoverFormView);

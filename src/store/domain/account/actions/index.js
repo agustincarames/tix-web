@@ -1,5 +1,6 @@
-import fetch from '../../../../utils/fetch';
 import { push } from 'react-router-redux';
+import fetch from '../../../../utils/fetch';
+import { addAlert } from '../../alerts/actions';
 
 export const LOGIN_USER = 'LOGIN_USER';
 export const FETCH_USER = 'FETCH_USER';
@@ -34,6 +35,9 @@ export function registerUser(register) {
   return dispatch => dispatch({
     type: REGISTER_USER,
     payload: fetch('/register', { method: 'POST', body: register }),
+  }).then(() => {
+    dispatch(addAlert('Usuario registrado correctamente'));
+    return dispatch(push('/'));
   });
 }
 
@@ -100,13 +104,16 @@ export function sendRecoveryEmail(email) {
   return dispatch => dispatch({
     type: SEND_RECOVERY_EMAIL,
     payload: fetch('/recover', { method: 'POST', body: { email } }),
-  });
+  }).then(() => dispatch(addAlert('Email enviado correctamente')));
 }
 
 export function sendRecoveryPassword(email, code, password) {
   return dispatch => dispatch({
     type: SEND_RECOVERY_EMAIL,
     payload: fetch('/recover/code', { method: 'POST', body: { email, code, password } }),
+  }).then(() => {
+    dispatch(addAlert('Contraseña modificada correctamente'));
+    return dispatch(push('/'));
   });
 }
 

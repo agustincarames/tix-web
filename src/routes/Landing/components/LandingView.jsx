@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import LogoTix from '../assets/LogoTix.png';
 import LoginForm from './LoginForm';
 import { loginUser } from '../../../store/domain/account/actions/index';
-import { connect } from 'react-redux';
+
 import './LandingView.scss';
 
 const LandingView = props => (
@@ -81,6 +83,10 @@ const LandingView = props => (
     <hr />
   </div>
 );
+
+LandingView.propTypes = {
+  submitLogin: PropTypes.func.required,
+};
 
 const mapStateToProps = () => ({ });
 

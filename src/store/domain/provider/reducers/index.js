@@ -10,5 +10,5 @@ export default typeToReducer({
       ...R.indexBy(R.prop('id'), action.payload),
     }),
   },
-  [LOGOUT_USER]: (state, action) => ({}),
+  [LOGOUT_USER]: () => ({}),
 }, {});

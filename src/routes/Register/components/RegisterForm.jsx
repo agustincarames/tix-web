@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Paper from 'material-ui/Paper';
@@ -13,6 +14,10 @@ const Captcha = props => (
     onChange={props.input.onChange}
   />
 );
+
+Captcha.propTypes = {
+  input: PropTypes.obj,
+};
 
 class RegisterForm extends Component {
 
@@ -29,7 +34,13 @@ class RegisterForm extends Component {
                 <Field type='password' name='password1' component={TextField} floatingLabelText={'Contraseña'} />
                 <Field type='password' name='password2' component={TextField} floatingLabelText={'Contraseña'} />
                 <Field name='captcharesponse' component={Captcha} />
-                <RaisedButton style={{ marginBottom: '15px' }} className='button-size' primary label='Registrarse'type='submit' />
+                <RaisedButton
+                  style={{ marginBottom: '15px' }}
+                  className='button-size'
+                  primary
+                  label='Registrarse'
+                  type='submit'
+                />
               </form>
             </div>
           </Paper>
@@ -39,8 +50,13 @@ class RegisterForm extends Component {
   }
 }
 
-RegisterForm = reduxForm({
+
+RegisterForm.propTypes = {
+  handleSubmit: PropTypes.func,
+};
+
+const ReduxRegisterForm = reduxForm({
   form: 'register',
 })(RegisterForm);
 
-export default RegisterForm;
+export default ReduxRegisterForm;

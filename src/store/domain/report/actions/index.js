@@ -1,5 +1,4 @@
 import fetch from '../../../../utils/fetch';
-import { push } from 'react-router-redux';
 
 export const FETCH_REPORTS = 'FETCH_REPORTS';
 export const FETCH_ALL_REPORTS = 'FETCH_ALL_REPORTS';
@@ -9,11 +8,12 @@ export const DOWNLOAD_ADMIN_REPORTS = 'DOWNLOAD_ADMIN_REPORTS';
 export function fetchReports(userId, installationId, providerId, startDate, endDate) {
   return dispatch => dispatch({
     type: FETCH_REPORTS,
-    payload: fetch(`/user/${userId}/reports?installationId=${installationId}&providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`),
+    payload: fetch(`/user/${userId}/reports?installationId=${installationId}
+      &providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`),
   });
 }
 
-export function fetchAllReports(userId, startDate, endDate) {
+export function fetchAllReports(userId) {
   return dispatch => dispatch({
     type: FETCH_ALL_REPORTS,
     payload: fetch(`/user/${userId}/reports`),
