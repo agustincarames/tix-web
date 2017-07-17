@@ -1,15 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import { fetchUserInstallation, deleteInstallation } from 'store/domain/installation/actions';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import Pencil from 'material-ui/svg-icons/content/create';
 import Delete from 'material-ui/svg-icons/action/delete';
 import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
@@ -18,11 +12,19 @@ import InstallationNameForm from './InstallationNameForm';
 class InstallationListView extends Component {
 
   componentWillMount() {
+    const {
+      installation,
+      userId,
+    } = this.props;
     this.setState({ editInstallatio: false });
+    this.editInstallation = this.editInstallation.bind(this);
+    this.toggleEditInstallation = this.toggleEditInstallation.bind(this, installation);
+    this.deleteInstallation = this.deleteInstallation.bind(this, installation.id, userId);
   }
 
   deleteInstallation(installationId, userId) {
     this.props.deleteInstallation(userId, installationId);
+
   }
 
   toggleEditInstallation() {
@@ -40,11 +42,13 @@ class InstallationListView extends Component {
 
   renderInstallationName() {
     if (this.state.editInstallation) {
-      return (<InstallationNameForm
-        onSubmit={this.editInstallation.bind(this)}
-        installation={this.props.installation}
-        toggleEditInstallation={this.toggleEditInstallation.bind(this)}
-      />);
+      return (
+        <InstallationNameForm
+          onSubmit={this.editInstallation}
+          installation={this.props.installation}
+          toggleEditInstallation={this.toggleEditInstallation}
+        />
+      );
     }
     return this.props.installation.name;
   }
@@ -60,16 +64,25 @@ class InstallationListView extends Component {
         <TableRowColumn>{this.renderInstallationName()}</TableRowColumn>
         <TableRowColumn>{installation.publickey}</TableRowColumn>
         <TableRowColumn>
-          <IconButton onTouchTap={this.toggleEditInstallation.bind(this, installation)} >
+          <IconButton onTouchTap={this.toggleEditInstallation} >
             <Pencil />
           </IconButton>
-          <IconButton onTouchTap={this.deleteInstallation.bind(this, installation.id, userId)}>
+          <IconButton onTouchTap={this.deleteInstallation}>
             <Delete />
           </IconButton>
         </TableRowColumn>
       </TableRow>
     );
   }
+}
+
+InstallationListView.propTypes = {
+  installation: PropTypes.shape({
+    name: PropTypes.string,
+  }),
+  userId: PropTypes.string,
+  editInstallation: PropTypes.func,
+  deleteInstallation: PropTypes.func,
 }
 
 export default InstallationListView;

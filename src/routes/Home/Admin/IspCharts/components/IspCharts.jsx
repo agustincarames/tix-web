@@ -1,32 +1,25 @@
 import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import R from 'ramda';
-import { fetchAdminReports } from 'store/domain/report/actions';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import HistogramChart from 'components/Charts/HistogramChart';
-import FiltersForm from './FiltersForm';
-import { fetchProviders } from 'store/domain/provider/actions';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 import moment from 'moment';
 import { CSVLink } from 'react-csv';
+import { fetchAdminReports } from '../../../../../store/domain/report/actions';
+import HistogramChart from '../../../../../components/Charts/HistogramChart';
+import FiltersForm from './FiltersForm';
+import { fetchProviders } from '../../../../../store/domain/provider/actions';
+
 
 class AdminView extends Component {
 
   componentWillMount() {
     this.props.fetchProviders(this.props.user.id);
     this.setState({ version: 0 });
+    this.filterReports = this.filterReports.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.version && this.state.version !== nextProps.reports.version) {
+    if (nextProps.reports && this.state.version !== nextProps.reports.version) {
       this.calculateQuartils(nextProps.reports);
     }
   }
@@ -65,13 +58,11 @@ class AdminView extends Component {
 
   filterReports(data) {
     this.state.filters = data;
-    this.props.fetchAdminReports(data.isp, moment(data.startDate).format('YYYY-MM-DD'), moment(data.endDate).format('YYYY-MM-DD'));
+    this.props.fetchAdminReports(data.isp,
+      moment(data.startDate).format('YYYY-MM-DD'), moment(data.endDate).format('YYYY-MM-DD'));
   }
 
   renderHistograms() {
-    const {
-      reports,
-    } = this.props;
     if (!this.upUsageQuartils) {
       return <div />;
     }
@@ -84,18 +75,36 @@ class AdminView extends Component {
         <CardText>
           <div className='row'>
             <div className='col-md-6'>
-              <HistogramChart data={this.upUsageQuartils} description='Utilization Subida' title='Histograma Utilization Subida' />
+              <HistogramChart
+                data={this.upUsageQuartils}
+                description='Utilization Subida'
+                title='Histograma Utilization Subida'
+              />
             </div>
             <div className='col-md-6'>
-              <HistogramChart data={this.downUsageQuartils} description='Utilization Bajada' red title='Histograma Utilization Bajada' />
+              <HistogramChart
+                data={this.downUsageQuartils}
+                description='Utilization Bajada'
+                red
+                title='Histograma Utilization Bajada'
+              />
             </div>
           </div>
           <div className='row'>
             <div className='col-md-6'>
-              <HistogramChart data={this.upQualityQuartils} description='Calidad Subida' title='Histograma Calidad Subida' />
+              <HistogramChart
+                data={this.upQualityQuartils}
+                description='Calidad Subida'
+                title='Histograma Calidad Subida'
+              />
             </div>
             <div className='col-md-6'>
-              <HistogramChart data={this.downQualityQuartils} description='Calidad Bajada' red title='Histograma Calidad Bajada' />
+              <HistogramChart
+                data={this.downQualityQuartils}
+                description='Calidad Bajada'
+                red
+                title='Histograma Calidad Bajada'
+              />
             </div>
           </div>
         </CardText>
@@ -105,7 +114,6 @@ class AdminView extends Component {
 
   renderCsvDownload() {
     const {
-      reports,
       providers,
       provider,
     } = this.props;
@@ -133,7 +141,7 @@ class AdminView extends Component {
     } = this.props;
     return (
       <div>
-        <FiltersForm providers={providers} onSubmit={this.filterReports.bind(this)} />
+        <FiltersForm providers={providers} onSubmit={this.filterReports} />
         {this.renderCsvDownload()}
         {this.renderHistograms()}
       </div>
@@ -141,6 +149,25 @@ class AdminView extends Component {
     );
   }
 }
+
+AdminView.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  reports: PropTypes.shape({
+    version: PropTypes.number,
+    upUsage: PropTypes.number,
+    downUsage: PropTypes.number,
+    upQuality: PropTypes.number,
+    downQuality: PropTypes.number,
+  }),
+  providers: PropTypes.arrayOf({
+    name: PropTypes.string,
+  }),
+  provider: PropTypes.string,
+  fetchProviders: PropTypes.func,
+  fetchAdminReports: PropTypes.func,
+};
 
 const mapStateToProps = store => ({
   user: store.account.user,

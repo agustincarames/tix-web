@@ -1,7 +1,5 @@
-import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import { fetchAllReports } from 'store/domain/report/actions';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Table,
   TableBody,
@@ -10,7 +8,7 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 class MonthlyReportTable extends Component {
 
@@ -31,7 +29,7 @@ class MonthlyReportTable extends Component {
       providers,
       reports,
     } = this.props;
-    if (!reports.providerList || reports.providerList.length == 0 || !providers) {
+    if (!reports.providerList || reports.providerList.length === 0 || !providers) {
       return <span> No hay información para mostrar</span>;
     }
 
@@ -54,15 +52,12 @@ class MonthlyReportTable extends Component {
   }
 
   render() {
-    const {
-      providers,
-      reports,
-    } = this.props;
     return (
       <Card className='card-margins'>
         <CardTitle
           title='Tabla de medianas mensuales'
-          subtitle='Esta tabla muestra las medianas mensuales de cada uno de los parámetros estudiados para cada uno de los proveedores de internet que utilizó el usuario.'
+          subtitle={`Esta tabla muestra las medianas mensuales de cada uno de los parámetros estudiados para
+            cada uno de los proveedores de internet que utilizó el usuario.`}
         />
         <CardText>
           {this.renderTable()}
@@ -70,7 +65,21 @@ class MonthlyReportTable extends Component {
       </Card>
     );
   }
-
 }
+
+MonthlyReportTable.propTypes = {
+  providers: PropTypes.arrayOf({
+    name: PropTypes.string,
+  }),
+  reports: PropTypes.shape({
+    providerList: PropTypes.array,
+    fullReport: PropTypes.arrayOf({
+      upQualityMedian: PropTypes.number,
+      downQualityMedian: PropTypes.number,
+      upUsageMedian: PropTypes.number,
+      downUsageMedian: PropTypes.number,
+    }),
+  }),
+};
 
 export default MonthlyReportTable;

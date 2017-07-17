@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import {
@@ -29,6 +30,11 @@ class InstallationNameForm extends Component {
   }
 }
 
+InstallationNameForm.propTypes = {
+  handleSubmit: PropTypes.func,
+  toggleEditInstallation: PropTypes.func,
+};
+
 function mapStateToProps(state, ownProps) {
   return {
     initialValues: {
@@ -37,9 +43,9 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-InstallationNameForm = reduxForm({
+const InstallationNameFormView = reduxForm({
   form: 'InstallationNameForm',
 })(InstallationNameForm);
 
-export default connect(mapStateToProps)(InstallationNameForm);
+export default connect(mapStateToProps)(InstallationNameFormView);
 

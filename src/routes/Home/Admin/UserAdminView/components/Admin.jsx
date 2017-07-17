@@ -1,8 +1,7 @@
-import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import R from 'ramda';
-import { fetchAllUsers, impersonateUser } from 'store/domain/account/actions';
 import {
   Table,
   TableBody,
@@ -11,36 +10,34 @@ import {
   TableRow,
   TableRowColumn,
 } from 'material-ui/Table';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import { fetchAllUsers, impersonateUser } from '../../../../../store/domain/account/actions';
 
 class AdminView extends Component {
-
-  renderNoUsers() {
-    return (
-      <span className='label label-important'>No hay usuarios registrados en el sistema.</span>
-    );
-  }
-
-  renderUsers(users, impersonateUser) {
-    return users.map(user => (
-      <TableRow key={user.id}>
-        <TableRowColumn>{user.id}</TableRowColumn>
-        <TableRowColumn>{user.username}</TableRowColumn>
-        <TableRowColumn>{user.role}</TableRowColumn>
-        <TableRowColumn><a onClick={() => impersonateUser(user.id)} className='btn btn-info' href='#'>Impersonar</a></TableRowColumn>
-      </TableRow>
-      ));
-  }
 
   componentWillMount() {
     this.props.fetchAllUsers();
   }
 
+  renderUsers(users, impersonateUserFunc) {
+    return users.map(user => (
+      <TableRow key={user.id}>
+        <TableRowColumn>{user.id}</TableRowColumn>
+        <TableRowColumn>{user.username}</TableRowColumn>
+        <TableRowColumn>{user.role}</TableRowColumn>
+        <TableRowColumn>
+          <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info'>
+            Impersonar
+          </span>
+        </TableRowColumn>
+      </TableRow>
+    ));
+  }
 
   render() {
     const {
       users,
-      impersonateUser,
+      impersonateUserFunc,
     } = this.props;
 
     return (
@@ -60,7 +57,7 @@ class AdminView extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover>
-              {this.renderUsers(users, impersonateUser)}
+              {this.renderUsers(users, impersonateUserFunc)}
             </TableBody>
           </Table>
         </CardText>
@@ -69,13 +66,23 @@ class AdminView extends Component {
   }
 }
 
+AdminView.propTypes = {
+  users: PropTypes.arrayOf({
+    id: PropTypes.string,
+    username: PropTypes.sring,
+    role: PropTypes.string,
+  }),
+  impersonateUserFunc: PropTypes.func,
+  fetchAllUsers: PropTypes.func,
+};
+
 const mapStateToProps = store => ({
   users: R.pathOr([], ['account', 'users'], store),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchAllUsers: () => dispatch(fetchAllUsers()),
-  impersonateUser: id => dispatch(impersonateUser(id)),
+  impersonateUserFunc: id => dispatch(impersonateUser(id)),
 });
 
 export default connect(

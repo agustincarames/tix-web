@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import R from 'ramda';
+import PropTypes from 'prop-types';
 import { fetchCurrentUser } from '../../../store/domain/account/actions';
 import { fetchUserInstallation, setActiveInstallation } from '../../../store/domain/installation/actions';
 import { fetchReports, downloadAdminReport } from '../../../store/domain/report/actions';
 import SidebarView from '../../../components/Sidebar/SidebarView';
-import { push } from 'react-router-redux';
-import R from 'ramda';
 
 class HomeView extends Component {
 
@@ -18,10 +18,10 @@ class HomeView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.id != nextProps.user.id) {
+    if (this.id !== nextProps.user.id) {
       this.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
-    } else if (nextProps.location.pathname == '/home' && nextProps.installations != null) {
+    } else if (nextProps.location.pathname === '/home' && nextProps.installations !== null) {
       nextProps.redirectToReport(1, 0);
     }
   }
@@ -32,8 +32,8 @@ class HomeView extends Component {
       loadReports,
       user,
       children,
-      setActiveInstallation,
-      downloadAdminReport,
+      setActiveInstallationFunc,
+      downloadAdminReportFunc,
     } = this.props;
 
     return (
@@ -44,8 +44,8 @@ class HomeView extends Component {
               installations={installations}
               loadReports={loadReports}
               user={user}
-              setActiveInstallation={setActiveInstallation}
-              downloadAdminReport={downloadAdminReport}
+              setActiveInstallation={setActiveInstallationFunc}
+              downloadAdminReport={downloadAdminReportFunc}
             />
           </div>
           <div className='col-md-9'>
@@ -57,7 +57,29 @@ class HomeView extends Component {
   }
 }
 
-const mapStateToProps = (store, state) => ({
+HomeView.propTypes = {
+  loadUserData: PropTypes.func,
+  loadInstallations: PropTypes.func,
+  loadReports: PropTypes.func,
+  redirectToReport: PropTypes.func,
+  setActiveInstallationFunc: PropTypes.func,
+  downloadAdminReportFunc: PropTypes.func,
+  user: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  children: PropTypes.node,
+  installations: PropTypes.arrayOf({
+    list: PropTypes.array,
+    activeInstallation: PropTypes.number,
+    activeLocation: PropTypes.number,
+  }),
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+  }),
+};
+
+
+const mapStateToProps = (store) => ({
   user: store.account.user,
   installations: R.pathOr({}, ['installations'], store),
 });
@@ -67,8 +89,9 @@ const mapDispatchToProps = dispatch => ({
   loadInstallations: userId => dispatch(fetchUserInstallation(userId)),
   loadReports: userId => dispatch(fetchReports(userId)),
   redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
-  setActiveInstallation: (installationId, locationId) => dispatch(setActiveInstallation(installationId, locationId)),
-  downloadAdminReport: () => dispatch(downloadAdminReport()),
+  setActiveInstallationFunc: (installationId, locationId) =>
+    dispatch(setActiveInstallation(installationId, locationId)),
+  downloadAdminReportFunc: () => dispatch(downloadAdminReport()),
 });
 
 export default connect(

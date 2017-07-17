@@ -1,41 +1,34 @@
-import React, { Component, PropTypes } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUserInstallation, deleteInstallation, editInstallationName } from 'store/domain/installation/actions';
 import R from 'ramda';
+import PropTypes from 'prop-types';
 import {
   Table,
   TableBody,
   TableHeader,
   TableHeaderColumn,
   TableRow,
-  TableRowColumn,
 } from 'material-ui/Table';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
+import {
+  fetchUserInstallation,
+  deleteInstallation,
+  editInstallationName,
+} from '../../../../../store/domain/installation/actions';
 import InstallationListView from './InstallationListView';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-
 
 class ViewInstallation extends Component {
-
-  componentWillMount() {
-  }
-
-  renderNoInstallations() {
-    return (
-      <span className='label label-important'>No hay instalaciones registradas en el sistema.</span>
-    );
-  }
 
   renderTable() {
     const {
       installations,
-      deleteInstallation,
+      dispatchDeleteInstallation,
       editInstallation,
       user,
     } = this.props;
 
-    if (installations.length == 0) {
-      return this.renderNoInstallations();
+    if (installations.length === 0) {
+      return <span className='label label-important'>No hay instalaciones registradas en el sistema.</span>
     }
     return (
       <Table>
@@ -47,9 +40,14 @@ class ViewInstallation extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} showRowHover>
-          { Object.keys(installations).map(key =>
-            <InstallationListView installation={installations[key]} deleteInstallation={deleteInstallation} userId={user.id} editInstallation={editInstallation} />,
-          )}
+          { Object.keys(installations).map(key => (
+            <InstallationListView
+              installation={installations[key]}
+              deleteInstallation={dispatchDeleteInstallation}
+              userId={user.id}
+              editInstallation={editInstallation}
+            />
+          ))}
         </TableBody>
       </Table>
     );
@@ -69,6 +67,17 @@ class ViewInstallation extends Component {
   }
 }
 
+ViewInstallation.propTypes = {
+  installations: PropTypes.arrayOf({
+    name: PropTypes.string,
+  }),
+  user: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  dispatchDeleteInstallation: PropTypes.func,
+  editInstallation: PropTypes.func,
+};
+
 const mapStateToProps = store => ({
   user: store.account.user,
   installations: R.pathOr([], ['installations', 'list'], store),
@@ -76,7 +85,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => ({
   loadInstallations: userId => dispatch(fetchUserInstallation(userId)),
-  deleteInstallation: (userId, installationId) => dispatch(deleteInstallation(userId, installationId)),
+  dispatchDeleteInstallation: (userId, installationId) => dispatch(deleteInstallation(userId, installationId)),
   editInstallation: (userId, installationId, name) => dispatch(editInstallationName(userId, installationId, name)),
 });
 

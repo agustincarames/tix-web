@@ -57,7 +57,8 @@ class UserReportView extends Component {
         <div>
           <MonthlyReportTable providers={providers} reports={reports} />
         </div>
-        {reports.providerList && reports.providerList.map(provider => this.renderGraph(providers[provider].name, reports.fullReport[provider]))}
+        { reports.providerList && reports.providerList.map(provider =>
+            this.renderGraph(providers[provider].name, reports.fullReport[provider])) }
       </div>
     );
   }
@@ -72,7 +73,9 @@ UserReportView.propTypes = {
   reports: PropTypes.shape({
     providerList: PropTypes.array,
   }),
-  providers: PropTypesp.array,
+  providers: PropTypes.arrayOf({
+    name: PropTypes.string,
+  }),
 };
 
 const mapStateToProps = store => ({

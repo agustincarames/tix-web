@@ -1,14 +1,14 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import PropTypes from 'prop-types';
 import MenuItem from 'material-ui/MenuItem';
 import {
   DatePicker,
   TextField,
   SelectField,
 } from 'redux-form-material-ui';
-import TimePicker from 'material-ui/TimePicker';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const required = value => value ? undefined : 'Requerido';
 
@@ -16,7 +16,7 @@ class FiltersForm extends Component {
 
   render() {
     const { handleSubmit, providers } = this.props;
-    if (Object.keys(providers).length == 0) {
+    if (Object.keys(providers).length === 0) {
       return <span>wait</span>;
     }
     return (
@@ -28,8 +28,8 @@ class FiltersForm extends Component {
           <form onSubmit={handleSubmit}>
             <div className='row'>
               <div className='col-md-4'>
-                <Field format={null} name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' validate={[required]} />
-                <Field format={null} component={DatePicker} floatingLabelText={'Fecha Fin'} name='endDate' validate={[required]} />
+                <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' validate={[required]} />
+                <Field component={DatePicker} floatingLabelText={'Fecha Fin'} name='endDate' validate={[required]} />
               </div>
               <div className='col-md-4'>
                 <Field name='dayOfWeek' component={SelectField} floatingLabelText='Dia de la semana' >
@@ -43,7 +43,8 @@ class FiltersForm extends Component {
                   <MenuItem value='7' primaryText='Domingo' />
                 </Field>
                 <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]}>
-                  {Object.keys(providers).map(key => <MenuItem value={providers[key].id} primaryText={providers[key].name} />)}
+                  {Object.keys(providers).map(key =>
+                    <MenuItem value={providers[key].id} primaryText={providers[key].name} />)}
                 </Field>
               </div>
               <div className='col-md-4'>
@@ -59,8 +60,16 @@ class FiltersForm extends Component {
   }
 }
 
-FiltersForm = reduxForm({
+FiltersForm.propTypes = {
+  handleSubmit: PropTypes.func,
+  providers: PropTypes.arrayOf({
+    id: PropTypes.string,
+    name: PropTypes.string,
+  }),
+};
+
+const FiltersFormView = reduxForm({
   form: 'usernameForm',
 })(FiltersForm);
 
-export default FiltersForm;
+export default FiltersFormView;

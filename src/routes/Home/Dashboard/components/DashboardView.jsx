@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import SelectDate from './TimeForm';
-import DashboardChart from 'components/Charts/DashboardChart';
-import { connect } from 'react-redux';
-import { fetchReports } from 'store/domain/report/actions';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import BottomArrow from 'material-ui/svg-icons/editor/vertical-align-bottom';
 import TopArrow from 'material-ui/svg-icons/editor/vertical-align-top';
 import BothArrow from 'material-ui/svg-icons/editor/vertical-align-center';
 import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
+import { connect } from 'react-redux';
+import DashboardChart from '../../../../components/Charts/DashboardChart';
+import { fetchReports } from '../../../../store/domain/report/actions';
+import SelectDate from './TimeForm';
+
 
 class DashboardView extends Component {
 
@@ -17,17 +19,24 @@ class DashboardView extends Component {
       user,
       routeParams,
     } = this.props;
-    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+    this.props.fetchReports(user.id, routeParams.installationId,
+      routeParams.providerId, moment().subtract(30, 'minutes'), moment());
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
     this.setState({ selectedIndex:0 });
+    this.selectDownstream = this.selectDownstream.bind(this);
+    this.selectUpstream = this.selectUpstream.bind(this);
+    this.selectGeneral = this.selectGeneral.bind(this);
+    this.selectDates = this.selectDates.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.installationId !== nextProps.routeParams.installationId || this.providerId !== nextProps.routeParams.providerId) {
+    if (this.installationId !== nextProps.routeParams.installationId
+      || this.providerId !== nextProps.routeParams.providerId) {
       this.providerId = nextProps.routeParams.providerId;
       this.installationId = nextProps.routeParams.installationId;
-      nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId, nextProps.routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+      nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId,
+        nextProps.routeParams.providerId, moment().subtract(30, 'minutes'), moment());
     }
     if (nextProps.reports) {
       this.setData(nextProps.reports);
@@ -105,7 +114,8 @@ class DashboardView extends Component {
       user,
       routeParams,
     } = this.props;
-    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId, moment(dates.startDate).format('YYYY-MM-DD'), moment(dates.endDate).format('YYYY-MM-DD'));
+    this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId,
+      moment(dates.startDate).format('YYYY-MM-DD'), moment(dates.endDate).format('YYYY-MM-DD'));
   }
 
   render() {
@@ -118,17 +128,17 @@ class DashboardView extends Component {
             <BottomNavigationItem
               label='General'
               icon={<BothArrow />}
-              onTouchTap={this.selectGeneral.bind(this)}
+              onTouchTap={this.selectGeneral}
             />
             <BottomNavigationItem
               label='Upstream'
               icon={<TopArrow />}
-              onTouchTap={this.selectUpstream.bind(this)}
+              onTouchTap={this.selectUpstream}
             />
             <BottomNavigationItem
               label='Downstream'
               icon={<BottomArrow />}
-              onTouchTap={this.selectDownstream.bind(this)}
+              onTouchTap={this.selectDownstream}
             />
           </BottomNavigation>
         </Paper>
@@ -137,13 +147,31 @@ class DashboardView extends Component {
   }
 }
 
-const mapStateToProps = (store, state) => ({
+DashboardView.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  routeParams: PropTypes.shape({
+    installationId: PropTypes.string,
+    providerId: PropTypes.string,
+  }),
+  fetchReports: PropTypes.func,
+  reports: PropTypes.arrayOf({
+    upUsage: PropTypes.number,
+    downUsage: PropTypes.number,
+    upQuality: PropTypes.number,
+    downQuality: PropTypes.number,
+  }),
+};
+
+const mapStateToProps = (store) => ({
   user: store.account.user,
   reports: store.reports,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchReports: (userId, installationId, providerId, startDate, endDate) => dispatch(fetchReports(userId, installationId, providerId, startDate, endDate)),
+  fetchReports: (userId, installationId, providerId, startDate, endDate) =>
+    dispatch(fetchReports(userId, installationId, providerId, startDate, endDate)),
 });
 
 export default connect(
