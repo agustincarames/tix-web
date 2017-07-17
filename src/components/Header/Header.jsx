@@ -1,15 +1,16 @@
 import React from 'react';
-import { IndexLink, Link } from 'react-router';
-import './Header.scss';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { logoutUser, stopImpersonation } from '../../store/domain/account/actions';
-import Alert from 'components/Alert';
-import { removeAlert } from 'store/domain/alerts/actions';
 import R from 'ramda';
+import './Header.scss';
+import { logoutUser, stopImpersonation } from '../../store/domain/account/actions';
+import Alert from '../../components/Alert';
+import { removeAlert } from '../../store/domain/alerts/actions';
 
-const displayLogout = (user, logout, stopImpersonation) => {
+const displayLogout = (user, logout, stopImpersonationFunc) => {
   if (user) {
-    const action = user.isImpersonating ? stopImpersonation : logout;
+    const action = user.isImpersonating ? stopImpersonationFunc : logout;
     const actionString = user.isImpersonating ? 'Terminar impersonalizacion' : 'Cerrar sesion';
     return (
       <ul className='nav navbar-right'>
@@ -19,6 +20,7 @@ const displayLogout = (user, logout, stopImpersonation) => {
       </ul>
     );
   }
+  return <div />;
 };
 
 export const Header = props => (
@@ -32,7 +34,7 @@ export const Header = props => (
               <Link to='/about'>Sobre el proyecto</Link>
             </li>
           </ul>
-          {displayLogout(props.user, props.logoutUser, props.stopImpersonation)}
+          {displayLogout(props.user, props.logoutUser, props.stopImpersonationFunc)}
         </div>
       </div>
     </div>
@@ -41,6 +43,20 @@ export const Header = props => (
   </header>
 );
 
+Header.propTypes = {
+  alerts: PropTypes.arrayOf({
+    message: PropTypes.string,
+    id: PropTypes.string,
+  }),
+  user: PropTypes.shape({
+    isImpersonating: PropTypes.boolean,
+    username: PropTypes.string,
+  }),
+  clearAlert: PropTypes.func,
+  stopImpersonationFunc: PropTypes.func,
+  logoutUser: PropTypes.func,
+};
+
 const mapStateToProps = store => ({
   user: store.account.user,
   alerts: R.pathOr({}, ['alerts'], store),
@@ -48,7 +64,7 @@ const mapStateToProps = store => ({
 
 const mapDispatchToProps = dispatch => ({
   logoutUser: () => dispatch(logoutUser()),
-  stopImpersonation: () => dispatch(stopImpersonation()),
+  stopImpersonationFunc: () => dispatch(stopImpersonation()),
   clearAlert: id => dispatch(removeAlert(id)),
 });
 

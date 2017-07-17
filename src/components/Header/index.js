@@ -1,3 +1,3 @@
-import Header from './Header';
+import HeaderView from './Header';
 
-export default Header;
+export default HeaderView;

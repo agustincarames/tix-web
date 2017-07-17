@@ -14,7 +14,7 @@ class HomeView extends Component {
     this.props.loadUserData();
     const id = R.path(['user', 'id'], this.props);
     this.id = id;
-    id && this.props.loadInstallations(this.props.user.id);
+    if (id) this.props.loadInstallations(this.props.user.id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -79,7 +79,7 @@ HomeView.propTypes = {
 };
 
 
-const mapStateToProps = (store) => ({
+const mapStateToProps = store => ({
   user: store.account.user,
   installations: R.pathOr({}, ['installations'], store),
 });

@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import Highcharts from 'highcharts';
+import PropTypes from 'prop-types';
 import Highstock from 'highcharts/highstock';
 import ReactHighcharts from 'react-highcharts';
+import moment from 'moment';
+import { Card, CardTitle, CardText } from 'material-ui/Card';
 
 const Charts = ReactHighcharts.withHighcharts(Highstock);
-import moment from 'moment';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 
 class DashboardChart extends Component {
+
+  componentWillMount() {
+    this.config = this.buildConfig();
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.config = this.buildConfig(newProps);
+  }
 
   buildConfig(props) {
     const fechasLength = props && props.fechas ? props.fechas.length : 0;
@@ -77,16 +85,8 @@ class DashboardChart extends Component {
     };
   }
 
-  componentWillMount() {
-    this.config = this.buildConfig();
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.config = this.buildConfig(newProps);
-  }
-
   renderGraph() {
-    if (!this.props.data || this.props.fechas.length == 0) {
+    if (!this.props.data || this.props.fechas.length === 0) {
       return <span>No hay reportes para mostrar</span>;
     }
     return <Charts config={this.config} />;
@@ -111,4 +111,12 @@ class DashboardChart extends Component {
     );
   }
 }
+
+DashboardChart.propTypes = {
+  fechas: PropTypes.array,
+  isp: PropTypes.string,
+  email: PropTypes.string,
+  data: PropTypes.array,
+};
+
 export default DashboardChart;

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import Paper from 'material-ui/Paper';
 import {
@@ -22,8 +23,12 @@ class UsernameForm extends Component {
   }
 }
 
-UsernameForm = reduxForm({
+UsernameForm.propTypes = {
+  handleSubmit: PropTypes.func,
+};
+
+const UsernameFormView = reduxForm({
   form: 'usernameForm',
 })(UsernameForm);
 
-export default UsernameForm;
+export default UsernameFormView;

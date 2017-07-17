@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
 const ReactHighcharts = require('react-highcharts');
- // Expects that Highcharts was loaded in the code.
-import moment from 'moment';
 
 class DashboardChart extends Component {
 
@@ -24,7 +21,8 @@ class DashboardChart extends Component {
         x: -20, // center
       },
       xAxis: {
-        categories: ['0-10%', '10-20%', '20-30%', '30-40%', '40-50%', '50-60%', '60-70%', '70-80%', '80-90%', '90-100%'],
+        categories:
+          ['0-10%', '10-20%', '20-30%', '30-40%', '40-50%', '50-60%', '60-70%', '70-80%', '80-90%', '90-100%'],
       },
       yAxis: {
         title: { text: 'Ocurrencias' },

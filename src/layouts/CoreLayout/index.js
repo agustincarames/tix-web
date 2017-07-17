@@ -1,3 +1,3 @@
-import CoreLayout from './CoreLayout';
+import CoreLayoutView from './CoreLayout';
 
-export default CoreLayout;
+export default CoreLayoutView;

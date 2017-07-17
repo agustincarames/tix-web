@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Highcharts from 'highcharts';
 import Highstock from 'highcharts/highstock';
 import ReactHighcharts from 'react-highcharts';
 
@@ -14,7 +13,7 @@ class BoxPlotChart extends Component {
     this.config = this.buildConfig(newProps);
   }
 
-  buildConfig(props) {
+  buildConfig() {
     return {
       chart: {
         type: 'boxplot',

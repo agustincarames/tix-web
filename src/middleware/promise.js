@@ -1,11 +1,10 @@
+import R from 'ramda';
 import {
   LOGOUT_USER,
-} from 'store/domain/account/actions';
+} from '../store/domain/account/actions';
 import {
   addAlert,
-} from 'store/domain/alerts/actions';
-
-import R from 'ramda';
+} from '../store/domain/alerts/actions';
 
 function isPromise(value) {
   if (value !== null && typeof value === 'object') {
@@ -54,7 +53,7 @@ export default function promiseMiddleware(store) {
         type: FAILURE,
       });
 
-      if (res.status == 401) {
+      if (res.status === 401) {
         store.dispatch({ type: LOGOUT_USER });
       }
 
@@ -75,18 +74,17 @@ export default function promiseMiddleware(store) {
 
       return mapResponseToPayload(res, body);
     }
-
-    return payloadResult
-      .then((res) => {
-        if (!res.bodyUsed || res.body) return res.json().then(json => handleStatuses(res, json));
-        return handleStatuses(res, null);
-      });
-
     function handleStatuses(res, json) {
       if (res.ok) {
         return handleSuccess(res, json);
       }
       return handleFailure(res, json);
     }
+
+    return payloadResult
+      .then((res) => {
+        if (!res.bodyUsed || res.body) return res.json().then(json => handleStatuses(res, json));
+        return handleStatuses(res, null);
+      });
   };
 }

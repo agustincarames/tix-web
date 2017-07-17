@@ -1,11 +1,17 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import UsernameForm from './UsernameForm';
 import PasswordForm from './PasswordForm';
-import { updatePassword, updateUsername } from 'store/domain/account/actions';
+import { updatePassword, updateUsername } from '../../../../store/domain/account/actions';
 import './ViewAccount.scss';
 
 class AdminView extends Component {
+
+  componentWillMount() {
+    this.onUserSubmit = this.onUserSubmit.bind(this);
+    this.onPasswordSubmit = this.onPasswordSubmit.bind(this);
+  }
 
   onUserSubmit(values) {
     this.props.updateUsername(this.props.user.id, values.username, values.oldPassword);
@@ -24,10 +30,10 @@ class AdminView extends Component {
           </span>
           <span className='row'>
             <div className='col-md-6'>
-              <UsernameForm onSubmit={this.onUserSubmit.bind(this)} />
+              <UsernameForm onSubmit={this.onUserSubmit} />
             </div>
             <div className='col-md-6'>
-              <PasswordForm onSubmit={this.onPasswordSubmit.bind(this)} />
+              <PasswordForm onSubmit={this.onPasswordSubmit} />
             </div>
           </span>
         </div>
@@ -35,6 +41,14 @@ class AdminView extends Component {
     );
   }
 }
+
+AdminView.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  updateUsername: PropTypes.func,
+  updatePassword: PropTypes.func,
+};
 
 const mapStateToProps = store => ({
   user: store.account.user,

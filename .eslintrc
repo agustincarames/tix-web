@@ -23,6 +23,9 @@
     "max-len"              : [2, 120, 2],
     "object-curly-spacing" : [2, "always"],
     "react/require-default-props": 0,
-    "react/prefer-stateless-function": 0
+    "react/prefer-stateless-function": 0,
+    "no-param-reassign": 0,
+    "global-require": 0,
+    "no-underscore-dangle": 0
   }
 }

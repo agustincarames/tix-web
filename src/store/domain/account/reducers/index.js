@@ -3,7 +3,6 @@ import typeToReducer from 'type-to-reducer';
 import {
   LOGIN_USER,
   FETCH_USER,
-  LOGOUT_USER,
   LOCAL_STORAGE_LOAD,
   FETCH_ALL_USERS,
   IMPERSONATE_USER,
@@ -33,7 +32,6 @@ export default typeToReducer({
       ...action.payload,
     },
   }),
-  [LOGOUT_USER]: (state) => ({}),
   [FETCH_ALL_USERS]: {
     FULFILLED: (state, action) => ({
       ...state,
@@ -50,7 +48,7 @@ export default typeToReducer({
       },
     }),
   },
-  [STOP_IMPERSONATION]: (state) => ({
+  [STOP_IMPERSONATION]: state => ({
     ...state,
     user: {
       ...state.user,

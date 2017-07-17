@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
-import LocationList from './LocationList';
-import './Sidebar.scss';
+import React, { Component } from 'react';
 import { List, ListItem } from 'material-ui/List';
 import Pencil from 'material-ui/svg-icons/content/create';
 import Wrench from 'material-ui/svg-icons/action/build';
 import Divider from 'material-ui/Divider';
 import Subheader from 'material-ui/Subheader';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
+import LocationListView from './LocationList';
+import './Sidebar.scss';
 
 class SidebarView extends Component {
 
@@ -15,7 +16,7 @@ class SidebarView extends Component {
     return Object.keys(installations.list).map((key) => {
       const installation = installations.list[key];
       return (
-        <LocationList
+        <LocationListView
           installation={installation}
           key={installation.id}
           active={installations.activeInstallation === installation.id}
@@ -26,7 +27,7 @@ class SidebarView extends Component {
     });
   }
 
-  renderAdminLink(user, downloadAdminReport) {
+  renderAdminLink(user) {
     if (user.role === 'admin') {
       return (<ListItem
         primaryText={'Panel de Administracion'}
@@ -36,6 +37,7 @@ class SidebarView extends Component {
         ]}
       />);
     }
+    return <div />;
   }
 
   render() {
@@ -54,15 +56,40 @@ class SidebarView extends Component {
         <Divider />
         <List>
           <Subheader>Configuracion</Subheader>
-          <ListItem primaryText={'Ver Instalaciones'} leftIcon={<Pencil />} containerElement={<Link to='/home/installation/view' />} />
-          <ListItem primaryText={'Mi cuenta'} leftIcon={<Wrench />} containerElement={<Link to='/home/account' />} />
-          <ListItem primaryText={'Reporte de usuario'} leftIcon={<Pencil />} containerElement={<Link to='/home/userreport' />} />
+          <ListItem
+            primaryText={'Ver Instalaciones'}
+            leftIcon={<Pencil />}
+            containerElement={<Link to='/home/installation/view' />}
+          />
+          <ListItem
+            primaryText={'Mi cuenta'}
+            leftIcon={<Wrench />}
+            containerElement={<Link to='/home/account' />}
+          />
+          <ListItem
+            primaryText={'Reporte de usuario'}
+            leftIcon={<Pencil />}
+            containerElement={<Link to='/home/userreport' />}
+          />
           {this.renderAdminLink(user, downloadAdminReport)}
         </List>
       </div>
     );
   }
 }
+
+SidebarView.propTypes = {
+  user: PropTypes.shape({
+    role: PropTypes.string.isRequired,
+  }),
+  installations: PropTypes.arrayOf({
+    list: PropTypes.array,
+    activeInstallation: PropTypes.string,
+    activeLocation: PropTypes.string,
+  }),
+  setActiveInstallation: PropTypes.func,
+  downloadAdminReport: PropTypes.func,
+};
 
 
 export default SidebarView;

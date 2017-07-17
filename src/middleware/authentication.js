@@ -1,8 +1,8 @@
+import { push } from 'react-router-redux';
 import {
   LOGOUT_USER,
   loadFromLocalStorage,
-} from 'store/domain/account/actions';
-import { push } from 'react-router-redux';
+} from '../store/domain/account/actions';
 
 let firstRun = true;
 

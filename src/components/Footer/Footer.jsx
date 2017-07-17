@@ -8,7 +8,6 @@ export const Footer = () => (
       ITBA: <em>Proyecto Final</em>
     </span>
   </footer>
-
 );
 
 export default Footer;

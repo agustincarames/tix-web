@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Snackbar from 'material-ui/Snackbar';
 
 class Alert extends Component {
 
   componentWillMount() {
     this.setState({ open: false });
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,11 +36,18 @@ class Alert extends Component {
         message={this.state.message}
         action='Cerrar'
         autoHideDuration={3000}
-        onRequestClose={this.handleRequestClose.bind(this)}
+        onRequestClose={this.handleRequestClose}
       />
     );
   }
 }
 
+Alert.propTypes = {
+  clearAlert: PropTypes.func,
+  alerts: PropTypes.arrayOf({
+    message: PropTypes.string,
+    id: PropTypes.string,
+  })
+}
 
 export default Alert;
