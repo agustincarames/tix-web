@@ -18,9 +18,6 @@ import {
 import InstallationListView from './InstallationListView';
 
 class ViewInstallation extends Component {
-
-  componentWillRecei
-
   renderTable() {
     const {
       installations,
@@ -29,11 +26,9 @@ class ViewInstallation extends Component {
       user,
     } = this.props;
 
-    console.log(installations);
     if (!installations || !installations.list || installations.list.length === 0) {
       return <span className='label label-important'>No hay instalaciones registradas en el sistema.</span>;
     }
-    console.log(installations);
     return (
       <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
