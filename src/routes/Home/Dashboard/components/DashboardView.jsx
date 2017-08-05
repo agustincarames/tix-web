@@ -9,6 +9,7 @@ import Paper from 'material-ui/Paper';
 import { connect } from 'react-redux';
 import DashboardChart from '../../../../components/Charts/DashboardChart';
 import { fetchReports } from '../../../../store/domain/report/actions';
+import { fetchProviders } from '../../../../store/domain/provider/actions';
 import SelectDate from './TimeForm';
 
 
@@ -21,6 +22,7 @@ class DashboardView extends Component {
     } = this.props;
     this.props.fetchReports(user.id, routeParams.installationId,
       routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+    this.props.fetchProviders(user.id);
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
     this.setState({ selectedIndex:0 });
@@ -119,10 +121,13 @@ class DashboardView extends Component {
   }
 
   render() {
+    console.log(this);
+    const isp = this.props.routeParams.providerId === '0' ? 'General' :
+      this.props.providers[this.props.routeParams.providerId].name;
     return (
       <div>
         <SelectDate onSubmit={this.selectDates.bind(this)} />
-        <DashboardChart isp='General' email='matiasdomingues@gmail.com' fechas={this.fechas} data={this.data} />
+        <DashboardChart isp={isp} email={this.props.user.username} fechas={this.fechas} data={this.data} />
         <Paper zDepth={1}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem
@@ -150,12 +155,17 @@ class DashboardView extends Component {
 DashboardView.propTypes = {
   user: PropTypes.shape({
     id: PropTypes.string,
+    username: PropTypes.string,
   }),
   routeParams: PropTypes.shape({
     installationId: PropTypes.string,
     providerId: PropTypes.string,
   }),
   fetchReports: PropTypes.func,
+  fetchProviders: PropTypes.func,
+  providers: PropTypes.arrayOf({
+    name: PropTypes.string,
+  }),
   reports: PropTypes.arrayOf({
     upUsage: PropTypes.number,
     downUsage: PropTypes.number,
@@ -167,11 +177,13 @@ DashboardView.propTypes = {
 const mapStateToProps = (store) => ({
   user: store.account.user,
   reports: store.reports,
+  providers: store.providers,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchReports: (userId, installationId, providerId, startDate, endDate) =>
     dispatch(fetchReports(userId, installationId, providerId, startDate, endDate)),
+  fetchProviders: userId => dispatch(fetchProviders(userId)),
 });
 
 export default connect(
