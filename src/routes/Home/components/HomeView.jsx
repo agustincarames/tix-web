@@ -23,9 +23,9 @@ class HomeView extends Component {
       this.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
     } else if (nextProps.location.pathname === '/home' && nextProps.installations && nextProps.installations.list) {
-      console.log(Object.keys(nextProps.installations.list)[0]);
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
-    } else if(nextProps.params.installationId && nextProps.installations && nextProps.installations.list && !Object.keys(nextProps.installations.list).includes(nextProps.params.installationId)){
+    } else if(nextProps.params.installationId && nextProps.installations && nextProps.installations.list &&
+      !Object.keys(nextProps.installations.list).includes(nextProps.params.installationId)){
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
     }
   }
@@ -50,6 +50,7 @@ class HomeView extends Component {
               user={user}
               setActiveInstallation={setActiveInstallationFunc}
               downloadAdminReport={downloadAdminReportFunc}
+              location={location}
             />
           </div>
           <div className='col-md-9'>
@@ -76,6 +77,9 @@ HomeView.propTypes = {
     list: PropTypes.array,
     activeInstallation: PropTypes.number,
     activeLocation: PropTypes.number,
+  }),
+  params: PropTypes.shape({
+    installationId: PropTypes.string,
   }),
   location: PropTypes.shape({
     pathname: PropTypes.string,

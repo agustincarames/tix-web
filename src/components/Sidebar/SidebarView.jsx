@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, ListItem } from 'material-ui/List';
+import {List, ListItem, makeSelectable} from 'material-ui/List';
 import Pencil from 'material-ui/svg-icons/content/create';
 import Wrench from 'material-ui/svg-icons/action/build';
 import Divider from 'material-ui/Divider';
@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import LocationListView from './LocationList';
 import './Sidebar.scss';
+
+const SelectableList = makeSelectable(List);
 
 class SidebarView extends Component {
 
@@ -32,8 +34,13 @@ class SidebarView extends Component {
       return (<ListItem
         primaryText={'Panel de Administracion'}
         containerElement={<Link to='/home/admin/users' />}
+        value='/home/admin/users'
         nestedItems={[
-          <ListItem primaryText={'Graficos de Utilización'} containerElement={<Link to='/home/admin/ispchart' />} />,
+          <ListItem
+            primaryText={'Graficos de Utilización'}
+            containerElement={<Link to='/home/admin/ispchart' />}
+            value='/home/admin/ispchart'
+          />,
         ]}
       />);
     }
@@ -46,33 +53,38 @@ class SidebarView extends Component {
       user,
       setActiveInstallation,
       downloadAdminReport,
+      location
     } = this.props;
+    console.log(location);
     return (
       <div>
-        <List>
+        <SelectableList
+          value={location.pathname}
+        >
           <Subheader>Instalaciones</Subheader>
           {this.renderInstallations(installations, setActiveInstallation)}
-        </List>
-        <Divider />
-        <List>
+          <Divider />
           <Subheader>Configuracion</Subheader>
           <ListItem
             primaryText={'Ver Instalaciones'}
             leftIcon={<Pencil />}
             containerElement={<Link to='/home/installation/view' />}
+            value='/home/installation/view'
           />
           <ListItem
             primaryText={'Mi cuenta'}
             leftIcon={<Wrench />}
             containerElement={<Link to='/home/account' />}
+            value='/home/account'
           />
           <ListItem
             primaryText={'Reporte de usuario'}
             leftIcon={<Pencil />}
             containerElement={<Link to='/home/userreport' />}
+            value='/home/userreport'
           />
           {this.renderAdminLink(user, downloadAdminReport)}
-        </List>
+        </SelectableList>
       </div>
     );
   }
