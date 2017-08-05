@@ -21,10 +21,10 @@ export default typeToReducer({
   [DELETE_INSTALLATION]: {
     FULFILLED: (state, action) => {
       const actualList = state.list;
-      const list = delete actualList[action.installationId];
+      delete actualList[action.installationId];
       return {
         ...state,
-        list,
+        actualList,
       };
     },
   },

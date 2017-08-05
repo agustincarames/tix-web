@@ -19,6 +19,8 @@ import InstallationListView from './InstallationListView';
 
 class ViewInstallation extends Component {
 
+  componentWillRecei
+
   renderTable() {
     const {
       installations,
@@ -27,9 +29,11 @@ class ViewInstallation extends Component {
       user,
     } = this.props;
 
-    if (installations.length === 0) {
-      return <span className='label label-important'>No hay instalaciones registradas en el sistema.</span>
+    console.log(installations);
+    if (!installations || !installations.list || installations.list.length === 0) {
+      return <span className='label label-important'>No hay instalaciones registradas en el sistema.</span>;
     }
+    console.log(installations);
     return (
       <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
@@ -40,9 +44,10 @@ class ViewInstallation extends Component {
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} showRowHover>
-          { Object.keys(installations).map(key => (
+          { Object.keys(installations.list).map(key => (
             <InstallationListView
-              installation={installations[key]}
+              key={key}
+              installation={installations.list[key]}
               deleteInstallation={dispatchDeleteInstallation}
               userId={user.id}
               editInstallation={editInstallation}
@@ -54,6 +59,7 @@ class ViewInstallation extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <Card className='card-margins'>
         <CardTitle
@@ -80,7 +86,7 @@ ViewInstallation.propTypes = {
 
 const mapStateToProps = store => ({
   user: store.account.user,
-  installations: R.pathOr([], ['installations', 'list'], store),
+  installations: store.installations,
 });
 
 const mapDispatchToProps = dispatch => ({

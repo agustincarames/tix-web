@@ -55,8 +55,7 @@ class InstallationListView extends Component {
 
   render() {
     const {
-      installation,
-      userId,
+      installation
     } = this.props;
 
     return (
