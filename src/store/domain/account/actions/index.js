@@ -87,6 +87,9 @@ export function updatePassword(userId, newPassword, oldPassword) {
   return dispatch => dispatch({
     type: UPDATE_USER,
     payload: fetch(`/user/${userId}`, { method: 'put', body }),
+  }).then(() => {
+    dispatch(addAlert('Contraseña modificada correctamente'));
+    return dispatch(push('/home'));
   });
 }
 
@@ -97,6 +100,9 @@ export function updateUsername(userId, username, oldPassword) {
   return dispatch => dispatch({
     type: UPDATE_USER,
     payload: fetch(`/user/${userId}`, { method: 'put', body }),
+  }).then(() => {
+    dispatch(addAlert('Usuario modificado correctamente'));
+    return dispatch(push('/home'));
   });
 }
 

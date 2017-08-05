@@ -47,7 +47,7 @@ class AdminView extends Component {
 
   assignQuartils(quartilsArray, value) {
     let w = 0;
-    for (let i = 0.1; i <= 1; i += 0.1) {
+    for (let i = 0.101; i < 1.1; i += 0.1) {
       if (value <= i) {
         quartilsArray[w] += 1;
         return;
@@ -171,7 +171,7 @@ AdminView.propTypes = {
 
 const mapStateToProps = store => ({
   user: store.account.user,
-  reports: R.pathOr({}, ['reports', 'adminReport'], store),
+  reports: R.path(['reports', 'adminReport'], store),
   provider: store.reports.provider,
   version: store.reports.version,
   providers: store.providers,
