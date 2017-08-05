@@ -20,8 +20,12 @@ class DashboardView extends Component {
       user,
       routeParams,
     } = this.props;
+    this.setState({
+      startDate: moment().subtract(1, 'days'),
+      endDate: moment(),
+    });
     this.props.fetchReports(user.id, routeParams.installationId,
-      routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+      routeParams.providerId, moment().subtract(1, 'days'), moment());
     this.props.fetchProviders(user.id);
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
@@ -38,7 +42,8 @@ class DashboardView extends Component {
       this.providerId = nextProps.routeParams.providerId;
       this.installationId = nextProps.routeParams.installationId;
       nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId,
-        nextProps.routeParams.providerId, moment().subtract(30, 'minutes'), moment());
+        nextProps.routeParams.providerId, this.state.startDate, this.state.endDate);
+      this.setState({ selectedIndex: 0 });
     }
     if (nextProps.reports) {
       this.setData(nextProps.reports);
@@ -116,18 +121,31 @@ class DashboardView extends Component {
       user,
       routeParams,
     } = this.props;
+    this.setState({
+      startDate: moment(dates.startDate).format('YYYY-MM-DD'),
+      endDate: moment(dates.endDate).format('YYYY-MM-DD'),
+    });
     this.props.fetchReports(user.id, routeParams.installationId, routeParams.providerId,
       moment(dates.startDate).format('YYYY-MM-DD'), moment(dates.endDate).format('YYYY-MM-DD'));
   }
 
+  getProviderName(providerId) {
+    if (providerId === '0') return 'General';
+    const providerName = this.props.providers[providerId];
+    if (providerName) return providerName.name;
+    return '';
+  }
+
   render() {
-    console.log(this);
-    const isp = this.props.routeParams.providerId === '0' ? 'General' :
-      this.props.providers[this.props.routeParams.providerId].name;
     return (
       <div>
         <SelectDate onSubmit={this.selectDates.bind(this)} />
-        <DashboardChart isp={isp} email={this.props.user.username} fechas={this.fechas} data={this.data} />
+        <DashboardChart
+          isp={this.getProviderName(this.props.routeParams.providerId)}
+          email={this.props.user.username}
+          fechas={this.fechas}
+          data={this.data}
+        />
         <Paper zDepth={1}>
           <BottomNavigation selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem

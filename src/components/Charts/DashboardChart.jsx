@@ -86,7 +86,7 @@ class DashboardChart extends Component {
   }
 
   renderGraph() {
-    if (!this.props.data || this.props.fechas.length === 0) {
+    if (!this.props.data || !this.props.fechas || this.props.fechas.length === 0) {
       return <span>No hay reportes para mostrar</span>;
     }
     return <Charts config={this.config} />;
