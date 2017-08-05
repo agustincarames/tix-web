@@ -54,7 +54,6 @@ class ViewInstallation extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <Card className='card-margins'>
         <CardTitle

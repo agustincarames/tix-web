@@ -18,7 +18,8 @@ class DashboardChart extends Component {
   }
 
   buildConfig(props) {
-    const fechasLength = props && props.fechas ? props.fechas.length : 0;
+    const fechasLength = props && props.fechas ? props.fechas.length :
+      (this.props && this.props.fechas ? this.props.fechas.length : 0);
     return {
       chart: {
         marginRight: 130,
@@ -89,6 +90,9 @@ class DashboardChart extends Component {
     if (!this.props.data || !this.props.fechas || this.props.fechas.length === 0) {
       return <span>No hay reportes para mostrar</span>;
     }
+    console.log(this.props.data);
+    console.log(this.props.fechas);
+    console.log(this.config);
     return <Charts config={this.config} />;
   }
 
