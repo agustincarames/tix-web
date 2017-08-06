@@ -7,6 +7,7 @@ import {
   FETCH_ALL_USERS,
   IMPERSONATE_USER,
   STOP_IMPERSONATION,
+  LOGOUT_USER,
 } from '../actions';
 
 export default typeToReducer({
@@ -55,4 +56,5 @@ export default typeToReducer({
       isImpersonating: false,
     },
   }),
+  [LOGOUT_USER]: () => ({}),
 }, {});

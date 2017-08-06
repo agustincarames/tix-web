@@ -55,7 +55,6 @@ class SidebarView extends Component {
       downloadAdminReport,
       location
     } = this.props;
-    console.log(location);
     return (
       <div>
         <SelectableList

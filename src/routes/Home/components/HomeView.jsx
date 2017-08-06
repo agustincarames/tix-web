@@ -18,14 +18,13 @@ class HomeView extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (this.id !== nextProps.user.id) {
       this.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
     } else if (nextProps.location.pathname === '/home' && nextProps.installations && nextProps.installations.list) {
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
-    } else if(nextProps.params.installationId && nextProps.installations && nextProps.installations.list &&
-      !Object.keys(nextProps.installations.list).includes(nextProps.params.installationId)){
+    } else if (nextProps.params.installationId && nextProps.installations && nextProps.installations.list &&
+      !Object.keys(nextProps.installations.list).includes(nextProps.params.installationId)) {
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
     }
   }

@@ -6,6 +6,7 @@ import {
   TextField,
 } from 'redux-form-material-ui';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router';
 
 class LoginForm extends Component {
 
@@ -19,7 +20,7 @@ class LoginForm extends Component {
             <Field type='text' name='username' component={TextField} floatingLabelText='Email' />
             <Field type='password' name='password' component={TextField} floatingLabelText={'Constraseña'} />
             <RaisedButton className='button-size' primary label='Log in'type='submit' />
-            <a className='password-forgot-text' >Olvido su contraseña? </a>
+            <Link className='password-forgot-text' to='/recover' > Olvido su contraseña? </Link>
           </form>
         </div>
       </Paper>
