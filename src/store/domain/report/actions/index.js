@@ -6,9 +6,11 @@ export const FETCH_ADMIN_REPORTS = 'FETCH_ADMIN_REPORTS';
 export const DOWNLOAD_ADMIN_REPORTS = 'DOWNLOAD_ADMIN_REPORTS';
 
 export function fetchReports(userId, installationId, providerId, startDate, endDate) {
+  const url = `/user/${userId}/reports?installationId=${installationId}&providerId=${
+    providerId}&startDate=${startDate}&endDate=${endDate}`;
   return dispatch => dispatch({
     type: FETCH_REPORTS,
-    payload: fetch(`/user/${userId}/reports?installationId=${installationId}&providerId=${providerId}&startDate=${startDate}&endDate=${endDate}`),
+    payload: fetch(url),
   });
 }
 

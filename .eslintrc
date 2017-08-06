@@ -27,6 +27,8 @@
     "no-param-reassign": 0,
     "global-require": 0,
     "no-underscore-dangle": 0,
-    "no-nested-ternary": 0
+    "no-nested-ternary": 0,
+    "react/jsx-filename-extension": 0,
+    "import/no-extraneous-dependencies": 0
   }
 }
