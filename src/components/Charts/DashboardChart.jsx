@@ -40,7 +40,8 @@ class DashboardChart extends Component {
               return '';
             }
             const date = moment(this.value);
-            return `${date.date()}/${date.month() + 1} <br> ${date.hour()}:${date.minute()}`;
+            return `${date.date() < 10 ? '0' : ''}${date.date()}/${date.month() < 10 ? '0' : ''}${date.month() + 1
+            } <br> ${date.hour() < 10 ? '0' : ''}${date.hour()}:${date.minute() < 10 ? '0' : ''}${date.minute()}`;
           },
         },
         min: fechasLength < 50 ? 0 : fechasLength - 50,
@@ -56,10 +57,11 @@ class DashboardChart extends Component {
           color: '#808080',
         }],
         min: 0,
-        max: 1,
+        max: 100,
       },
       tooltip: {
         shared: true,
+        valueSuffix: '%',
         crosshairs: true,
       },
       legend: {

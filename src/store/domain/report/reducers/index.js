@@ -21,16 +21,16 @@ export default typeToReducer({
             downUsage.push(null);
             upQuality.push(null);
             downQuality.push(null);
-            dates.push(lastDate.add(15, 'minutes'));
+            dates.push(lastDate.add(25, 'minutes'));
             lastDate = moment(measure.timestamp);
           }
         } else {
           lastDate = moment(measure.timestamp);
         }
-        upUsage.push(measure.upUsage);
-        downUsage.push(measure.downUsage);
-        upQuality.push(measure.upQuality);
-        downQuality.push(measure.downQuality);
+        upUsage.push(Math.floor(measure.upUsage * 100));
+        downUsage.push(Math.floor(measure.downUsage * 100));
+        upQuality.push(Math.floor(measure.upQuality * 100));
+        downQuality.push(Math.floor(measure.downQuality * 100));
         dates.push(measure.timestamp);
       });
       return {
@@ -56,10 +56,10 @@ export default typeToReducer({
           report[measure.provider_id].dates = [];
           providerList.push(measure.provider_id);
         }
-        report[measure.provider_id].upUsage.push(measure.upUsage);
-        report[measure.provider_id].downUsage.push(measure.downUsage);
-        report[measure.provider_id].upQuality.push(measure.upQuality);
-        report[measure.provider_id].downQuality.push(measure.downQuality);
+        report[measure.provider_id].upUsage.push(Math.floor(measure.upUsage * 100));
+        report[measure.provider_id].downUsage.push(Math.floor(measure.downUsage * 100));
+        report[measure.provider_id].upQuality.push(Math.floor(measure.upQuality * 100));
+        report[measure.provider_id].downQuality.push(Math.floor(measure.downQuality * 100));
         report[measure.provider_id].dates.push(measure.timestamp);
       });
       providerList.forEach((providerId) => {

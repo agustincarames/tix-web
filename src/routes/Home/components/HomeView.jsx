@@ -10,6 +10,12 @@ import SidebarView from '../../../components/Sidebar/SidebarView';
 
 class HomeView extends Component {
 
+  componentWillMount() {
+    if (!this.props.user) {
+      this.props.redirectRoot();
+    }
+  }
+
   componentDidMount() {
     this.props.loadUserData();
     const id = R.path(['user', 'id'], this.props);
@@ -38,7 +44,9 @@ class HomeView extends Component {
       setActiveInstallationFunc,
       downloadAdminReportFunc,
     } = this.props;
-
+    if(!user){
+      return <div />;
+    }
     return (
       <div className='container-fluid'>
         <div className='row'>
@@ -68,6 +76,7 @@ HomeView.propTypes = {
   redirectToReport: PropTypes.func,
   setActiveInstallationFunc: PropTypes.func,
   downloadAdminReportFunc: PropTypes.func,
+  redirectRoot: PropTypes.func,
   user: PropTypes.shape({
     id: PropTypes.string,
   }),
@@ -99,6 +108,7 @@ const mapDispatchToProps = dispatch => ({
   setActiveInstallationFunc: (installationId, locationId) =>
     dispatch(setActiveInstallation(installationId, locationId)),
   downloadAdminReportFunc: () => dispatch(downloadAdminReport()),
+  redirectRoot: () => dispatch(push('/')),
 });
 
 export default connect(
