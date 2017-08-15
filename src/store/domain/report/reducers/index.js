@@ -1,4 +1,5 @@
 import typeToReducer from 'type-to-reducer';
+import moment from 'moment';
 import { FETCH_REPORTS, FETCH_ALL_REPORTS, FETCH_ADMIN_REPORTS } from '../actions';
 import { LOGOUT_USER } from '../../account/actions';
 
@@ -12,7 +13,20 @@ export default typeToReducer({
       const upQuality = [];
       const downQuality = [];
       const dates = [];
+      let lastDate = null;
       action.payload.forEach((measure) => {
+        if (lastDate) {
+          if (moment(measure.timestamp).isAfter(lastDate.add(25, 'minutes'))) {
+            upUsage.push(null);
+            downUsage.push(null);
+            upQuality.push(null);
+            downQuality.push(null);
+            dates.push(lastDate.add(15, 'minutes'));
+            lastDate = moment(measure.timestamp);
+          }
+        } else {
+          lastDate = moment(measure.timestamp);
+        }
         upUsage.push(measure.upUsage);
         downUsage.push(measure.downUsage);
         upQuality.push(measure.upQuality);
