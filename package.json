@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "3.0.0-alpha.2",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "tix-we",
+  "version": "1.0.0",
+  "description": "Web application for tix time server",
   "main": "index.js",
   "engines": {
     "node": ">=4.5.0",
@@ -18,8 +18,7 @@
     "test:dev": "npm run test -- --watch",
     "deploy": "better-npm-run deploy",
     "deploy:dev": "better-npm-run deploy:dev",
-    "deploy:prod": "better-npm-run deploy:prod",
-    "codecov": "cat coverage/*/lcov.info | codecov"
+    "deploy:prod": "better-npm-run deploy:prod"
   },
   "betterScripts": {
     "compile": {
@@ -60,20 +59,13 @@
       "env": {
         "DEBUG": "app:*"
       }
-    },
-    "test": {
-      "command": "node ./node_modules/karma/bin/karma start config/karma.config",
-      "env": {
-        "NODE_ENV": "test",
-        "DEBUG": "app:*"
-      }
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/TiX-measurements/tix-web.git"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
+  "author": "ITBA",
   "license": "MIT",
   "dependencies": {
     "babel-core": "6.17.0",
