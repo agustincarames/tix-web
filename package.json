@@ -1,6 +1,6 @@
 {
   "name": "tix-web",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Web application for tix time server",
   "main": "index.js",
   "engines": {
