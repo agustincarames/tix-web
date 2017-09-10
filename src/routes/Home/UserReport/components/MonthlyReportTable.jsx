@@ -14,7 +14,7 @@ class MonthlyReportTable extends Component {
 
   renderTableValues(providers, reports) {
     return reports.providerList.map(provider =>
-      (<TableRow>
+      (<TableRow key={`providerList${provider}`}>
         <TableRowColumn>{providers[provider].name}</TableRowColumn>
         <TableRowColumn>{Math.floor(100 * reports.fullReport[provider].upQualityMedian)}%</TableRowColumn>
         <TableRowColumn>{Math.floor(100 * reports.fullReport[provider].downQualityMedian)}%</TableRowColumn>
@@ -68,17 +68,17 @@ class MonthlyReportTable extends Component {
 }
 
 MonthlyReportTable.propTypes = {
-  providers: PropTypes.arrayOf({
+  providers: PropTypes.shape({
     name: PropTypes.string,
   }),
   reports: PropTypes.shape({
     providerList: PropTypes.array,
-    fullReport: PropTypes.arrayOf({
+    fullReport: PropTypes.arrayOf(PropTypes.shape({
       upQualityMedian: PropTypes.number,
       downQualityMedian: PropTypes.number,
       upUsageMedian: PropTypes.number,
       downUsageMedian: PropTypes.number,
-    }),
+    })),
   }),
 };
 

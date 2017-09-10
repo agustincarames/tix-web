@@ -68,11 +68,13 @@ class ViewInstallation extends Component {
 }
 
 ViewInstallation.propTypes = {
-  installations: PropTypes.arrayOf({
-    name: PropTypes.string,
+  installations: PropTypes.shape({
+    list: PropTypes.object,
+    activeInstallation: PropTypes.number,
+    activeLocation: PropTypes.number,
   }),
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   dispatchDeleteInstallation: PropTypes.func,
   editInstallation: PropTypes.func,

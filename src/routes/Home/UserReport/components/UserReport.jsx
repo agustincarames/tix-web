@@ -44,7 +44,7 @@ class UserReportView extends Component {
       user,
     } = this.props;
     return (
-      <DashboardChart isp={provider} email={user.username} fechas={data.fechas} data={data.data} />
+      <DashboardChart key={provider} isp={provider} email={user.username} fechas={data.fechas} data={data.data} />
     );
   }
   render() {
@@ -68,12 +68,12 @@ UserReportView.propTypes = {
   fetchAllReports: PropTypes.func,
   fetchProviders: PropTypes.func,
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   reports: PropTypes.shape({
     providerList: PropTypes.array,
   }),
-  providers: PropTypes.arrayOf({
+  providers: PropTypes.shape({
     name: PropTypes.string,
   }),
 };

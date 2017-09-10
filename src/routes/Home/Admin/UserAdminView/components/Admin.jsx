@@ -67,11 +67,11 @@ class AdminView extends Component {
 }
 
 AdminView.propTypes = {
-  users: PropTypes.arrayOf({
-    id: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
     username: PropTypes.sring,
     role: PropTypes.string,
-  }),
+  })),
   impersonateUserFunc: PropTypes.func,
   fetchAllUsers: PropTypes.func,
 };

@@ -56,8 +56,8 @@ class HomeView extends Component {
 HomeView.propTypes = {
   code: PropTypes.string,
   email: PropTypes.string,
-  sendRecoveryPassword: PropTypes.func.required,
-  sendRecoveryEmail: PropTypes.func.required,
+  sendRecoveryPassword: PropTypes.func.isRequired,
+  sendRecoveryEmail: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (store, state) => ({

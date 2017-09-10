@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import R from 'ramda';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
@@ -8,7 +9,6 @@ import { fetchAdminReports } from '../../../../../store/domain/report/actions';
 import HistogramChart from '../../../../../components/Charts/HistogramChart';
 import FiltersForm from './FiltersForm';
 import { fetchProviders } from '../../../../../store/domain/provider/actions';
-
 
 class AdminView extends Component {
 
@@ -152,7 +152,7 @@ class AdminView extends Component {
 
 AdminView.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   reports: PropTypes.shape({
     version: PropTypes.number,
@@ -161,7 +161,7 @@ AdminView.propTypes = {
     upQuality: PropTypes.number,
     downQuality: PropTypes.number,
   }),
-  providers: PropTypes.arrayOf({
+  providers: PropTypes.shape({
     name: PropTypes.string,
   }),
   provider: PropTypes.string,

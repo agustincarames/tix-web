@@ -30,6 +30,9 @@ class Alert extends Component {
   }
 
   render() {
+    if (!this.state.message) {
+      return <div />;
+    }
     return (
       <Snackbar
         open={this.state.open}
@@ -44,10 +47,10 @@ class Alert extends Component {
 
 Alert.propTypes = {
   clearAlert: PropTypes.func,
-  alerts: PropTypes.arrayOf({
+  alerts: PropTypes.shape({
     message: PropTypes.string,
     id: PropTypes.string,
-  })
-}
+  }),
+};
 
 export default Alert;

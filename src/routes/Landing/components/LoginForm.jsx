@@ -29,7 +29,7 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  handleSubmit: PropTypes.func.required,
+  handleSubmit: PropTypes.func,
 };
 
 const LoginFormView = reduxForm({

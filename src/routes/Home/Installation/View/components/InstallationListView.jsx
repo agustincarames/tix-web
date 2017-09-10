@@ -79,7 +79,7 @@ InstallationListView.propTypes = {
   installation: PropTypes.shape({
     name: PropTypes.string,
   }),
-  userId: PropTypes.string,
+  userId: PropTypes.number,
   editInstallation: PropTypes.func,
   deleteInstallation: PropTypes.func,
 }

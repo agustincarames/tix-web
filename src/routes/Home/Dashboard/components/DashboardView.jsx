@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import R from 'ramda';
 import BottomArrow from 'material-ui/svg-icons/editor/vertical-align-bottom';
 import TopArrow from 'material-ui/svg-icons/editor/vertical-align-top';
 import BothArrow from 'material-ui/svg-icons/editor/vertical-align-center';
@@ -139,7 +140,7 @@ class DashboardView extends Component {
   render() {
     return (
       <div>
-        <SelectDate onSubmit={this.selectDates.bind(this)} />
+        <SelectDate onSubmit={this.selectDates} />
         <DashboardChart
           isp={this.getProviderName(this.props.routeParams.providerId)}
           email={this.props.user.username}
@@ -172,7 +173,7 @@ class DashboardView extends Component {
 
 DashboardView.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     username: PropTypes.string,
   }),
   routeParams: PropTypes.shape({
@@ -181,20 +182,20 @@ DashboardView.propTypes = {
   }),
   fetchReports: PropTypes.func,
   fetchProviders: PropTypes.func,
-  providers: PropTypes.arrayOf({
+  providers: PropTypes.shape({
     name: PropTypes.string,
   }),
-  reports: PropTypes.arrayOf({
-    upUsage: PropTypes.number,
-    downUsage: PropTypes.number,
-    upQuality: PropTypes.number,
-    downQuality: PropTypes.number,
+  reports: PropTypes.shape({
+    upUsage: PropTypes.array,
+    downUsage: PropTypes.array,
+    upQuality: PropTypes.array,
+    downQuality: PropTypes.array,
   }),
 };
 
 const mapStateToProps = (store) => ({
   user: store.account.user,
-  reports: store.reports,
+  reports: R.pathOr({}, ['reports'], store),
   providers: store.providers,
 });
 

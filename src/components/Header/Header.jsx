@@ -44,7 +44,7 @@ export const Header = props => (
 );
 
 Header.propTypes = {
-  alerts: PropTypes.arrayOf({
+  alerts: PropTypes.shape({
     message: PropTypes.string,
     id: PropTypes.string,
   }),

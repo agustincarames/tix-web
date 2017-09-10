@@ -78,11 +78,11 @@ HomeView.propTypes = {
   downloadAdminReportFunc: PropTypes.func,
   redirectRoot: PropTypes.func,
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   children: PropTypes.node,
-  installations: PropTypes.arrayOf({
-    list: PropTypes.array,
+  installations: PropTypes.shape({
+    list: PropTypes.object,
     activeInstallation: PropTypes.number,
     activeLocation: PropTypes.number,
   }),

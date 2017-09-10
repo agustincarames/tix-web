@@ -10,11 +10,13 @@ const renderFolders = (providers, id, setActiveInstallation) => {
   const providerItems = [];
   providerItems.push(
     <ListItem
+      key={`ListItem${id}-0`}
       primaryText={'General'}
       onTouchTap={() => setActiveInstallation(id, 0)}
       value={`/home/report/${id}/0`}
     />);
   return providerItems.concat(providers.map(provider => (<ListItem
+    key={`ListItem${id}-${provider.id}`}
     primaryText={provider.name}
     onTouchTap={() => setActiveInstallation(id, provider.id)}
     value={`/home/report/${id}/${provider.id}`}
@@ -37,10 +39,10 @@ export const LocationList = props => (
 LocationList.propTypes = {
   installation: PropTypes.shape({
     name: PropTypes.string,
-    id: PropTypes.string,
+    id: PropTypes.number,
     providers: PropTypes.array,
   }),
-  active: PropTypes.boolean,
+  active: PropTypes.bool,
   setActiveInstallation: PropTypes.func,
 }
 

@@ -89,4 +89,4 @@ export default typeToReducer({
     },
   },
   [LOGOUT_USER]: () => ({}),
-}, []);
+}, {});

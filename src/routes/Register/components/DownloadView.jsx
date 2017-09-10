@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import AppleLogo from './images/applelogo.jpg';
 import LinuxLogo from './images/linuxlogo.jpg';
 

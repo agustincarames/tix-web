@@ -44,7 +44,7 @@ class FiltersForm extends Component {
                 </Field>
                 <Field name='isp' component={SelectField} floatingLabelText='ISP' validate={[required]}>
                   {Object.keys(providers).map(key =>
-                    <MenuItem value={providers[key].id} primaryText={providers[key].name} />)}
+                    <MenuItem key={key} value={providers[key].id} primaryText={providers[key].name} />)}
                 </Field>
               </div>
               <div className='col-md-4'>
@@ -62,7 +62,7 @@ class FiltersForm extends Component {
 
 FiltersForm.propTypes = {
   handleSubmit: PropTypes.func,
-  providers: PropTypes.arrayOf({
+  providers: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
   }),

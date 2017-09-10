@@ -96,9 +96,9 @@ class LandingView extends Component {
 }
 
 LandingView.propTypes = {
-  submitLogin: PropTypes.func.required,
+  submitLogin: PropTypes.func,
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   redirectHome: PropTypes.func,
 };

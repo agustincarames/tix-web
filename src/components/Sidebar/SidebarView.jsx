@@ -93,10 +93,10 @@ SidebarView.propTypes = {
   user: PropTypes.shape({
     role: PropTypes.string.isRequired,
   }),
-  installations: PropTypes.arrayOf({
-    list: PropTypes.array,
-    activeInstallation: PropTypes.string,
-    activeLocation: PropTypes.string,
+  installations: PropTypes.shape({
+    list: PropTypes.object,
+    activeInstallation: PropTypes.number,
+    activeLocation: PropTypes.number,
   }),
   setActiveInstallation: PropTypes.func,
   downloadAdminReport: PropTypes.func,

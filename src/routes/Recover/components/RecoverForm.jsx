@@ -56,8 +56,8 @@ class RecoverForm extends Component {
 }
 
 RecoverForm.propTypes = {
-  handleSubmit: PropTypes.func.required,
-  showCode: PropTypes.bool.required,
+  handleSubmit: PropTypes.func.isRequired,
+  showCode: PropTypes.bool.isRequired,
   toggleRecoveryCode: PropTypes.func,
 };
 

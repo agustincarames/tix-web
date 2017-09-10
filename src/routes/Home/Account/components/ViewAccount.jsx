@@ -44,7 +44,7 @@ class AdminView extends Component {
 
 AdminView.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
   }),
   updateUsername: PropTypes.func,
   updatePassword: PropTypes.func,

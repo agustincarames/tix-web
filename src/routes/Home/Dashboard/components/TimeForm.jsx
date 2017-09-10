@@ -14,8 +14,8 @@ class SelectDate extends Component {
     return (
       <Paper style={{ marginTop: '15px' }} zDepth={1}>
         <form className='form-alignment' onSubmit={handleSubmit}>
-          <Field name='startDate' component={DatePicker} dateFormat='YYY-MM-DD' floatingLabelText='Fecha Inicio' />
-          <Field name='endDate' component={DatePicker} dateFormat='YYY-MM-DD' floatingLabelText='Fecha Final' />
+          <Field name='startDate' component={DatePicker} floatingLabelText='Fecha Inicio' />
+          <Field name='endDate' component={DatePicker} floatingLabelText='Fecha Final' />
           <button className='btn btn-primary btn-large' type='submit' >Filtrar</button>
         </form>
       </Paper>);
