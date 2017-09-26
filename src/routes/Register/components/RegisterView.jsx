@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RegisterForm from './RegisterForm';
 import { registerUser } from '../../../store/domain/account/actions/index';
-import DownloadView from './DownloadView';
+import DownloadView from '../../Home/FirstTimeRun/components/DownloadView';
 
 const RegisterView = props => (
   <div className='container'>

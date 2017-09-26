@@ -27,8 +27,19 @@ class HomeView extends Component {
     if (this.id !== nextProps.user.id) {
       this.id = nextProps.user.id;
       nextProps.loadInstallations(nextProps.user.id);
-    } else if (nextProps.location.pathname === '/home' && nextProps.installations && nextProps.installations.list) {
+      if (nextProps.installations && nextProps.installations.list) {
+        console.log(Object.keys(nextProps.installations.list).length);
+      }
+    } else if (nextProps.location.pathname === '/home' && nextProps.installations && nextProps.installations.list &&
+      Object.keys(nextProps.installations.list).length > 0) {
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
+    } else if ((nextProps.location.pathname === '/home' ||  nextProps.location.pathname.includes('report')) &&
+      !nextProps.location.pathname.includes('firstrun') && nextProps.installations && nextProps.installations.list &&
+      Object.keys(nextProps.installations.list).length === 0) {
+      nextProps.redirectToFirstTimeRun();
+    } else if(nextProps.location.pathname.includes('firstrun') && nextProps.installations && nextProps.installations.list &&
+      Object.keys(nextProps.installations.list).length > 0){
+      nextProps.redirectHome();
     } else if (nextProps.params.installationId && nextProps.installations && nextProps.installations.list &&
       !Object.keys(nextProps.installations.list).includes(nextProps.params.installationId)) {
       nextProps.redirectToReport(Object.keys(nextProps.installations.list)[0], 0);
@@ -74,6 +85,8 @@ HomeView.propTypes = {
   loadInstallations: PropTypes.func,
   loadReports: PropTypes.func,
   redirectToReport: PropTypes.func,
+  redirectHome: PropTypes.func,
+  redirectToFirstTimeRun: PropTypes.func,
   setActiveInstallationFunc: PropTypes.func,
   downloadAdminReportFunc: PropTypes.func,
   redirectRoot: PropTypes.func,
@@ -105,6 +118,8 @@ const mapDispatchToProps = dispatch => ({
   loadInstallations: userId => dispatch(fetchUserInstallation(userId)),
   loadReports: userId => dispatch(fetchReports(userId)),
   redirectToReport: (installationId, providerId) => dispatch(push(`/home/report/${installationId}/${providerId}`)),
+  redirectHome: () => dispatch(push('/home')),
+  redirectToFirstTimeRun: () => dispatch(push('/home/report/firstrun')),
   setActiveInstallationFunc: (installationId, locationId) =>
     dispatch(setActiveInstallation(installationId, locationId)),
   downloadAdminReportFunc: () => dispatch(downloadAdminReport()),

@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import AppleLogo from './images/applelogo.jpg';
 import LinuxLogo from './images/linuxlogo.jpg';
+import WindowsLogo from './images/windowslogo.jpg';
 
 class DownloadView extends Component {
   render() {
     return (
       <section id='typography'>
         <div className='page-header'>
-          <h1>Nueva instalaci&oacute;n o actualizaci&oacute;n</h1>
+          <h1>Descarga instalador</h1>
         </div>
-
         <div className='row'>
 
           <div className='span12'>
-            <p>Aqu&iacute; vas a poder descargar la aplicaci&oacute;n seg&uacute;n tu sistema operativo.</p>
+            <p>Notamos que no tiene ninguna instalación creada, por favor descargue el cliente para poder
+            comenzar a generar reportes</p>
           </div>
         </div>
 
         <div className='row'>
-          <div className='span12'>
+          <div className='span12' style={{ marginRight: '35px' }}>
             <h4>Elige tu sistema operativo</h4>
 
             <div className='row'>
