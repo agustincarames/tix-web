@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AppleLogo from './images/applelogo.jpg';
 import LinuxLogo from './images/linuxlogo.jpg';
+import WindowsLogo from './images/windowslogo.jpg';
 
 class DownloadView extends Component {
   render() {
