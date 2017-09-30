@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import R from 'ramda';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
 import './Header.scss';
 import { logoutUser, stopImpersonation } from '../../store/domain/account/actions';
 import Alert from '../../components/Alert';
@@ -23,21 +30,38 @@ const displayLogout = (user, logout, stopImpersonationFunc) => {
   return <div />;
 };
 
+const renderLeftIcon = (user, logout, stopImpersonalization) => {
+  if (!user) {
+    return <FlatButton label='Sobre el proyecto' />;
+  }
+  const menuItems = [<MenuItem onTouchTap={logout} primaryText="Cerrar sesion" />];
+  if (user.isImpersonating) {
+    menuItems.push(
+      <MenuItem onTouchTap={stopImpersonalization} primaryText="Terminar Impersonalización"/>
+    );
+  }
+  return (
+    <IconMenu
+      iconButtonElement={
+        <IconButton><MoreVertIcon /></IconButton>
+      }
+      targetOrigin={{horizontal: 'right', vertical: 'top'}}
+      anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+    >
+      {menuItems}
+    </IconMenu>
+  );
+};
+
+
 export const Header = props => (
   <header>
-    <div className='navbar navbar-default navbar-margin'>
-      <div className='container-fluid'>
-        <Link to='/' className='navbar-brand'>TiX</Link>
-        <div className='collapse navbar-collapse'>
-          <ul className='nav navbar-nav'>
-            <li>
-              <Link to='/about'>Sobre el proyecto</Link>
-            </li>
-          </ul>
-          {displayLogout(props.user, props.logoutUser, props.stopImpersonationFunc)}
-        </div>
-      </div>
-    </div>
+    <AppBar
+      title='TiX'
+      showMenuIconButton={false}
+      iconElementRight={renderLeftIcon(props.user, props.logoutUser, props.stopImpersonationFunc)}
+      style={{backgroundColor: '#0d47a1'}}
+    />
     <div className='beta-banner'>{ 'Versión Beta' }</div>
     <Alert alerts={props.alerts} clearAlert={props.clearAlert} />
   </header>

@@ -46,6 +46,7 @@ export default typeToReducer({
     FULFILLED: (state, action) => {
       const report = [];
       const providerList = [];
+      let lastDate = null;
       action.payload.forEach((measure) => {
         if (!report[measure.provider_id]) {
           report[measure.provider_id] = {};
@@ -55,6 +56,18 @@ export default typeToReducer({
           report[measure.provider_id].downQuality = [];
           report[measure.provider_id].dates = [];
           providerList.push(measure.provider_id);
+        }
+        if (lastDate) {
+          if (moment(measure.timestamp).isAfter(lastDate.add(25, 'minutes'))) {
+            report[measure.provider_id].upUsage.push(null);
+            report[measure.provider_id].downUsage.push(null);
+            report[measure.provider_id].upQuality.push(null);
+            report[measure.provider_id].downQuality.push(null);
+            report[measure.provider_id].dates.push(lastDate.add(25, 'minutes'));
+            lastDate = moment(measure.timestamp);
+          }
+        } else {
+          lastDate = moment(measure.timestamp);
         }
         report[measure.provider_id].upUsage.push(Math.floor(measure.upUsage * 100));
         report[measure.provider_id].downUsage.push(Math.floor(measure.downUsage * 100));
