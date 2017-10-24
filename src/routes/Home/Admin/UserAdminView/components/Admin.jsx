@@ -19,7 +19,7 @@ class AdminView extends Component {
     this.props.fetchAllUsers();
   }
 
-  renderUsers(users, impersonateUserFunc) {
+  renderUsers(users, impersonateUserFunc, changeRole) {
     return users.map(user => (
       <TableRow key={user.id}>
         <TableRowColumn>{user.id}</TableRowColumn>
@@ -30,7 +30,11 @@ class AdminView extends Component {
             <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info'>
               Impersonar
             </span>
-            <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info' style={{ marginLeft: '5px' }}>
+            <span
+              onTouchTap={() => changeRole(user.id, user.role === 'admin' ? 'user' : 'admin')}
+              className='btn btn-info'
+              style={{ marginLeft: '5px' }}
+            >
               {user.role === 'admin' ? '- Rol' : '+ Rol'}
             </span>
           </div>
