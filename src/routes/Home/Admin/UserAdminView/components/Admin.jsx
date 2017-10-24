@@ -11,7 +11,7 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import { Card, CardTitle, CardText } from 'material-ui/Card';
-import { fetchAllUsers, impersonateUser } from '../../../../../store/domain/account/actions';
+import { fetchAllUsers, impersonateUser, editRole } from '../../../../../store/domain/account/actions';
 
 class AdminView extends Component {
 
@@ -26,9 +26,14 @@ class AdminView extends Component {
         <TableRowColumn>{user.username}</TableRowColumn>
         <TableRowColumn>{user.role}</TableRowColumn>
         <TableRowColumn>
-          <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info'>
-            Impersonar
-          </span>
+          <div>
+            <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info'>
+              Impersonar
+            </span>
+            <span onTouchTap={() => impersonateUserFunc(user.id)} className='btn btn-info' style={{ marginLeft: '5px' }}>
+              {user.role === 'admin' ? '- Rol' : '+ Rol'}
+            </span>
+          </div>
         </TableRowColumn>
       </TableRow>
     ));
@@ -83,6 +88,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => ({
   fetchAllUsers: () => dispatch(fetchAllUsers()),
   impersonateUserFunc: id => dispatch(impersonateUser(id)),
+  changeRole: (userId, role) => dispatch(editRole(userId, role)),
 });
 
 export default connect(

@@ -123,3 +123,15 @@ export function sendRecoveryPassword(email, code, password) {
   });
 }
 
+export function editRole(userId, role) {
+  const body = {};
+  body.role = role;
+  return dispatch => dispatch({
+    type: UPDATE_USER,
+    payload: fetch(`/user/${userId}`, { method: 'put', body }),
+  }).then(() => {
+    dispatch(addAlert('Usuario modificado correctamente'));
+    return dispatch(push('/home'));
+  });
+}
+

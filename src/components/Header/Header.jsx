@@ -43,7 +43,7 @@ export const Header = props => (
       title='TiX'
       showMenuIconButton={false}
       iconElementRight={renderLeftIcon(props.user, props.logoutUser, props.stopImpersonationFunc)}
-      style={{ backgroundColor: '#0d47a1' }}
+      style={{ backgroundColor: '#c64e31' }}
       onTitleTouchTap={props.redirectToHome}
     />
     <div className='beta-banner'>{ 'Versión Beta' }</div>
@@ -75,7 +75,7 @@ const mapDispatchToProps = dispatch => ({
   logoutUser: () => dispatch(logoutUser()),
   stopImpersonationFunc: () => dispatch(stopImpersonation()),
   clearAlert: id => dispatch(removeAlert(id)),
-  redirectToHome: () => dispatch(push('/'))
+  redirectToHome: () => dispatch(push('/')),
 });
 
 export default connect(

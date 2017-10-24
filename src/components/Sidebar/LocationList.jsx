@@ -44,6 +44,6 @@ LocationList.propTypes = {
   }),
   active: PropTypes.bool,
   setActiveInstallation: PropTypes.func,
-}
+};
 
 export default LocationList;
