@@ -47,6 +47,7 @@ class AdminView extends Component {
     const {
       users,
       impersonateUserFunc,
+      changeRole,
     } = this.props;
 
     return (
@@ -66,7 +67,7 @@ class AdminView extends Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false} showRowHover>
-              {this.renderUsers(users, impersonateUserFunc)}
+              {this.renderUsers(users, impersonateUserFunc, changeRole)}
             </TableBody>
           </Table>
         </CardText>
@@ -83,6 +84,7 @@ AdminView.propTypes = {
   })),
   impersonateUserFunc: PropTypes.func,
   fetchAllUsers: PropTypes.func,
+  changeRole: PropTypes.func,
 };
 
 const mapStateToProps = store => ({

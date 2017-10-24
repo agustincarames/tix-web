@@ -26,7 +26,7 @@ class DashboardView extends Component {
       endDate: moment(),
     });
     this.props.fetchReports(user.id, routeParams.installationId,
-      routeParams.providerId, moment().subtract(1, 'days'), moment());
+      routeParams.providerId, moment().subtract(1, 'days').format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
     this.props.fetchProviders(user.id);
     this.installationId = routeParams.installationId;
     this.providerId = routeParams.providerId;
@@ -43,7 +43,8 @@ class DashboardView extends Component {
       this.providerId = nextProps.routeParams.providerId;
       this.installationId = nextProps.routeParams.installationId;
       nextProps.fetchReports(nextProps.user.id, nextProps.routeParams.installationId,
-        nextProps.routeParams.providerId, this.state.startDate, this.state.endDate);
+        nextProps.routeParams.providerId, this.state.startDate.format('YYYY-MM-DD'),
+        this.state.endDate.format('YYYY-MM-DD'));
       this.setState({ selectedIndex: 0 });
     }
     if (nextProps.reports) {
