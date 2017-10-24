@@ -83,7 +83,9 @@ export default function promiseMiddleware(store) {
 
     return payloadResult
       .then((res) => {
-        if (res.status !== 401 && (!res.bodyUsed || res.body)) return res.json().then(json => handleStatuses(res, json));
+        if (res.status !== 401 && (!res.bodyUsed || res.body)) {
+          return res.json().then(json => handleStatuses(res, json));
+        }
         return handleStatuses(res, null);
       });
   };
