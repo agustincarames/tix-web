@@ -26,7 +26,7 @@ class DownloadView extends Component {
               <ul className='thumbnails'>
                 <li className='col-md-4'>
                   <p >Linux</p>
-                  <a href='/downloads/assets/fxlauncher.jar' className='thumbnail'>
+                  <a href='/downloads/assets/tix-time-client-0.1.0-SNAPSHOT.deb' className='thumbnail'>
                     <img
                       width='150'
                       alt='Linux'
@@ -36,7 +36,7 @@ class DownloadView extends Component {
                 </li>
                 <li className='col-md-4'>
                   <p >Windows</p>
-                  <a href='/downloads/assets/fxlauncher.jar' className='thumbnail'>
+                  <a href='/downloads/assets/tix-time-client-0.1.0-SNAPSHOT.exe' className='thumbnail'>
                     <img
                       width='150'
                       alt='Linux'
@@ -46,9 +46,8 @@ class DownloadView extends Component {
                 </li>
                 <li className='col-md-4'>
                   <p>OSX</p>
-                  <a href='/downloads/assets/fxlauncher.jar' className='thumbnail'>
+                  <a href='/downloads/assets/tix-time-client-0.1.0-SNAPSHOT.dmg' className='thumbnail'>
                     <img width='150' alt='Apple' src={AppleLogo} />
-
                   </a>
                 </li>
               </ul>
