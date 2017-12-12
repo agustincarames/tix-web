@@ -60,7 +60,7 @@ export function loadFromLocalStorage(user) {
 export function fetchAllUsers() {
   return dispatch => dispatch({
     type: FETCH_ALL_USERS,
-    payload: fetch('/user/all'),
+    payload: fetch('/admin/users'),
   });
 }
 
