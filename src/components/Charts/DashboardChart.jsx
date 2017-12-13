@@ -18,9 +18,9 @@ class DashboardChart extends Component {
   }
 
   buildConfig(props) {
-    const fechasLength = props && props.fechas ? props.fechas.length :
+    const datesLength = props && props.fechas ? props.fechas.length :
       (this.props && this.props.fechas ? this.props.fechas.length : 0);
-    const fechas = props ? props.fechas : this.props.fechas;
+    const dates = props ? props.fechas : this.props.fechas;
     return {
       chart: {
         marginRight: 130,
@@ -32,7 +32,7 @@ class DashboardChart extends Component {
       },
       xAxis: {
         type: 'datetime',
-        categories: fechas ? fechas.map(fecha => moment(fecha)) : [],
+        categories: dates ? dates.map(date => moment(date).format()) : [],
         tickInterval: 6,
         labels: {
           enabled: true,
@@ -45,8 +45,8 @@ class DashboardChart extends Component {
             } <br> ${date.hour() < 10 ? '0' : ''}${date.hour()}:${date.minute() < 10 ? '0' : ''}${date.minute()}`;
           },
         },
-        min: fechasLength < 50 ? 0 : fechasLength - 50,
-        max: fechasLength,
+        min: datesLength < 50 ? 0 : datesLength - 50,
+        max: datesLength,
       },
       yAxis: {
         title: {
