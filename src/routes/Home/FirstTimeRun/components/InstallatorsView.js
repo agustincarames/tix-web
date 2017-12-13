@@ -42,7 +42,7 @@ class InstallatorsView extends Component {
           </div>
         </div>
       </div>
-   );
+    );
   }
 
 }
