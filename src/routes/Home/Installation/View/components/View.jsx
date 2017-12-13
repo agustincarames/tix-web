@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import R from 'ramda';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -16,6 +15,7 @@ import {
   editInstallationName,
 } from '../../../../../store/domain/installation/actions';
 import InstallationListView from './InstallationListView';
+import InstallatorsView from '../../../FirstTimeRun/components/InstallatorsView';
 
 class ViewInstallation extends Component {
   renderTable() {
@@ -55,14 +55,24 @@ class ViewInstallation extends Component {
 
   render() {
     return (
-      <Card className='card-margins'>
-        <CardTitle
-          title='Mis Instalaciones'
-        />
-        <CardText>
-          {this.renderTable()}
-        </CardText>
-      </Card>
+      <div>
+        <Card className='card-margins'>
+          <CardTitle
+            title='Mis Instalaciones'
+          />
+          <CardText>
+            {this.renderTable()}
+          </CardText>
+        </Card>
+        <Card className='card-margins'>
+          <CardTitle
+            title='Descargar Instalador'
+          />
+          <CardText>
+            <InstallatorsView />
+          </CardText>
+        </Card>
+      </div>
     );
   }
 }
