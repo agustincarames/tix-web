@@ -7,10 +7,10 @@ function getAuthentication(token) {
   return {};
 }
 
-export default function isoFetch(url, options = {}) {
+function isoFetch(url, options = {}) {
   const method = options.method || 'GET';
   const body = JSON.stringify(options.body) || undefined;
-  const fullUrl = `https://tix.innova-red.net/api${url}`;
+  const fullUrl = "http://localhost:3001/api" + url; //config.api_url + url;
   return (token) => {
     const headers = {
       Accept: 'application/json',
@@ -21,3 +21,5 @@ export default function isoFetch(url, options = {}) {
     return fetch(fullUrl, { headers, method, body });
   };
 }
+
+module.exports = isoFetch;

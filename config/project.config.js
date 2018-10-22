@@ -24,8 +24,9 @@ const config = {
   // ----------------------------------
   // Server Configuration
   // ----------------------------------
-  server_host : ip.address(), // use string 'localhost' to prevent exposure on local network
-  server_port : process.env.PORT || 3000,
+  server_host : process.env.TIX_WEB_HOST || ip.address(), // use string 'localhost' to prevent exposure on local network
+  server_port : process.env.TIX_WEB_PORT || 3000,
+  api_url: process.env.TIX_API_PUBLIC_URL,
 
   // ----------------------------------
   // Compiler Configuration
