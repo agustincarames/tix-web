@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+const apiConfig = require('../apiConfig');
 
 function getAuthentication(token) {
   if (token) {
@@ -10,7 +11,7 @@ function getAuthentication(token) {
 function isoFetch(url, options = {}) {
   const method = options.method || 'GET';
   const body = JSON.stringify(options.body) || undefined;
-  const fullUrl = "http://localhost:3001/api" + url; //config.api_url + url;
+  const fullUrl = apiConfig.url + url;
   return (token) => {
     const headers = {
       Accept: 'application/json',

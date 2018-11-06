@@ -1,6 +1,7 @@
 FROM node:carbon-alpine
 
 # Install app dependencies
+RUN apk add bash
 WORKDIR /usr/src/app
 COPY package.json .
 RUN npm install
@@ -16,4 +17,4 @@ COPY . .
 
 EXPOSE 3000 
 
-CMD ["npm", "start"]
+CMD ["./run.sh"]
